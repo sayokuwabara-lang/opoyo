@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E2E2E3">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Grimoire">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>Grimoire Garden</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#E2E2E3;--card:#F3F3F3;--sub:#D3D3D3;--tx:#2B2B2D;--tx2:#5F6062;--ac:#6D6E70;--ac2:#AAAAAB;--bd:#C2C2C3;--ink:#2A2326;--pg:#555556;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.8 "Noto Sans JP","BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",sans-serif;font-weight:500;overflow-x:hidden}
+h1,h2,h3{font-weight:700;margin:0 0 8px;letter-spacing:.03em}
+h1{font-size:22px;text-align:center}h2{font-size:19px}h3{font-size:17px}
+#app{max-width:520px;margin:0 auto;padding:14px 14px 100px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(40,40,45,.06)}
+.card.deco{border-top:3px solid var(--ac2)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.mut{color:var(--tx2);font-size:15px}
+button{font:inherit;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid var(--ac);background:var(--ac);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--tx);border-color:var(--bd)}
+button.sm{min-height:38px;padding:4px 10px;font-size:15px}
+button.on{background:var(--pg);border-color:var(--pg);color:#fff}
+input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--bd);border-radius:12px;background:#fff;color:var(--tx)}
+.bar{height:12px;background:var(--sub);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--pg);transition:width .4s}
+.bub{background:var(--sub);border-radius:14px;padding:10px 14px}
+.bub.t{position:relative;flex:1}.bub.t:before{content:"";position:absolute;left:-8px;top:20px;border:8px solid transparent;border-left:0;border-right-color:var(--sub)}
+.jace{background:none;border:0;padding:0;min-height:0;display:block;margin:0 auto}
+.task{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--bd)}
+.task:first-of-type{border-top:0}
+.chk{width:24px;height:24px;min-width:24px;min-height:24px;margin-top:5px;border-radius:50%;padding:0;background:transparent;border:2px solid var(--ac);color:#fff;font-size:13px;line-height:1}
+.chk.d{background:var(--pg);border-color:var(--pg)}
+.done .tt{text-decoration:line-through;color:var(--tx2)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:0;font-size:13px;min-height:56px;padding:4px 0}
+nav button.on{color:var(--ink);font-weight:700}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:9;max-width:88%;opacity:0;transition:opacity .25s;pointer-events:none}
+#toast.s{opacity:1}
+.tag{display:inline-block;background:var(--sub);border-radius:10px;padding:0 8px;font-size:13px}
+.sw{position:relative;overflow:hidden;border-top:1px solid var(--bd)}.sw .task{border-top:0}.acts{position:absolute;right:0;top:0;bottom:0;display:flex}.acts button{min-height:0;height:100%;width:72px;border-radius:0;border:0;padding:0}.acts button.ghost{background:var(--sub);color:var(--tx)}.acts button.del{background:#6b4a4f}.swi{position:relative;background:var(--card);transition:transform .2s;touch-action:pan-y;user-select:none;-webkit-user-select:none}.ov{position:fixed;inset:0;background:rgba(30,30,34,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}.mb{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:420px}
+input[type=date]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;text-align:left}.bub.red{background:#B5474E;color:#fff}.bub.t.red:before{border-right-color:#B5474E}
+.mb{max-height:88vh;overflow:auto}
+.big{font-size:46px;text-align:center;letter-spacing:.08em;font-weight:700}
+</style></head><body>
+<div id="app"></div><div id="toast"></div><nav id="nav"></nav>
+<script>
+const KEY='grimoire_garden_v1';
+const SAY={
+open:['来たか。無理のない範囲で、少しずつ進めよう。','おかえり。今日も静かに始めればいい。','よく来たな。ゆっくりでいい。'],
+done:['一つ片づいたな。少しずつ進めばいい。','よくやった。その一歩は、ちゃんと残る。','終わったか。ひと息ついていい。'],
+left:['残ったものは、明日に回してもいい。全部を一度に抱える必要はない。'],
+ref:['今日を振り返れたなら、それで十分だ。休むのも大事な一日だ。'],
+ms:['少し休もう。今は、何かを成し遂げなくてもいい。'],
+me:['おかえり。少しでも落ち着けたなら、それで十分だ。']};
+const WORDS=['全部やらなくていい。今日の一つで十分だ。','疲れたなら、先に休め。勉強は逃げない。','うまくいかない日は、続けた日でもある。','小さく始めれば、案外動き出す。','比べるのは昨日の自分だけでいい。','わからないのは、前に進んでいる証拠だ。','深呼吸を一つ。それだけで違う。','終わらせるより、手をつけることを大事にしよう。','休んだことは、失敗じゃない。','今日の自分に、できる分だけ頼めばいい。','机に向かえた。それだけで一歩だ。','焦る夜は、まず水を飲め。'];
+const MEDS=[
+{id:'m1',n:'月影の呼吸',min:5,g:'気持ちを落ち着ける',d:'呼吸を無理に変えず、自然な呼吸に注意を向けます。'},
+{id:'m2',n:'書庫の静寂',min:5,g:'頭の中を整理する',d:'浮かんだ考えに気づき、追い払わず、再び目の前の感覚に注意を戻します。'},
+{id:'m3',n:'夜の手放し',min:7,g:'一日の緊張を整理する',d:'今日あったことを思い浮かべ、今すぐ解決しなくてよいことを一度脇に置きます。'},
+{id:'m4',n:'足元の休息',min:5,g:'授業の合間や電車で休む',d:'足が床に触れる感覚、手の感覚、周囲の音に注意を向けます。'}];
+const MOODS=[['疲れている','m4'],['不安がある','m1'],['頭が散らかっている','m2'],['一日を終えたい','m3']];
+const CATS=['疲れたとき・休みたいとき','不安や心配があるとき','勇気が必要なとき','希望を持ちたいとき','勉強や判断に知恵が必要なとき','自分を責めてしまうとき','眠る前・静かな時間','感謝や喜びを感じたいとき'];
+// s は本文の引用ではなく、内容の短い要約。本文は利用条件を確認した翻訳のみ別途追加する
+const DEFV=[
+{c:0,r:'マタイによる福音書 11:28',s:'疲れた人、重荷を負う人に向けて、休ませてあげようと呼びかける言葉だ。'},
+{c:0,r:'詩編 23:1–3',s:'羊飼いに導かれ、静かな水辺で魂が元気を取り戻す情景を歌っている。'},
+{c:1,r:'マタイによる福音書 6:34',s:'明日のことまで思い悩むな、という教えだ。今日の分だけ見ればいい。'},
+{c:1,r:'フィリピの信徒への手紙 4:6–7',s:'何も思い煩わず、願いを祈りで伝えれば、心に平安が与えられると語る。'},
+{c:2,r:'イザヤ書 41:10',s:'恐れるな、わたしが共にいる、という励ましの言葉だ。'},
+{c:2,r:'ヨシュア記 1:9',s:'強く、勇気を持て。どこへ行っても共にいる、という約束だ。'},
+{c:3,r:'哀歌 3:22–23',s:'慈しみは尽きず、朝ごとに新しくされる、と語る。昨日がどうでも、今日は新しい。'},
+{c:3,r:'ローマの信徒への手紙 8:28',s:'すべてのことが、最終的には益になるよう働くという希望を語る。'},
+{c:4,r:'箴言 2:6',s:'知恵は与えられるものだ、と語る。知ることは贈り物でもある。'},
+{c:4,r:'ヤコブの手紙 1:5',s:'知恵に欠けるなら、求めればよい。ためらわず頼っていい、という言葉だ。'},
+{c:5,r:'詩編 34:18',s:'心の砕けた人のそばに寄り添う、という言葉だ。落ち込む日も一人ではない。'},
+{c:5,r:'ローマの信徒への手紙 8:38–39',s:'どんなものも、神の愛から自分を引き離せないと語る。失敗しても変わらない。'},
+{c:6,r:'詩編 4:8',s:'安らかに横になり、眠れる、という夜の祈りの言葉だ。'},
+{c:6,r:'詩編 121:7–8',s:'出入りのすべてを見守ってくれる、という守りの約束を歌う。'},
+{c:7,r:'詩編 118:24',s:'今日という日を喜び祝おう、という呼びかけだ。'},
+{c:7,r:'テサロニケの信徒への手紙一 5:16–18',s:'いつも喜び、絶えず祈り、どんなことにも感謝する、という勧めだ。'}];
+let VERSES=[];function syncV(){if(!Array.isArray(S.verses)||!S.verses.length){S.verses=DEFV.map((v,i)=>({c:v.c,r:v.r,s:v.s,text:(S.vtext&&S.vtext[i])||'',tr:''}));save()}VERSES=S.verses}
+
+const jst=(t=Date.now())=>new Date(t+9*36e5).toISOString().slice(0,10);
+const addDay=(d,n)=>new Date(Date.parse(d+'T00:00:00Z')+n*864e5).toISOString().slice(0,10);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id);
+function fresh(){return{v:2,tasks:[],assign:[],recur:[],refl:{},meds:[],favs:[],vhist:{},vtext:{}}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return Object.assign(fresh(),JSON.parse(r),{v:2})}catch(e){}return fresh()}
+let S=load(),view='home',filter='today',rd=jst(),vcat=-1,vq='',saying='',last={},tm=null,mood=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('保存に失敗しました。ブラウザの保存設定を確認してください')}}
+function toast(m){const t=$('toast');t.textContent=m;t.className='s';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2600)}
+function pick(k,a){let c=a.filter(x=>x!==last[k]);c=c.length?c:a;const s=c[Math.floor(Math.random()*c.length)];last[k]=s;return s}
+function say(k){return saying=pick(k,SAY[k])}
+function hash(d){let h=0;for(const c of d)h=(h*31+c.charCodeAt(0))>>>0;return h}
+function talk(){saying=pick('w',WORDS);render()}
+function readVerse(i){const v=VERSES[i];saying=v.r+'。'+v.s+(S.vtext[i]?'':'　本文は、お手持ちの聖書で読んでみてくれ。');render()}
+
+function jace(){const F='#4a4852',O='#2a2326',C='#e6dccd',P='#f0a79a',st=' stroke="'+O+'" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"';
+return '<svg viewBox="0 -4 200 200" width="170" height="170" role="img" aria-label="ジェイス" style="display:block">'+
+'<path d="M140 168 Q186 160 178 108 Q160 116 146 140Z" fill="'+F+'"'+st+'/><path d="M178 108 Q174 132 158 140 Q170 126 178 108Z" fill="'+C+'"/>'+
+'<path d="M64 120 Q58 170 68 186 L132 186 Q142 170 136 120Z" fill="'+F+'"'+st+'/><path d="M82 120 L92 146 L100 138 L108 146 L118 120Z" fill="'+C+'"/>'+
+'<ellipse cx="76" cy="184" rx="18" ry="11" fill="'+C+'"'+st+'/><ellipse cx="124" cy="184" rx="18" ry="11" fill="'+C+'"'+st+'/>'+
+'<path d="M44 72 L36 14 L88 48Z" fill="'+F+'"'+st+'/><path d="M156 72 L164 14 L112 48Z" fill="'+F+'"'+st+'/><path d="M49 58 L46 28 L70 46Z" fill="'+P+'"/><path d="M151 58 L154 28 L130 46Z" fill="'+P+'"/>'+
+'<path d="M30 92 Q28 40 100 40 Q172 40 170 92 Q172 126 100 132 Q28 126 30 92Z" fill="'+F+'"'+st+'/>'+
+'<path d="M50 102 Q58 84 84 92 Q100 97 116 92 Q142 84 150 102 Q146 126 100 130 Q54 126 50 102Z" fill="'+C+'"/><ellipse cx="72" cy="72" rx="11" ry="5" fill="'+C+'"/><ellipse cx="128" cy="72" rx="11" ry="5" fill="'+C+'"/>'+
+'<ellipse cx="62" cy="106" rx="9" ry="6" fill="'+P+'"/><ellipse cx="138" cy="106" rx="9" ry="6" fill="'+P+'"/>'+
+'<ellipse cx="76" cy="88" rx="9" ry="11" fill="'+O+'"/><ellipse cx="124" cy="88" rx="9" ry="11" fill="'+O+'"/><circle cx="79" cy="84" r="3.2" fill="#fff"/><circle cx="127" cy="84" r="3.2" fill="#fff"/><circle cx="73" cy="93" r="1.5" fill="#fff"/><circle cx="121" cy="93" r="1.5" fill="#fff"/>'+
+'<ellipse cx="100" cy="102" rx="8" ry="6" fill="'+O+'"/><path d="M88 110 Q94 118 100 111 Q106 118 112 110" fill="none" stroke="'+O+'" stroke-width="3" stroke-linecap="round"/></svg>'}
+
+function toggle(id){const t=S.tasks.find(x=>x.id===id);if(!t)return;
+if(!t.done){t.done=true;t.doneAt=Date.now();t.doneDate=jst();say('done');toast('完了しました')}
+else{t.done=false;t.doneAt=null;t.doneDate=null;toast('完了を取り消しました')}
+save();render()}
+function addTask(){const n=$('tn').value.trim();if(!n)return toast('タスク名を入力してください');const rp=$('tr').value;if(rp!=='none'){const sd=$('td').value||jst(),wd=new Date(Date.parse(sd+'T00:00:00Z')).getUTCDay();S.recur.push({id:'r'+Date.now(),name:n,memo:$('tm').value.trim(),rep:rp,wd,start:sd,last:''});save();toast('くりかえしタスクを追加しました');render();return}
+S.tasks.push({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),name:n,memo:$('tm').value.trim(),date:$('td').value||jst(),created:Date.now(),done:false,doneAt:null,doneDate:null});
+save();toast('追加しました');render()}
+function editTask(id){const t=S.tasks.find(x=>x.id===id);const n=prompt('タスク名',t.name);if(n===null)return;const m=prompt('メモ',t.memo||'');const d=prompt('予定日 (YYYY-MM-DD)',t.date);
+if(n.trim())t.name=n.trim();if(m!==null)t.memo=m;if(d&&/^\d{4}-\d{2}-\d{2}$/.test(d))t.date=d;save();render()}
+function delTask(id){if(!confirm('このタスクを削除しますか？'))return;S.tasks=S.tasks.filter(x=>x.id!==id);save();render()}
+function moveTask(id){const t=S.tasks.find(x=>x.id===id);const n=addDay(t.date,1);if(!confirm('「'+t.name+'」の予定日を '+n+' に移動しますか？'))return;t.date=n;save();toast('翌日へ移動しました');render()}
+function taskRow(t,ctl){return '<div class="task '+(t.done?'done':'')+'"><button class="chk '+(t.done?'d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+(t.rid?'↻ ':'')+esc(t.name)+'</div><div class="mut">予定 '+t.date+(t.done?' ／ 完了 '+t.doneDate:'')+'</div>'+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'<div class="row"><button class="ghost sm" onclick="editTask(\''+t.id+'\')">編集</button><button class="ghost sm" onclick="delTask(\''+t.id+'\')">削除</button></div>')+'</div></div>'}
+
+function vToday(){const d=jst();if(S.vhist[d]==null){S.vhist[d]=hash(d)%VERSES.length;save()}return S.vhist[d]}
+function fav(i){const k=S.favs.indexOf(i);k<0?S.favs.push(i):S.favs.splice(k,1);save();toast(k<0?'お気に入りに追加':'お気に入りを解除');render()}
+function saveVT(i,el){const t=el.value.trim();if(t)S.vtext[i]=t;else delete S.vtext[i];save();toast('保存しました')}
+function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+CATS[v.c]+'</span><h3 style="margin-top:6px">'+v.r+'</h3><p class="mut" style="margin:0 0 8px">'+esc(v.s)+'（内容の要約）</p>'+
+'<textarea rows="2" placeholder="お手持ちの聖書の本文を貼り付けて保存（自分用）" onchange="saveVT('+i+',this)">'+esc(S.vtext[i]||'')+'</textarea><div class="row" style="margin-top:8px"><button class="sm" onclick="readVerse('+i+');go(\'home\')">ジェイスに話してもらう</button><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★ お気に入り':'☆ お気に入り')+'</button></div></div>'}
+
+function recMed(){const m=MOODS.find(x=>x[0]===mood);return MEDS.find(x=>x.id===(m?m[1]:'m1'))}
+function startMed(id){const m=MEDS.find(x=>x.id===id);tm={id,ms:m.min*60000,tot:m.min*60000,end:Date.now()+m.min*60000,run:true,fin:false,mood:mood||'',after:'',note:''};say('ms');render();tick()}
+function tick(){clearInterval(tick.h);tick.h=setInterval(()=>{if(!tm||!tm.run)return;const r=tm.end-Date.now();if(r<=0){tm.run=false;tm.fin=true;tm.ms=0;clearInterval(tick.h);say('me');render();return}const e=$('tmr');if(e)e.textContent=fmt(r)},250)}
+const fmt=r=>{const s=Math.ceil(r/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+function pause(){tm.ms=tm.end-Date.now();tm.run=false;render()}
+function resume(){tm.end=Date.now()+tm.ms;tm.run=true;render();tick()}
+function stopMed(){tm=null;clearInterval(tick.h);render()}
+function saveMedNote(){S.meds.push({d:jst(),t:Date.now(),id:tm.id,min:Math.max(1,Math.round((tm.tot-tm.ms)/60000)),mood:tm.mood,after:tm.after,note:(tm.note||'').trim(),early:!!tm.early});save();toast('記録しました');tm=null;render()}
+function endMed(){const r=tm.run?Math.max(0,tm.end-Date.now()):tm.ms;tm.run=false;tm.fin=true;tm.ms=r;tm.early=r>0;clearInterval(tick.h);say('me');render()}
+function genRecur(){const td=jst(),wd=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay();let ch=0;S.recur.forEach(r=>{const ok=r.rep==='daily'||(r.rep==='weekdays'&&wd>0&&wd<6)||(r.rep==='weekly'&&r.wd===wd);if(ok&&r.last!==td&&td>=r.start){r.last=td;ch=1;if(!S.tasks.some(t=>t.rid===r.id&&t.date===td))S.tasks.push({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),rid:r.id,name:r.name,memo:r.memo,date:td,created:Date.now(),done:false,doneAt:null,doneDate:null})}});if(ch)save()}
+function stopRecur(id){if(!confirm('このくりかえしを止めますか？（すでに作られたタスクは残ります）'))return;S.recur=S.recur.filter(r=>r.id!==id);save();render()}
+function medLog(){const ds=[...new Set(S.meds.map(x=>x.d))],td=jst();let c=0,d=ds.includes(td)?td:addDay(td,-1);while(ds.includes(d)){c++;d=addDay(d,-1)}
+const wk=S.meds.filter(x=>x.d>=addDay(td,-6)),tot=S.meds.reduce((a,x)=>a+(x.min||0),0),wm=wk.reduce((a,x)=>a+(x.min||0),0);
+return '<div class="card"><h3>瞑想の記録</h3><p style="margin:0">連続 <b>'+c+'</b> 日 ／ 直近7日 <b>'+wk.length+'</b> 回・'+wm+'分 ／ 累計 '+tot+'分</p><p class="mut" style="margin:0 0 6px">休んだ日があっても、記録は消えません。</p>'+(S.meds.length?S.meds.slice(-7).reverse().map(x=>{const m=MEDS.find(m=>m.id===x.id);return '<p class="mut" style="margin:0;border-top:1px solid var(--bd);padding:4px 0">'+x.d+' '+(m?m.n:'')+(x.min?' '+x.min+'分':'')+(x.mood||x.after?'<br>気分：'+(x.mood||'—')+' → '+(x.after||'—'):'')+(x.note?'<br>'+esc(x.note):'')+'</p>'}).join(''):'<p class="mut">まだ記録はありません。</p>')+'</div>'}
+function modal(h){let m=$('md');if(!m){m=document.createElement('div');m.id='md';m.className='ov';document.body.appendChild(m)}m.innerHTML='<div class="mb">'+h+'</div>';m.style.display='flex'}
+function closeM(){const m=$('md');if(m)m.style.display='none'}
+let mcb=null;
+function ask(msg,ok,fn){mcb=fn;modal('<p style="margin:0 0 12px">'+msg+'</p><div class="row"><button onclick="closeM();mcb()">'+ok+'</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function delTask(id){ask('このタスクを削除しますか？','削除する',()=>{S.tasks=S.tasks.filter(x=>x.id!==id);save();render();toast('削除しました')})}
+function moveTask(id){const t=S.tasks.find(x=>x.id===id),n=addDay(t.date,1);ask('「'+esc(t.name)+'」の予定日を '+n+' に移動しますか？','移動する',()=>{t.date=n;save();toast('翌日へ移動しました');render()})}
+function editTask(id){const t=S.tasks.find(x=>x.id===id);modal('<h3>タスクを編集</h3><input id="en" value="'+esc(t.name)+'" style="margin-bottom:6px"><input id="em" value="'+esc(t.memo||'')+'" placeholder="メモ" style="margin-bottom:6px"><input id="ed" type="date" value="'+t.date+'" style="margin-bottom:10px"><div class="row"><button onclick="saveEdit(\''+id+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function saveEdit(id){const t=S.tasks.find(x=>x.id===id),n=$('en').value.trim();if(!n)return toast('タスク名を入力してください');t.name=n;t.memo=$('em').value.trim();if($('ed').value)t.date=$('ed').value;save();closeM();render();toast('保存しました')}
+function stopRecur(id){ask('このくりかえしを止めますか？（すでに作られたタスクは残ります）','止める',()=>{S.recur=S.recur.filter(r=>r.id!==id);save();render()})}
+function wipe(){ask('すべてのデータを消去します。元に戻せません。','消去する',()=>{S=fresh();save();render()})}
+function imp(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.tasks))throw 0;ask('現在のデータを読み込んだ内容で置き換えますか？','置き換える',()=>{S=Object.assign(fresh(),d,{v:2});save();render();toast('読み込みました')})}catch(e){toast('読み込めないファイルです')}};r.readAsText(f)}
+function taskRow(t,ctl){const body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+(t.rid?'↻ ':'')+esc(t.name)+'</div><div class="mut">予定 '+t.date+(t.done?' ／ 完了 '+t.doneDate:'')+'</div>'+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
+if(ctl)return '<div class="task '+(t.done?'done':'')+'">'+body+'</div>';
+return '<div class="sw"><div class="acts"><button class="ghost" onclick="editTask(\''+t.id+'\')">編集</button><button class="del" onclick="delTask(\''+t.id+'\')">削除</button></div><div class="swi task '+(t.done?'done':'')+'">'+body+'</div></div>'}
+let sw={};const SWW=144;
+function closeSw(ex){document.querySelectorAll('.swi').forEach(e=>{if(e!==ex)e.style.transform=''})}
+document.addEventListener('pointerdown',e=>{if(e.target.closest('.acts'))return;const el=e.target.closest('.swi');if(!el){closeSw();return}closeSw(el);sw={el,x:e.clientX,y:e.clientY,base:el.style.transform?-SWW:0,moved:0,lock:0};el.style.transition='none'});
+document.addEventListener('pointermove',e=>{if(!sw.el)return;const dx=e.clientX-sw.x,dy=e.clientY-sw.y;if(!sw.lock&&(Math.abs(dx)>8||Math.abs(dy)>8))sw.lock=Math.abs(dx)>Math.abs(dy)?1:2;if(sw.lock!==1)return;sw.moved=1;sw.el.style.transform='translateX('+Math.max(-SWW,Math.min(0,sw.base+dx))+'px)'});
+document.addEventListener('pointerup',e=>{if(!sw.el)return;const el=sw.el;el.style.transition='';if(sw.moved){const p=Math.max(-SWW,Math.min(0,sw.base+e.clientX-sw.x));el.style.transform=p<-SWW/2?'translateX(-'+SWW+'px)':''}sw.el=null;setTimeout(()=>sw.moved=0,0)});
+document.addEventListener('pointercancel',()=>{if(sw.el){sw.el.style.transition='';sw.el.style.transform='';sw.el=null}});
+document.addEventListener('click',e=>{if(sw.moved){e.stopPropagation();e.preventDefault()}},true);
+function medLog(){const td=jst(),by={};S.meds.forEach(x=>{by[x.d]=(by[x.d]||0)+(x.min||0)});
+let c=0,d=by[td]?td:addDay(td,-1);while(by[d]){c++;d=addDay(d,-1)}
+const col=m=>!m?'var(--sub)':m<=5?'#AAAAAB':m<=10?'#6D6E70':'#3a3a3c',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-((wdi+6)%7)-21),MS={'落ち着いた':'◎','少し楽になった':'○','変わらない':'△','まだ重い':'▽'};
+let g='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">'+'月火水木金土日'.split('').map(w=>'<div class="mut" style="text-align:center;font-size:13px">'+w+'</div>').join('');
+for(let i=0;i<28;i++){const x=addDay(st,i),m=by[x]||0;g+=x>td?'<div></div>':'<div style="aspect-ratio:1;border-radius:8px;background:'+col(m)+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+(m>5?'#fff':'#5F6062')+';border:2px solid '+(x===td?'#2A2326':'transparent')+'">'+Number(x.slice(8))+'</div>'}
+g+='</div><p class="mut" style="margin:6px 0 0">濃いほど長く瞑想した日（直近4週間）</p>';
+const days=[0,1,2,3,4,5,6].map(i=>addDay(td,i-6)),mx=Math.max(10,...days.map(x=>by[x]||0));
+const bars='<div style="display:flex;gap:6px;align-items:flex-end;height:96px">'+days.map(x=>{const m=by[x]||0;return '<div style="flex:1;text-align:center"><div class="mut" style="font-size:12px">'+(m||'')+'</div><div style="height:'+(m?Math.max(6,m/mx*60):4)+'px;background:'+(m?'var(--pg)':'var(--sub)')+';border-radius:6px"></div><div class="mut" style="font-size:12px">'+'日月火水木金土'[new Date(Date.parse(x+'T00:00:00Z')).getUTCDay()]+'</div></div>'}).join('')+'</div>';
+const dots='<div>'+[0,1,2,3,4,5,6].map(i=>'<span style="font-size:24px;color:'+(i<Math.min(c,7)?'var(--pg)':'var(--ac2)')+'">'+(i<Math.min(c,7)?'●':'○')+'</span>').join(' ')+' <b>'+c+'日連続</b></div>';
+return '<div class="card"><h3>瞑想の記録</h3>'+dots+'<p class="mut" style="margin:2px 0 10px">休んだ日があっても記録は消えません。</p><h3 style="font-size:15px">直近7日（分）</h3>'+bars+'<h3 style="font-size:15px;margin-top:14px">カレンダー</h3>'+g+(S.meds.length?'<h3 style="font-size:15px;margin-top:14px">最近の記録</h3>'+S.meds.slice(-5).reverse().map(x=>{const m=MEDS.find(m=>m.id===x.id);return '<div style="border-top:1px solid var(--bd);padding:6px 0"><b>'+(m?m.n:'')+'</b> <span class="mut">'+x.d.slice(5)+'・'+(x.min||'?')+'分</span><br><span class="mut">気分 '+(x.mood||'—')+' → <b style="font-size:18px;color:var(--pg)">'+(MS[x.after]||'—')+'</b> '+esc(x.after||'')+'</span>'+(x.note?'<br><span class="mut">'+esc(x.note)+'</span>':'')+'</div>'}).join(''):'')+'</div>'}
+function jIcon(){return '<svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg>'}
+function dleft(d){return Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(jst()+'T00:00:00Z'))/864e5)}
+function urgent(){const lim=addDay(jst(),3);return S.assign.filter(a=>!a.done&&a.due<=lim).sort((a,b)=>a.due.localeCompare(b.due))}
+function amsg(a){const n=dleft(a.due);return '「'+esc(a.name)+'」'+(n<0?'は期限を過ぎている。責めているわけじゃない、まず状況だけ確認しよう。':n===0?'の期限は今日だ。できるところまででいい。':'の期限まで、あと'+n+'日だ。少しずつ進めておこう。')}
+function urgHtml(){return urgent().slice(0,3).map(a=>'<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px;margin-bottom:10px"><div style="flex:none">'+jIcon()+'</div><div class="bub t red">'+amsg(a)+'</div></div>').join('')}
+function addAssign(){const n=$('an').value.trim(),d=$('ad').value;if(!n)return toast('課題名を入力してください');if(!d)return toast('期限の日付を選んでください');S.assign.push({id:'a'+Date.now()+Math.random().toString(36).slice(2,5),name:n,due:d,done:false,doneDate:null,created:Date.now()});save();toast('課題を追加しました');render()}
+function togA(id){const a=S.assign.find(x=>x.id===id);a.done=!a.done;a.doneDate=a.done?jst():null;save();toast(a.done?'提出おつかれさま':'未完了に戻しました');render()}
+function delAssign(id){ask('この課題を削除しますか？','削除する',()=>{S.assign=S.assign.filter(x=>x.id!==id);save();render()})}
+function editAssign(id){const a=S.assign.find(x=>x.id===id);modal('<h3>課題を編集</h3><input id="en2" value="'+esc(a.name)+'" style="margin-bottom:6px"><input id="ed2" type="date" value="'+a.due+'" style="margin-bottom:10px"><div class="row"><button onclick="saveAssign(\''+id+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function saveAssign(id){const a=S.assign.find(x=>x.id===id),n=$('en2').value.trim();if(!n)return toast('課題名を入力してください');a.name=n;if($('ed2').value)a.due=$('ed2').value;save();closeM();render();toast('保存しました')}
+function aRow(a){const n=dleft(a.due),late=n<0&&!a.done,chip=a.done?'':'<span class="tag" style="background:'+(late?'#B5474E':n<=3?'#E3B7B9':'var(--sub)')+';color:'+(late?'#fff':'var(--tx)')+'">'+(late?'期限切れ':n===0?'今日':'あと'+n+'日')+'</span>';
+return '<div class="sw"><div class="acts"><button class="ghost" onclick="editAssign(\''+a.id+'\')">編集</button><button class="del" onclick="delAssign(\''+a.id+'\')">削除</button></div><div class="swi task '+(a.done?'done':'')+'"><button class="chk'+(a.done?' d':'')+'" onclick="togA(\''+a.id+'\')" aria-label="提出">'+(a.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(a.name)+'</div><div class="mut">期限 '+a.due.slice(5).replace('-','/')+' '+chip+'</div></div></div></div>'}
+function aCard(){const u=S.assign.filter(a=>!a.done).sort((a,b)=>a.due.localeCompare(b.due)),d=S.assign.filter(a=>a.done).sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')).slice(0,3),l=u.concat(d);
+return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0">← 左にスライドで編集・削除</p>':'<p class="mut">課題はありません。</p>')+'<h3 style="margin-top:12px">課題を追加</h3><input id="an" placeholder="課題名" style="margin-bottom:6px"><input id="ad" type="date" style="margin-bottom:8px"><button onclick="addAssign()">追加する</button></div>'}
+function vToday(){const d=jst();if(S.vhist[d]==null||!VERSES[S.vhist[d]]){S.vhist[d]=hash(d)%VERSES.length;save()}return S.vhist[d]}
+function readVerse(i){const v=VERSES[i];saying=v.r+'。'+(v.text?v.text+(v.tr?'（'+v.tr+'）':'')+(v.s?'　'+v.s:''):(v.s?v.s+'　本文は、お手持ちの聖書で読んでみてくれ。':'お手持ちの聖書で読んでみてくれ。'));render()}
+function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+CATS[v.c]+'</span><h3 style="margin-top:6px">'+esc(v.r)+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</h3>'+(v.text?'<p style="margin:0 0 6px">'+esc(v.text)+'</p>':'<p class="mut" style="margin:0 0 6px">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut" style="margin:0 0 8px">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="sm" onclick="readVerse('+i+');go(\'home\')">ジェイスに話してもらう</button><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div>'}
+function vForm(i){const v=i<0?{c:0,r:'',s:'',text:'',tr:''}:VERSES[i];modal('<h3>'+(i<0?'聖句を追加':'聖句を編集')+'</h3><input id="vr" placeholder="聖書箇所（例：詩編 23:1–3）" value="'+esc(v.r)+'" style="margin-bottom:6px"><select id="vc" style="margin-bottom:6px">'+CATS.map((c,k)=>'<option value="'+k+'"'+(v.c===k?' selected':'')+'>'+c+'</option>').join('')+'</select><input id="vt" placeholder="翻訳名（例：新共同訳）" value="'+esc(v.tr||'')+'" style="margin-bottom:6px"><textarea id="vx" rows="4" placeholder="本文（お手持ちの聖書から）" style="margin-bottom:6px">'+esc(v.text||'')+'</textarea><textarea id="vs" rows="2" placeholder="ひとことメモ・要約（ジェイスが話します）" style="margin-bottom:10px">'+esc(v.s||'')+'</textarea><div class="row"><button onclick="vSave('+i+')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function vSave(i){const r=$('vr').value.trim();if(!r)return toast('聖書箇所を入力してください');const o={c:+$('vc').value,r,tr:$('vt').value.trim(),text:$('vx').value.trim(),s:$('vs').value.trim()};if(i<0)S.verses.push(o);else Object.assign(S.verses[i],o);save();closeM();render();toast('保存しました')}
+function vDel(k){if(S.verses.length<=1)return toast('最後の1つは削除できません。編集で書き換えてください');ask('この聖句を削除しますか？','削除する',()=>{S.verses.splice(k,1);S.favs=S.favs.filter(i=>i!==k).map(i=>i>k?i-1:i);Object.keys(S.vhist).forEach(d=>{const i=S.vhist[d];if(i===k)delete S.vhist[d];else if(i>k)S.vhist[d]=i-1});save();render()})}
+function go(v){view=v;render();scrollTo(0,0)}
+
+function vHome(){const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter(t=>t.done).length;
+let ts=S.tasks.filter(t=>filter==='all'?true:filter==='done'?t.done:(t.date===td||(t.date<td&&!t.done)||(t.done&&t.doneDate===td)));
+ts.sort((a,b)=>a.done-b.done||a.date.localeCompare(b.date));
+const left=S.tasks.filter(t=>!t.done&&t.date<=td).length,rec=recMed(),vi=vToday();
+return '<h1>☾ Grimoire Garden</h1><div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg></button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+'</div></div>'+urgHtml()+'<div class="row"><button class="sm" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
+'<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(ts.length?ts.map(t=>taskRow(t)).join('')+'<p class="mut" style="margin:4px 0 0">← 左にスライドで編集・削除</p>':'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件。'+SAY.left[0]+'</p>':'')+'</div>'+
+aCard()+'<div class="card"><h3>タスクを追加</h3><input id="tn" placeholder="タスク名" style="margin-bottom:6px"><input id="tm" placeholder="詳細メモ（任意）" style="margin-bottom:6px"><input id="td" type="date" value="'+td+'" style="margin-bottom:6px"><select id="tr" style="margin-bottom:8px"><option value="none">くりかえしなし</option><option value="daily">毎日くりかえす</option><option value="weekdays">平日（月〜金）にくりかえす</option><option value="weekly">毎週（予定日の曜日）にくりかえす</option></select><button onclick="addTask()">追加する</button>'+(S.recur.length?'<h3 style="margin:14px 0 4px">くりかえし中</h3>'+S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>↻ '+esc(r.name)+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="ghost sm" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'<p class="mut" style="margin:4px 0 0">開いた日にその日の分が自動で追加されます。休んだ日の分は追加されず、たまりません。</p>':'')+'</div>'+
+'<div class="card"><h3>今日のおすすめ瞑想</h3><p style="margin:0 0 6px"><b>'+rec.n+'</b>（'+rec.min+'分）<br><span class="mut">'+rec.g+'</span></p><button onclick="go(\'med\')">瞑想へ</button></div>'+
+'<div class="card"><h3>今日の聖句</h3><b>'+VERSES[vi].r+'</b><br><button class="ghost sm" onclick="go(\'verse\')" style="margin-top:6px">聖句の書庫へ</button></div>'+
+'<button class="ghost" style="width:100%;margin-bottom:12px" onclick="go(\'ref\')">一日の振り返り</button>'+
+'<div class="card"><h3>データ管理</h3><p class="mut">データはこの端末のこのブラウザ内にのみ保存されます。端末変更やブラウザのデータ削除で消えるため、書き出しをおすすめします。</p><div class="row"><button class="ghost sm" onclick="exp()">書き出し</button><button class="ghost sm" onclick="$(\'imp\').click()">読み込み</button><button class="ghost sm" onclick="wipe()">全消去</button></div><input type="file" id="imp" accept=".json" style="display:none" onchange="imp(this)"></div>'}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='grimoire-garden-'+jst()+'.json';a.click()}
+function imp(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.tasks))throw 0;if(!confirm('現在のデータを置き換えますか？'))return;S=Object.assign(fresh(),d,{v:2});save();toast('読み込みました');render()}catch(e){toast('読み込めないファイルです')}};r.readAsText(f)}
+function wipe(){if(confirm('すべてのデータを消去します。元に戻せません。よろしいですか？')&&confirm('本当に消去しますか？')){S=fresh();save();render()}}
+
+function vRef(){const pl=S.tasks.filter(t=>t.date===rd),dn=S.tasks.filter(t=>t.doneDate===rd),un=pl.filter(t=>!t.done);
+const cm=!pl.length&&!dn.length?'何もない日も、大事な一日だ。':dn.length?'今日は'+dn.length+'件、よく進めた。':'進まない日もある。責めなくていい。';
+return '<h1>一日の振り返り</h1><div class="card row sp"><button class="ghost sm" onclick="rd=addDay(rd,-1);render()">◀</button><input type="date" value="'+rd+'" onchange="rd=this.value||rd;render()" style="flex:1;min-width:0;width:auto"><button class="ghost sm" onclick="rd=addDay(rd,1);render()">▶</button></div>'+
+'<div class="card"><p style="margin:0 0 8px">予定 '+pl.length+' 件 ／ 完了 '+dn.length+' 件 ／ 未完了 '+un.length+' 件</p><div class="bub">'+cm+'</div></div>'+
+'<div class="card"><h3>完了したタスク</h3>'+(dn.length?dn.map(t=>taskRow(t,' ')).join(''):'<p class="mut">なし</p>')+'</div>'+
+'<div class="card"><h3>未完了のタスク</h3>'+(un.length?un.map(t=>taskRow(t,'<div class="row"><button class="sm" onclick="moveTask(\''+t.id+'\')">翌日へ移動</button><button class="ghost sm" onclick="delTask(\''+t.id+'\')">削除</button></div>')).join('')+'<p class="mut">元の日付のまま残す場合は、何も操作しなくて大丈夫です。</p>':'<p class="mut">なし</p>')+'</div>'+
+'<div class="card"><h3>振り返りメモ（任意）</h3><textarea rows="4" onchange="S.refl[rd]=this.value;save();say(\'ref\');toast(\'保存しました\')">'+esc(S.refl[rd]||'')+'</textarea></div>'}
+
+function vMed(){if(tm){const m=MEDS.find(x=>x.id===tm.id);
+return '<h1>'+m.n+'</h1><div class="card"><p>'+m.d+'</p><div class="big" id="tmr">'+fmt(tm.run?tm.end-Date.now():tm.ms)+'</div><div class="bub" style="margin:8px 0">'+esc(saying)+'</div>'+
+(tm.fin?'<p style="margin:0 0 4px">終えたあとの気分</p><div class="row" style="margin-bottom:8px">'+['落ち着いた','少し楽になった','変わらない','まだ重い'].map(a=>'<button class="sm '+(tm.after===a?'on':'ghost')+'" onclick="tm.after=\''+a+'\';render()">'+a+'</button>').join('')+'</div><textarea rows="3" placeholder="感想（任意）" oninput="tm.note=this.value" style="margin-bottom:8px">'+esc(tm.note||'')+'</textarea><div class="row"><button onclick="saveMedNote()">記録して閉じる</button><button class="ghost" onclick="stopMed()">記録せず閉じる</button></div>':
+'<div class="row">'+(tm.run?'<button onclick="pause()">一時停止</button>':'<button onclick="resume()">再開</button>')+'<button class="ghost" onclick="endMed()">終了</button></div>')+'<p class="mut">目を閉じなくて構いません。苦しければいつでも止めてください。</p></div>'}
+const rec=recMed();
+return '<h1>瞑想</h1><div class="card"><h3>今の気分は？</h3><div class="row">'+MOODS.map(m=>'<button class="sm '+(mood===m[0]?'on':'ghost')+'" onclick="mood=\''+m[0]+'\';render()">'+m[0]+'</button>').join('')+'</div><p style="margin:8px 0 0">おすすめ：<b>'+rec.n+'</b>（'+rec.min+'分）</p></div>'+
+MEDS.map(m=>'<div class="card"><div class="row sp"><h3>'+m.n+'</h3><span class="tag">'+m.min+'分</span></div><p class="mut" style="margin:0 0 8px">'+m.g+'<br>'+m.d+'</p><button onclick="startMed(\''+m.id+'\')">はじめる</button></div>').join('')+
+medLog()}
+
+function vVerse(){const q=vq.trim();
+const ix=VERSES.map((v,i)=>i).filter(i=>vcat===-2?S.favs.includes(i):(vcat<0||VERSES[i].c===vcat)&&(!q||(VERSES[i].r+CATS[VERSES[i].c]+VERSES[i].s+(VERSES[i].text||'')+(VERSES[i].tr||'')).includes(q)));
+const vh=Object.keys(S.vhist).sort().reverse().slice(0,7);
+return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:12px" onclick="vForm(-1)">＋ 聖句を追加</button><div class="card deco"><h3>今日の聖句</h3>'+vCard(vToday())+'</div><div class="card"><input placeholder="キーワード検索" value="'+esc(vq)+'" onchange="vq=this.value;render()"><div class="row" style="margin-top:8px"><button class="sm '+(vcat===-1?'on':'ghost')+'" onclick="vcat=-1;render()">すべて</button><button class="sm '+(vcat===-2?'on':'ghost')+'" onclick="vcat=-2;render()">★お気に入り</button>'+CATS.map((c,i)=>'<button class="sm '+(vcat===i?'on':'ghost')+'" onclick="vcat='+i+';render()">'+c+'</button>').join('')+'</div></div>'+
+(ix.length?ix.map(vCard).join(''):'<p class="mut">該当なし</p>')+'<div class="card"><h3>過去に表示した聖句</h3>'+vh.map(d=>'<p class="mut" style="margin:0">'+d+'　'+VERSES[S.vhist[d]].r+'</p>').join('')+'</div>'}
+
+function render(){syncV();genRecur();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse};$('app').innerHTML=V[view]();
+$('nav').innerHTML=[['home','☾','ホーム'],['ref','✎','振り返り'],['med','◌','瞑想'],['verse','✦','聖句']].map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
+say('open');render();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
