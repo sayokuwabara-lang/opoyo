@@ -481,7 +481,11 @@ wrTimes().forEach(h=>L.push('BEGIN:VEVENT','UID:water-'+pad(h)+'-'+d+'@grimoire'
 L.push('END:VCALENDAR');return L.join('\r\n')}
 function exportIcs(){try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([makeIcs()],{type:'text/calendar'}));a.download='water-reminders.ics';document.body.appendChild(a);a.click();toast('カレンダーに追加する画面が開きます')}catch(e){toast('書き出せませんでした')}}
 function remCard(){const r=wrGet(),t=wrTimes(),adj=(k,l,u)=>'<div class="row sp" style="margin-top:6px"><span>'+l+'</span><span class="row"><button class="ghost sm" onclick="wrAdj(\''+k+'\',-1)">−</button><b>'+r[k]+u+'</b><button class="ghost sm" onclick="wrAdj(\''+k+'\',1)">＋</button></span></div>';
-return '<div class="card"><h3>水を飲む通知</h3><p class="mut" style="font-size:13px;margin:0">時間を決めて、iPhoneのカレンダーの通知として登録します。アプリを閉じていても通知が来ます。</p>'+adj('int','間隔','時間おき')+adj('from','開始','時')+adj('to','終了','時')+'<p class="mut" style="margin:8px 0">'+t.map(h=>h+':00').join('、')+'（毎日 '+t.length+'回）</p><button class="ghost sm" onclick="exportIcs()">カレンダーに追加</button><p class="mut" style="font-size:12px;margin:6px 0 0">時間を変えて追加し直すと、前の分が残ります。カレンダーアプリで削除してください。</p></div>'}
+return '<div class="card"><h3>水を飲む通知</h3><p class="mut" style="font-size:13px;margin:0">時間を決めて、iPhoneのカレンダーの通知として登録します。アプリを閉じていても通知が来ます。</p>'+adj('int','間隔','時間おき')+adj('from','開始','時')+adj('to','終了','時')+'<p class="mut" style="margin:8px 0">'+t.map(h=>h+':00').join('、')+'（毎日 '+t.length+'回）</p><div class="row sp" style="margin-bottom:6px"><span style="font-size:15px">アプリを開いている間も知らせる</span><button class="sm '+(S.wrApp!==false?'on':'ghost')+'" onclick="wrAppT()">'+(S.wrApp!==false?'オン':'オフ')+'</button></div><button class="ghost sm" onclick="exportIcs()">カレンダーに追加</button><p class="mut" style="font-size:12px;margin:6px 0 0">時間を変えて追加し直すと、前の分が残ります。カレンダーアプリで削除してください。</p></div>'}
+function wrAppT(){S.wrApp=S.wrApp===false;save();render()}
+function wrCheck(){if(S.wrApp===false)return;const n=new Date(Date.now()+9*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60,d=jst(),f=(S.wrFired&&S.wrFired[d])||[];let fire=false;wrTimes().forEach(t=>{if(h>=t&&h<t+1&&!f.includes(t)){f.push(t);fire=true}});if(fire){S.wrFired={[d]:f};save();toast('水を飲もう');endSound('水を飲もう','そろそろ一杯どうだ。')}}
+setInterval(wrCheck,30000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')wrCheck()});
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
