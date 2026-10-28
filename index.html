@@ -211,17 +211,7 @@ fr(o);fr(o2);o2.detune.value=8;lfo.frequency.value=5.5;lg.gain.value=7;lfo.conne
 g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.22,t+0.6);g.gain.setValueAtTime(0.22,t+2.4);g.gain.exponentialRampToValueAtTime(0.0001,t+3.8);
 o.connect(f);o2.connect(f);f.connect(g);g.connect(AC.destination);[o,o2,lfo].forEach(x=>{x.start(t);x.stop(t+3.9)})}catch(e){}}
 function wToday(){return S.water.log[jst()]||[]}
-function wDue(){const w=S.water,l=wToday(),now=Date.now(),h=new Date(now+9*36e5).getUTCHours();if(h<8||h>=22||l.length>=w.goal)return '';if(!l.length)return '今日はまだ水を飲んでいない。一杯どうだ。';const m=Math.floor((now-l[l.length-1])/6e4);return m>=w.int*60?'水を飲んで'+Math.floor(m/60)+'時間'+m%60+'分たつ。一杯どうだ。':''}
-function wHtml(){const m=wDue();return m?'<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px;margin-bottom:10px"><div style="flex:none">'+jIcon()+'</div><div class="bub t">'+m+'</div></div>':''}
-function urgHtml(){return '<div id="wb">'+wHtml()+'</div>'+urgent().slice(0,3).map(a=>'<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px;margin-bottom:10px"><div style="flex:none">'+jIcon()+'</div><div class="bub t red">'+amsg(a)+'</div></div>').join('')}
-setInterval(()=>{const e=$('wb');if(e&&view==='home')e.innerHTML=wHtml()},60000);
-function drink(){const k=jst();(S.water.log[k]=S.water.log[k]||[]).push(Date.now());save();render()}
 function undrink(){const l=S.water.log[jst()];if(l&&l.length){l.pop();save();render()}}
-function wAdj(k,d){const w=S.water,lim=k==='int'?[1,6]:[1,20];w[k]=Math.max(lim[0],Math.min(lim[1],w[k]+d));save();render()}
-function wCard(){const w=S.water,l=wToday(),n=l.length,last=n?Math.floor((Date.now()-l[n-1])/6e4):null;
-const cups=Array.from({length:w.goal},(_,i)=>'<span style="display:inline-block;width:22px;height:28px;margin:0 3px 4px 0;border:2px solid var(--ac);border-radius:3px 3px 9px 9px;background:'+(i<n?'var(--pg)':'transparent')+'"></span>').join('');
-const adj=(k,lab,u)=>'<div class="row sp" style="margin-top:6px"><span>'+lab+'</span><span class="row"><button class="ghost sm" onclick="wAdj(\''+k+'\',-1)">−</button><b>'+w[k]+u+'</b><button class="ghost sm" onclick="wAdj(\''+k+'\',1)">＋</button></span></div>';
-return '<div class="card"><h2>水を飲む</h2><div>'+cups+'</div><p class="mut" style="margin:0 0 8px">'+n+' / '+w.goal+'杯'+(last!=null?'　最後は'+(last<60?last+'分':Math.floor(last/60)+'時間'+last%60+'分')+'前':'')+'</p><div class="row"><button onclick="drink()">＋ 1杯飲んだ</button><button class="ghost" onclick="undrink()">取り消し</button></div>'+adj('int','リマインド間隔','時間ごと')+adj('goal','1日の目標','杯')+'<p class="mut" style="margin:8px 0 0">アプリを開いている間、時間がたつとジェイスが声をかけます。</p></div>'}
 function md(d){const p=d.split('-');return +p[1]+'/'+ +p[2]}
 function taskRow(t,ctl){const sd=!ctl&&view==='home'&&filter==='all',body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+(t.rid?'↻ ':'')+esc(t.name)+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
 if(ctl)return '<div class="task '+(t.done?'done':'')+'">'+body+'</div>';
@@ -237,7 +227,7 @@ const bars='<div style="display:flex;gap:6px;align-items:flex-end;height:110px">
 return '<h1>水分</h1><div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px"><div style="flex:none">'+jIcon()+'</div><div class="bub t">'+msg+'</div></div></div>'+
 '<div class="card"><div class="big">'+n+'<span style="font-size:18px"> / '+g+' ml</span></div><div class="bar" style="margin:8px 0"><i style="width:'+Math.min(100,n/g*100)+'%"></i></div><p class="mut" style="margin:0 0 10px">'+(n>=g?'目標達成':'あと '+rest+' ml')+'</p><div class="row">'+S.water.presets.map(m=>'<button onclick="drinkMl('+m+')">＋'+m+'</button>').join('')+'<button class="ghost" onclick="undrink()">取り消し</button></div><div class="row" style="flex-wrap:nowrap;margin-top:10px"><input id="wml" type="number" inputmode="numeric" placeholder="mlを入力"><button style="flex:none" onclick="drinkCustom()">追加</button></div></div>'+
 '<div class="card"><div class="row sp"><span>1日の目標</span><span class="row"><button class="ghost sm" onclick="wGoal(-250)">−</button><b>'+g+' ml</b><button class="ghost sm" onclick="wGoal(250)">＋</button></span></div></div>'+
-presetCard()+remCard()+'<div class="card"><h3>直近7日（ml）</h3>'+bars+'</div>'+
+presetCard()+'<div class="card"><h3>直近7日（ml）</h3>'+bars+'</div>'+
 (l.length?'<div class="card"><h3>今日の記録</h3>'+l.map(x=>'<p class="mut" style="margin:0">'+new Date((x.t||x)+9*36e5).toISOString().slice(11,16)+'　'+(typeof x==='number'?200:x.ml)+'ml</p>').join('')+'</div>':'')}
 let sel={mode:'pomo',sub:''},ss=null;
 const hm=s=>{const m=Math.floor(s/60);return m>=60?Math.floor(m/60)+'時間'+(m%60)+'分':m+'分'};
@@ -473,19 +463,6 @@ function wlOff(){try{if(wl)wl.release()}catch(e){}wl=null}
 setInterval(()=>{const act=!!(tm&&tm.run&&!tm.fin)||!!(ss&&!ss.paused);if(S.keepAwake&&act)wlOn();else if(wl)wlOff()},2000);
 document.addEventListener('visibilitychange',()=>{try{if(document.visibilityState==='visible'){if(navigator.clearAppBadge)navigator.clearAppBadge();if(S.keepAwake&&((tm&&tm.run)||(ss&&!ss.paused)))wlOn()}}catch(e){}});
 try{if(navigator.clearAppBadge)navigator.clearAppBadge()}catch(e){}
-function wrGet(){return S.wr=S.wr||{int:2,from:9,to:21}}
-function wrTimes(){const r=wrGet(),a=[];for(let h=r.from;h<=r.to;h+=r.int)a.push(h);return a}
-function wrAdj(k,d){const r=wrGet(),lim={int:[1,6],from:[5,22],to:[6,23]}[k];r[k]=Math.max(lim[0],Math.min(lim[1],r[k]+d));if(r.to<=r.from){if(k==='to')r.to=Math.min(23,r.from+1);else r.from=Math.max(5,r.to-1)}save();render()}
-function makeIcs(){const r=wrGet(),pad=n=>String(n).padStart(2,'0'),d=jst().replace(/-/g,''),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Grimoire Garden//JP','CALSCALE:GREGORIAN'];
-wrTimes().forEach(h=>L.push('BEGIN:VEVENT','UID:water-'+pad(h)+'-'+d+'@grimoire','DTSTAMP:'+d+'T000000Z','DTSTART:'+d+'T'+pad(h)+'0000','DTEND:'+d+'T'+pad(h)+'0500','RRULE:FREQ=DAILY','SUMMARY:水を飲もう','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:水を飲もう','TRIGGER:PT0S','END:VALARM','END:VEVENT'));
-L.push('END:VCALENDAR');return L.join('\r\n')}
-function exportIcs(){try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([makeIcs()],{type:'text/calendar'}));a.download='water-reminders.ics';document.body.appendChild(a);a.click();toast('カレンダーに追加する画面が開きます')}catch(e){toast('書き出せませんでした')}}
-function remCard(){const r=wrGet(),t=wrTimes(),adj=(k,l,u)=>'<div class="row sp" style="margin-top:6px"><span>'+l+'</span><span class="row"><button class="ghost sm" onclick="wrAdj(\''+k+'\',-1)">−</button><b>'+r[k]+u+'</b><button class="ghost sm" onclick="wrAdj(\''+k+'\',1)">＋</button></span></div>';
-return '<div class="card"><h3>水を飲む通知</h3><p class="mut" style="font-size:13px;margin:0">時間を決めて、iPhoneのカレンダーの通知として登録します。アプリを閉じていても通知が来ます。</p>'+adj('int','間隔','時間おき')+adj('from','開始','時')+adj('to','終了','時')+'<p class="mut" style="margin:8px 0">'+t.map(h=>h+':00').join('、')+'（毎日 '+t.length+'回）</p><div class="row sp" style="margin-bottom:6px"><span style="font-size:15px">アプリを開いている間も知らせる</span><button class="sm '+(S.wrApp!==false?'on':'ghost')+'" onclick="wrAppT()">'+(S.wrApp!==false?'オン':'オフ')+'</button></div><button class="ghost sm" onclick="exportIcs()">カレンダーに追加</button><p class="mut" style="font-size:12px;margin:6px 0 0">時間を変えて追加し直すと、前の分が残ります。カレンダーアプリで削除してください。</p></div>'}
-function wrAppT(){S.wrApp=S.wrApp===false;save();render()}
-function wrCheck(){if(S.wrApp===false)return;const n=new Date(Date.now()+9*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60,d=jst(),f=(S.wrFired&&S.wrFired[d])||[];let fire=false;wrTimes().forEach(t=>{if(h>=t&&h<t+1&&!f.includes(t)){f.push(t);fire=true}});if(fire){S.wrFired={[d]:f};save();toast('水を飲もう');endSound('水を飲もう','そろそろ一杯どうだ。')}}
-setInterval(wrCheck,30000);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')wrCheck()});
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
