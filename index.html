@@ -45,8 +45,9 @@ nav button.on{color:var(--ink);font-weight:700}
 #toast.s{opacity:1}
 .tag{display:inline-block;background:var(--sub);border-radius:10px;padding:0 8px;font-size:13px}
 .sw{position:relative;overflow:hidden;border-top:1px solid var(--bd)}.sw .task{border-top:0}.acts{position:absolute;right:0;top:0;bottom:0;display:flex}.acts button{min-height:0;height:100%;width:72px;border-radius:0;border:0;padding:0}.acts button.ghost{background:var(--sub);color:var(--tx)}.acts button.del{background:#6b4a4f}.swi{position:relative;background:var(--card);transition:transform .2s;touch-action:pan-y;user-select:none;-webkit-user-select:none}.ov{position:fixed;inset:0;background:rgba(30,30,34,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}.mb{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:420px}
-input[type=date]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;text-align:left}.bub.red{background:#B5474E;color:#fff}.bub.t.red:before{border-right-color:#B5474E}
+input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;text-align:left}.bub.red{background:#B5474E;color:#fff}.bub.t.red:before{border-right-color:#B5474E}
 .mb{max-height:88vh;overflow:auto}
+.cp{min-height:34px;padding:3px 8px;font-size:14px;border-radius:10px}
 .tiny{min-height:0;padding:2px 10px;font-size:12px;background:transparent;color:var(--tx2);border:1px solid var(--bd);border-radius:8px}
 .big{font-size:46px;text-align:center;letter-spacing:.08em;font-weight:700}
 </style></head><body>
@@ -101,7 +102,7 @@ let S=load(),view='home',filter='today',rd=jst(),vcat=-1,vq='',saying='',last={}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('保存に失敗しました。ブラウザの保存設定を確認してください')}}
 function toast(m){const t=$('toast');t.textContent=m;t.className='s';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2600)}
 function pick(k,a){let c=a.filter(x=>x!==last[k]);c=c.length?c:a;const s=c[Math.floor(Math.random()*c.length)];last[k]=s;return s}
-function say(k){sref='';return saying=pick(k,SAY[k])}
+function say(k){sref='';sayMode='word';return saying=pick(k,SAY[k])}
 function hash(d){let h=0;for(const c of d)h=(h*31+c.charCodeAt(0))>>>0;return h}
 function talk(){sref='';saying=pick('w',WORDS);render()}
 function readVerse(i){const v=VERSES[i];saying=v.r+'。'+v.s+(S.vtext[i]?'':'　本文は、お手持ちの聖書で読んでみてくれ。');render()}
@@ -185,7 +186,7 @@ return '<div class="card"><h3>瞑想の記録</h3>'+dots+'<p class="mut" style="
 function jIcon(){return '<svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg>'}
 function dleft(d){return Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(jst()+'T00:00:00Z'))/864e5)}
 function urgent(){const lim=addDay(jst(),3);return S.assign.filter(a=>!a.done&&a.due<=lim).sort((a,b)=>a.due.localeCompare(b.due))}
-function amsg(a){const n=dleft(a.due);return '「'+esc(a.name)+'」'+(n<0?'は期限を過ぎている。責めているわけじゃない、まず状況だけ確認しよう。':n===0?'の期限は今日だ。できるところまででいい。':'の期限まで、あと'+n+'日だ。少しずつ進めておこう。')}
+function amsg(a){const n=dleft(a.due);return '<b style="background:#fff;color:#B5474E;padding:1px 7px;border-radius:6px">'+esc(a.name)+'</b>'+(n<0?'は期限を過ぎている。責めているわけじゃない、まず状況だけ確認しよう。':n===0?'の期限は今日だ。できるところまででいい。':'の期限まで、あと'+n+'日だ。少しずつ進めておこう。')}
 function urgHtml(){return urgent().slice(0,3).map(a=>'<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px;margin-bottom:10px"><div style="flex:none">'+jIcon()+'</div><div class="bub t red">'+amsg(a)+'</div></div>').join('')}
 function addAssign(){const n=$('an').value.trim(),d=$('ad').value;if(!n)return toast('課題名を入力してください');if(!d)return toast('期限の日付を選んでください');S.assign.push({id:'a'+Date.now()+Math.random().toString(36).slice(2,5),name:n,due:d,done:false,doneDate:null,created:Date.now()});save();toast('課題を追加しました');render()}
 function togA(id){const a=S.assign.find(x=>x.id===id);a.done=!a.done;a.doneDate=a.done?jst():null;save();toast(a.done?'提出おつかれさま':'未完了に戻しました');render()}
@@ -370,7 +371,7 @@ return '<h1>'+m.n+'</h1><div class="card"><p>'+m.d+'</p><div class="big" id="tmr
 (tm.fin?'<p style="margin:0 0 4px">終えたあとの気分</p><div class="row" style="margin-bottom:8px">'+['落ち着いた','少し楽になった','変わらない','まだ重い'].map(a=>'<button class="sm '+(tm.after===a?'on':'ghost')+'" onclick="tm.after=\''+a+'\';render()">'+a+'</button>').join('')+'</div><textarea rows="3" placeholder="感想（任意）" oninput="tm.note=this.value" style="margin-bottom:8px">'+esc(tm.note||'')+'</textarea><div class="row"><button onclick="saveMedNote()">記録して閉じる</button><button class="ghost" onclick="stopMed()">記録せず閉じる</button></div>':
 '<div class="row">'+(tm.run?'<button onclick="pause()">一時停止</button>':'<button onclick="resume()">再開</button>')+'<button class="ghost" onclick="endMed()">終了</button></div>')+'<p class="mut">目を閉じなくて構いません。苦しければいつでも止めてください。</p></div>'}
 const rec=recMed();
-return '<h1>瞑想</h1><div class="row" style="margin-bottom:10px"><button class="ghost sm" onclick="howl()">♪ 終了の遠吠えを試す</button><button class="sm" onclick="medForm(\'\')">＋ 瞑想を追加</button></div><div class="card"><div class="row sp"><h3 style="margin:0">今の気分は？</h3><button class="tiny" onclick="moodForm()">編集</button></div><div class="row">'+MOODS.map(m=>'<button class="sm '+(mood===m[0]?'on':'ghost')+'" onclick="mood=\''+m[0]+'\';render()">'+m[0]+'</button>').join('')+'</div><p style="margin:8px 0 0">おすすめ：<b>'+rec.n+'</b>（'+rec.min+'分）</p></div>'+
+return '<h1>瞑想</h1><button class="sm" style="margin-bottom:10px" onclick="medForm(\'\')">＋ 瞑想を追加</button><div class="card"><div class="row sp"><h3 style="margin:0">今の気分は？</h3><button class="tiny" onclick="moodForm()">編集</button></div><div class="row">'+MOODS.map(m=>'<button class="sm '+(mood===m[0]?'on':'ghost')+'" onclick="mood=\''+m[0]+'\';render()">'+m[0]+'</button>').join('')+'</div><p style="margin:8px 0 0">おすすめ：<b>'+rec.n+'</b>（'+rec.min+'分）</p></div>'+
 MEDS.map(m=>'<div class="card"><div class="row sp"><h3>'+m.n+'</h3><span class="tag">'+m.min+'分</span></div><p class="mut" style="margin:0 0 8px">'+m.g+'<br>'+m.d+'</p><div class="row"><button onclick="startMed(\''+m.id+'\')">はじめる</button>'+(m.id[0]==='c'?'<button class="ghost sm" onclick="medForm(\''+m.id+'\')">編集</button><button class="ghost sm" onclick="medDel(\''+m.id+'\')">削除</button>':'')+'</div></div>').join('')+
 medLog()}
 
@@ -382,6 +383,69 @@ return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:6px" onc
 
 function render(){syncV();genRecur();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet};$('app').innerHTML=V[view]();
 $('nav').innerHTML=S.nav.map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
+let ordMode=false,tOpt=false,showRec=false,sayMode='word',dr={tn:'',td:'',tt:'',tmm:'',tr:'none'},alm=null;
+function talk(){sref='';sayMode='word';saying=pick('w',WORDS);render()}
+function readVerse(i){const v=VERSES[i];saying=(v.text||'')+(v.text&&v.s?'　':'')+(v.s||'')||'ゆっくり読んでみよう。';sref=v.r+(v.tr?'（'+v.tr+'）':'');sayMode='verse';render()}
+/* ---- 瞑想終了の音（通知音）---- */
+function chimeBytes(sr){const n=Math.floor(sr*2.6),o=new Uint8Array(n);for(let i=0;i<n;i++){const t=i/sr;let v=0;[0,1.1].forEach(s=>{if(t>=s){const u=t-s;v+=Math.exp(-u*2.2)*(0.55*Math.sin(2*Math.PI*880*u)+0.3*Math.sin(2*Math.PI*1320*u)+0.15*Math.sin(2*Math.PI*1760*u))}});o[i]=Math.max(0,Math.min(255,Math.round(128+v*100)))}return o}
+function almStop(){if(alm){try{alm.pause()}catch(e){}alm=null}}
+function almStart(sec){almStop();try{const sr=8000,ch=chimeBytes(sr),n=Math.floor(sr*sec),len=n+ch.length,b=new Uint8Array(44+len),dv=new DataView(b.buffer),w=(o,s)=>{for(let i=0;i<s.length;i++)b[o+i]=s.charCodeAt(i)};w(0,'RIFF');dv.setUint32(4,36+len,true);w(8,'WAVE');w(12,'fmt ');dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,1,true);dv.setUint32(24,sr,true);dv.setUint32(28,sr,true);dv.setUint16(32,1,true);dv.setUint16(34,8,true);w(36,'data');dv.setUint32(40,len,true);b.fill(128,44,44+n);b.set(ch,44+n);alm=new Audio(URL.createObjectURL(new Blob([b],{type:'audio/wav'})));alm.play().catch(()=>{alm=null})}catch(e){alm=null}}
+function chimeWeb(){try{unlockAudio();const t=AC.currentTime;[0,1.1].forEach(s=>[880,1320].forEach((f,j)=>{const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,t+s);g.gain.exponentialRampToValueAtTime(j?0.08:0.18,t+s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+s+1.8);o.connect(g);g.connect(AC.destination);o.start(t+s);o.stop(t+s+1.9)}))}catch(e){}}
+function notifyEnd(){try{if(window.Notification&&Notification.permission==='granted'){const t='瞑想おわり',b='おつかれさま。';if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(r=>r.showNotification(t,{body:b})).catch(()=>new Notification(t,{body:b}));else new Notification(t,{body:b})}}catch(e){}}
+function reqNotif(){try{if(window.Notification&&Notification.permission==='default')Notification.requestPermission()}catch(e){}}
+function howl(){if(!(alm&&!alm.paused&&!alm.ended))chimeWeb();notifyEnd()}
+function startMed(id){const m=MEDS.find(x=>x.id===id);unlockAudio();reqNotif();tm={id,ms:m.min*60000,tot:m.min*60000,end:Date.now()+m.min*60000,run:true,fin:false,mood:mood||'',after:'',note:''};almStart(m.min*60);say('ms');render();tick()}
+function pause(){tm.ms=tm.end-Date.now();tm.run=false;if(alm)alm.pause();render()}
+function resume(){tm.end=Date.now()+tm.ms;tm.run=true;if(alm)alm.play().catch(()=>{});render();tick()}
+function endMed(){const r=tm.run?Math.max(0,tm.end-Date.now()):tm.ms;tm.run=false;tm.fin=true;tm.ms=r;tm.early=r>0;clearInterval(tick.h);almStop();say('me');render()}
+function stopMed(){almStop();tm=null;clearInterval(tick.h);render()}
+/* ---- タスク ---- */
+function keep(){const g=id=>{const e=document.getElementById(id);return e?e.value:null};['tn','td','tt','tmm','tr'].forEach(k=>{const v=g(k);if(v!==null)dr[k]=v})}
+function addTask(){keep();const n=dr.tn.trim();if(!n)return toast('タスク名を入力してください');const sd=dr.td||jst(),tmv=dr.tt||'',memo=dr.tmm.trim();
+if(dr.tr!=='none'){const wd=new Date(Date.parse(sd+'T00:00:00Z')).getUTCDay();S.recur.push({id:'r'+Date.now(),name:n,memo,tm:tmv,rep:dr.tr,wd,start:sd,last:''});toast('くりかえしタスクを追加しました')}
+else{S.tasks.push({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),name:n,memo,tm:tmv,date:sd,created:Date.now(),done:false,doneAt:null,doneDate:null});toast('追加しました')}
+dr={tn:'',td:'',tt:'',tmm:'',tr:'none'};save();render()}
+function genRecur(){const td=jst(),wd=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay();let ch=0;S.recur.forEach(r=>{const ok=r.rep==='daily'||(r.rep==='weekdays'&&wd>0&&wd<6)||(r.rep==='weekly'&&r.wd===wd);if(ok&&r.last!==td&&td>=r.start){r.last=td;ch=1;if(!S.tasks.some(t=>t.rid===r.id&&t.date===td))S.tasks.push({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),rid:r.id,name:r.name,memo:r.memo,tm:r.tm||'',date:td,created:Date.now(),done:false,doneAt:null,doneDate:null})}});if(ch)save()}
+function editTask(id){const t=S.tasks.find(x=>x.id===id);modal('<h3>タスクを編集</h3><input id="en" value="'+esc(t.name)+'" style="margin-bottom:6px"><input id="em" value="'+esc(t.memo||'')+'" placeholder="メモ" style="margin-bottom:6px"><div class="mut" style="font-size:12px">日付</div><input id="ed" type="date" value="'+t.date+'" style="margin-bottom:6px"><div class="mut" style="font-size:12px">時間（任意）</div><input id="et" type="time" value="'+(t.tm||'')+'" style="margin-bottom:10px"><div class="row"><button onclick="saveEdit(\''+id+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function saveEdit(id){const t=S.tasks.find(x=>x.id===id),n=$('en').value.trim();if(!n)return toast('タスク名を入力してください');t.name=n;t.memo=$('em').value.trim();if($('ed').value)t.date=$('ed').value;t.tm=$('et').value||'';save();closeM();render();toast('保存しました')}
+function taskRow(t,ctl){const sd=!ctl&&view==='home'&&filter==='all',body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(t.name)+(t.tm?' <span class="mut">'+esc(t.tm)+'</span>':'')+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
+if(ctl)return '<div class="task '+(t.done?'done':'')+'">'+body+'</div>';
+return '<div class="sw"><div class="acts"><button class="ghost" onclick="editTask(\''+t.id+'\')">編集</button><button class="del" onclick="delTask(\''+t.id+'\')">削除</button></div><div class="swi task '+(t.done?'done':'')+'">'+body+'</div></div>'}
+function ordCtl(t,p,n){return '<div class="row" style="margin-top:4px">'+(p?'<button class="tiny" onclick="swapO(\''+t.id+'\',\''+p.id+'\')">▲ 上へ</button>':'')+(n?'<button class="tiny" onclick="swapO(\''+t.id+'\',\''+n.id+'\')">▼ 下へ</button>':'')+'</div>'}
+function swapO(a,b){const x=S.tasks.find(t=>t.id===a),y=S.tasks.find(t=>t.id===b);if(!x||!y)return;const ox=x.o||x.created,oy=y.o||y.created;x.o=oy;y.o=ox===oy?ox+1:ox;save();render()}
+function recList(){return S.recur.length?S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:2px 0;font-size:14px"><span>'+esc(r.name)+(r.tm?' '+esc(r.tm):'')+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="tiny" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">開いた日にその日の分が自動で追加されます。休んだ日の分は追加されず、たまりません。</p>':'<p class="mut" style="font-size:12px;margin:4px 0 0">くりかえし中のタスクはありません。</p>'}
+function tOptT(w){keep();if(w==='o')tOpt=!tOpt;else showRec=!showRec;render()}
+function tAdd(){const td=jst(),sl=v=>dr.tr===v?' selected':'';
+return '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)"><div class="row" style="flex-wrap:nowrap"><input id="tn" class="cp" placeholder="タスクを追加" value="'+esc(dr.tn)+'"><button class="sm" style="flex:none" onclick="addTask()">追加</button></div>'+
+'<div class="row" style="flex-wrap:nowrap;margin-top:4px;gap:6px"><span class="mut" style="font-size:11px;flex:none">日付</span><input id="td" class="cp" type="date" value="'+(dr.td||td)+'" style="flex:1"><span class="mut" style="font-size:11px;flex:none">時間</span><input id="tt" class="cp" type="time" value="'+esc(dr.tt)+'" style="flex:1"></div>'+
+'<div class="row" style="margin-top:4px"><button class="tiny" onclick="tOptT(\'o\')">'+(tOpt?'▲ 閉じる':'▼ メモ・くりかえし')+'</button><button class="tiny" onclick="tOptT(\'r\')">くりかえし中 '+S.recur.length+'</button></div>'+
+(tOpt?'<input id="tmm" class="cp" placeholder="メモ（任意）" value="'+esc(dr.tmm)+'" style="margin-top:4px"><select id="tr" class="cp" style="margin-top:4px"><option value="none"'+sl('none')+'>くりかえしなし</option><option value="daily"'+sl('daily')+'>毎日くりかえす</option><option value="weekdays"'+sl('weekdays')+'>平日（月〜金）にくりかえす</option><option value="weekly"'+sl('weekly')+'>毎週（予定日の曜日）にくりかえす</option></select>':'')+
+(showRec?'<div style="margin-top:4px">'+recList()+'</div>':'')+'</div>'}
+function vHome(){const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter(t=>t.done).length;
+let ts=S.tasks.filter(t=>filter==='all'?true:filter==='done'?t.done:(t.date===td||(t.date<td&&!t.done&&!t.rid)||(t.done&&t.doneDate===td)));
+ts.sort((a,b)=>a.done-b.done||(filter==='all'?a.date.localeCompare(b.date):0)||(a.o||a.created)-(b.o||b.created));
+const left=S.tasks.filter(t=>!t.done&&t.date<=td&&!(t.rid&&t.date<td)).length,vi=vToday(),vm=sayMode==='verse';
+const list=ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):undefined)).join('')+(ordMode?'':'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>'):'<p class="mut">タスクはありません。</p>';
+return '<div style="text-align:right"><button class="ghost sm" onclick="go(\'set\')">⚙ 設定</button></div><h1>☾ Grimoire Garden</h1>'+
+'<div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+
+'<div class="row"><button class="sm '+(vm?'ghost':'on')+'" onclick="talk()">今日の一言</button><button class="sm '+(vm?'on':'ghost')+'" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
+'<div class="card"><div class="row sp"><h2 style="margin:0">今日のタスク</h2><button class="tiny" onclick="ordMode=!ordMode;render()">'+(ordMode?'完了':'並び替え')+'</button></div>'+
+(all.length?'<div class="mut" style="margin-top:4px">今日の予定 '+dn+' / '+all.length+'</div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+
+'<div class="row" style="margin:6px 0">'+[['today','今日'],['all','すべて'],['done','完了済み'],['cal','カレンダー']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+
+(filter==='cal'?calHtml():list)+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+tAdd()+'</div>'+aCard()}
+/* ---- 課題 ---- */
+function addAssign(){const n=$('an').value.trim(),d=$('ad').value;if(!n)return toast('課題名を入力してください');if(!d)return toast('期限の日付を選んでください');S.assign.push({id:'a'+Date.now()+Math.random().toString(36).slice(2,5),name:n,due:d,at:$('at').value||'',memo:$('am').value.trim(),done:false,doneDate:null,created:Date.now()});save();toast('課題を追加しました');render()}
+function editAssign(id){const a=S.assign.find(x=>x.id===id);modal('<h3>課題を編集</h3><input id="en2" value="'+esc(a.name)+'" style="margin-bottom:6px"><input id="em2" value="'+esc(a.memo||'')+'" placeholder="メモ" style="margin-bottom:6px"><div class="mut" style="font-size:12px">期限の日付</div><input id="ed2" type="date" value="'+a.due+'" style="margin-bottom:6px"><div class="mut" style="font-size:12px">時間（任意）</div><input id="et2" type="time" value="'+(a.at||'')+'" style="margin-bottom:10px"><div class="row"><button onclick="saveAssign(\''+id+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function saveAssign(id){const a=S.assign.find(x=>x.id===id),n=$('en2').value.trim();if(!n)return toast('課題名を入力してください');a.name=n;a.memo=$('em2').value.trim();if($('ed2').value)a.due=$('ed2').value;a.at=$('et2').value||'';save();closeM();render();toast('保存しました')}
+function aRow(a){const n=dleft(a.due),late=n<0&&!a.done,chip=a.done?'':'<span class="tag" style="background:'+(late?'#B5474E':n<=3?'#E3B7B9':'var(--sub)')+';color:'+(late?'#fff':'var(--tx)')+'">'+(late?'期限切れ':n===0?'今日':'あと'+n+'日')+'</span>';
+return '<div class="sw"><div class="acts"><button class="ghost" onclick="editAssign(\''+a.id+'\')">編集</button><button class="del" onclick="delAssign(\''+a.id+'\')">削除</button></div><div class="swi task '+(a.done?'done':'')+'"><button class="chk'+(a.done?' d':'')+'" onclick="togA(\''+a.id+'\')" aria-label="提出">'+(a.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(a.name)+'</div><div class="mut">期限 '+md(a.due)+(a.at?' '+esc(a.at):'')+' '+chip+'</div>'+(a.memo?'<div class="mut">'+esc(a.memo)+'</div>':'')+'</div></div></div>'}
+function aCard(){const key=a=>a.due+(a.at||''),u=S.assign.filter(a=>!a.done).sort((a,b)=>key(a).localeCompare(key(b))),d=S.assign.filter(a=>a.done).sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')).slice(0,3),l=u.concat(d);
+return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>':'<p class="mut">課題はありません。</p>')+
+'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)"><div class="row" style="flex-wrap:nowrap"><input id="an" class="cp" placeholder="課題を追加"><button class="sm" style="flex:none" onclick="addAssign()">追加</button></div>'+
+'<div class="row" style="flex-wrap:nowrap;margin-top:4px;gap:6px"><span class="mut" style="font-size:11px;flex:none">期限</span><input id="ad" class="cp" type="date" value="'+jst()+'" style="flex:1"><span class="mut" style="font-size:11px;flex:none">時間</span><input id="at" class="cp" type="time" style="flex:1"></div>'+
+'<input id="am" class="cp" placeholder="メモ（任意）" style="margin-top:4px"></div></div>'}
+function wipe(){ask('すべてのデータを消去します。元に戻せません。','消去する',()=>{S=fresh();save();render()})}
+function imp(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.tasks))throw 0;ask('現在のデータを読み込んだ内容で置き換えますか？','置き換える',()=>{S=Object.assign(fresh(),d,{v:2});save();render();toast('読み込みました')})}catch(e){toast('読み込めないファイルです')}};r.readAsText(f)}
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
