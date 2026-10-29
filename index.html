@@ -17,7 +17,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 :root[data-theme=dark]{--bg:#1b1b1d;--card:#262629;--sub:#35353a;--tx:#e9e9ec;--tx2:#a2a2aa;--ac:#5f5f68;--ac2:#6b6b74;--bd:#3f3f45;--ink:#e9e9ec;--pg:#7b7b86;--inp:#1f1f22;--h1:#4a4a52;--h2:#6a6a73;--h3:#8a8a94;--ph1:#8a8a94;--ph2:#5a5a62;--ph3:#d4d4dc;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.8 "Noto Sans JP","BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",sans-serif;font-weight:500;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.8 "Noto Sans JP","BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",sans-serif;font-weight:500;overflow-x:hidden;overscroll-behavior-y:none}
 h1,h2,h3{font-weight:700;margin:0 0 8px;letter-spacing:.03em}
 h1{font-size:22px;text-align:center}h2{font-size:19px}h3{font-size:17px}
 #app{max-width:520px;margin:0 auto;padding:14px 14px 100px}
@@ -39,7 +39,7 @@ input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;b
 .chk{width:24px;height:24px;min-width:24px;min-height:24px;margin-top:5px;border-radius:50%;padding:0;background:transparent;border:2px solid var(--ac);color:#fff;font-size:13px;line-height:1}
 .chk.d{background:var(--pg);border-color:var(--pg)}
 .done .tt{text-decoration:line-through;color:var(--tx2)}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav{position:fixed;left:0;right:0;bottom:0;transform:translateZ(0);-webkit-transform:translateZ(0);background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
 nav button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:0;font-size:13px;min-height:56px;padding:4px 0}
 nav button.on{color:var(--ink);font-weight:700}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;z-index:9;max-width:88%;opacity:0;transition:opacity .25s;pointer-events:none}
@@ -169,11 +169,11 @@ if(ctl)return '<div class="task '+(t.done?'done':'')+'">'+body+'</div>';
 return '<div class="sw"><div class="acts"><button class="ghost" onclick="editTask(\''+t.id+'\')">編集</button><button class="del" onclick="delTask(\''+t.id+'\')">削除</button></div><div class="swi task '+(t.done?'done':'')+'">'+body+'</div></div>'}
 let sw={};const SWW=144;
 function closeSw(ex){document.querySelectorAll('.swi').forEach(e=>{if(e!==ex)e.style.transform=''})}
-document.addEventListener('pointerdown',e=>{if(e.target.closest('.acts'))return;const el=e.target.closest('.swi');if(!el){closeSw();return}closeSw(el);sw={el,x:e.clientX,y:e.clientY,base:el.style.transform?-SWW:0,moved:0,lock:0};el.style.transition='none'});
-document.addEventListener('pointermove',e=>{if(!sw.el)return;const dx=e.clientX-sw.x,dy=e.clientY-sw.y;if(!sw.lock&&(Math.abs(dx)>8||Math.abs(dy)>8))sw.lock=Math.abs(dx)>Math.abs(dy)?1:2;if(sw.lock!==1)return;sw.moved=1;sw.el.style.transform='translateX('+Math.max(-SWW,Math.min(0,sw.base+dx))+'px)'});
+document.addEventListener('pointerdown',e=>{sw.moved=0;sw.mt=0;if(e.target.closest('.acts'))return;const el=e.target.closest('.swi');if(!el){closeSw();return}closeSw(el);sw={el,x:e.clientX,y:e.clientY,base:el.style.transform?-SWW:0,moved:0,lock:0};el.style.transition='none'});
+document.addEventListener('pointermove',e=>{if(!sw.el)return;const dx=e.clientX-sw.x,dy=e.clientY-sw.y;if(!sw.lock&&(Math.abs(dx)>8||Math.abs(dy)>8))sw.lock=Math.abs(dx)>Math.abs(dy)?1:2;if(sw.lock!==1)return;sw.moved=1;sw.mt=Date.now();sw.el.style.transform='translateX('+Math.max(-SWW,Math.min(0,sw.base+dx))+'px)'});
 document.addEventListener('pointerup',e=>{if(!sw.el)return;const el=sw.el;el.style.transition='';if(sw.moved){const p=Math.max(-SWW,Math.min(0,sw.base+e.clientX-sw.x));el.style.transform=p<-SWW/2?'translateX(-'+SWW+'px)':''}sw.el=null;setTimeout(()=>sw.moved=0,0)});
-document.addEventListener('pointercancel',()=>{if(sw.el){sw.el.style.transition='';sw.el.style.transform='';sw.el=null}});
-document.addEventListener('click',e=>{if(sw.moved){e.stopPropagation();e.preventDefault()}},true);
+document.addEventListener('pointercancel',()=>{if(sw.el){sw.el.style.transition='';sw.el.style.transform='';sw.el=null}sw.moved=0});
+document.addEventListener('click',e=>{if(sw.moved&&Date.now()-(sw.mt||0)<400){e.stopPropagation();e.preventDefault()}},true);
 function medLog(){const td=jst(),by={};S.meds.forEach(x=>{by[x.d]=(by[x.d]||0)+(x.min||0)});
 let c=0,d=by[td]?td:addDay(td,-1);while(by[d]){c++;d=addDay(d,-1)}
 const col=m=>!m?'var(--sub)':m<=5?'var(--h1)':m<=10?'var(--h2)':'var(--h3)',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-wdi-21),MS={'落ち着いた':'◎','少し楽になった':'○','変わらない':'△','まだ重い':'▽'};
@@ -532,6 +532,7 @@ function setTheme(v){S.theme=v;save();render()}
 function themeCard(){const t=S.theme||'light',b=(v,l)=>'<button class="sm '+(t===v?'on':'ghost')+'" onclick="setTheme(\''+v+'\')">'+l+'</button>';return '<div class="card"><h3>画面の色</h3><div class="row">'+b('light','ライト')+b('dark','ダーク')+b('auto','端末にあわせる')+'</div></div>'}
 try{if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(S.theme==='auto')applyTheme()})}catch(e){}
 function evToday(){const td=jst(),es=(S.events||[]).filter(e=>evOn(e,td)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));if(!es.length)return '';return '<div style="margin:6px 0 2px;padding:4px 8px;background:var(--sub);border-radius:10px;font-size:14px">'+es.map(e=>{const mu=e.end&&e.end>e.date;return '<div style="display:flex;gap:6px;align-items:baseline;padding:1px 0"><span style="color:#5b7a99;font-size:11px">◆</span><span class="mut" style="font-size:12px;min-width:34px">'+(mu?'期間':(e.tm||'終日'))+'</span><span style="flex:1;min-width:0">'+esc(e.name)+(mu?' <span class="mut" style="font-size:12px">〜'+md(e.end)+'</span>':'')+'</span></div>'}).join('')+'</div>'}
+document.addEventListener('focusout',()=>{setTimeout(()=>{try{window.scrollBy(0,1);window.scrollBy(0,-1)}catch(e){}},120)});
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
