@@ -13,8 +13,9 @@
 <title>Grimoire Garden</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#E2E2E3;--card:#F3F3F3;--sub:#D3D3D3;--tx:#2B2B2D;--tx2:#5F6062;--ac:#6D6E70;--ac2:#AAAAAB;--bd:#C2C2C3;--ink:#2A2326;--pg:#555556;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#E2E2E3;--card:#F3F3F3;--sub:#D3D3D3;--tx:#2B2B2D;--tx2:#5F6062;--ac:#6D6E70;--ac2:#AAAAAB;--bd:#C2C2C3;--ink:#2A2326;--pg:#555556;--inp:#fff;--h1:#AAAAAB;--h2:#6D6E70;--h3:#3a3a3c;--ph1:#6D6E70;--ph2:#AAAAAB;--ph3:#3a3a3c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root[data-theme=dark]{--bg:#1b1b1d;--card:#262629;--sub:#35353a;--tx:#e9e9ec;--tx2:#a2a2aa;--ac:#5f5f68;--ac2:#6b6b74;--bd:#3f3f45;--ink:#e9e9ec;--pg:#7b7b86;--inp:#1f1f22;--h1:#4a4a52;--h2:#6a6a73;--h3:#8a8a94;--ph1:#8a8a94;--ph2:#5a5a62;--ph3:#d4d4dc;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.8 "Noto Sans JP","BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",sans-serif;font-weight:500;overflow-x:hidden}
 h1,h2,h3{font-weight:700;margin:0 0 8px;letter-spacing:.03em}
@@ -28,7 +29,7 @@ button{font:inherit;min-height:44px;padding:8px 14px;border-radius:12px;border:1
 button.ghost{background:transparent;color:var(--tx);border-color:var(--bd)}
 button.sm{min-height:38px;padding:4px 10px;font-size:15px}
 button.on{background:var(--pg);border-color:var(--pg);color:#fff}
-input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--bd);border-radius:12px;background:#fff;color:var(--tx)}
+input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--bd);border-radius:12px;background:var(--inp);color:var(--tx)}
 .bar{height:12px;background:var(--sub);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--pg);transition:width .4s}
 .bub{background:var(--sub);border-radius:14px;padding:10px 14px}
 .bub.t{position:relative;flex:1}.bub.t:before{content:"";position:absolute;left:-8px;top:20px;border:8px solid transparent;border-left:0;border-right-color:var(--sub)}
@@ -41,7 +42,7 @@ input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;b
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
 nav button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:0;font-size:13px;min-height:56px;padding:4px 0}
 nav button.on{color:var(--ink);font-weight:700}
-#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:9;max-width:88%;opacity:0;transition:opacity .25s;pointer-events:none}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;z-index:9;max-width:88%;opacity:0;transition:opacity .25s;pointer-events:none}
 #toast.s{opacity:1}
 .tag{display:inline-block;background:var(--sub);border-radius:10px;padding:0 8px;font-size:13px}
 .sw{position:relative;overflow:hidden;border-top:1px solid var(--bd)}.sw .task{border-top:0}.acts{position:absolute;right:0;top:0;bottom:0;display:flex}.acts button{min-height:0;height:100%;width:72px;border-radius:0;border:0;padding:0}.acts button.ghost{background:var(--sub);color:var(--tx)}.acts button.del{background:#6b4a4f}.swi{position:relative;background:var(--card);transition:transform .2s;touch-action:pan-y;user-select:none;-webkit-user-select:none}.ov{position:fixed;inset:0;background:rgba(30,30,34,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}.mb{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:420px}
@@ -175,9 +176,9 @@ document.addEventListener('pointercancel',()=>{if(sw.el){sw.el.style.transition=
 document.addEventListener('click',e=>{if(sw.moved){e.stopPropagation();e.preventDefault()}},true);
 function medLog(){const td=jst(),by={};S.meds.forEach(x=>{by[x.d]=(by[x.d]||0)+(x.min||0)});
 let c=0,d=by[td]?td:addDay(td,-1);while(by[d]){c++;d=addDay(d,-1)}
-const col=m=>!m?'var(--sub)':m<=5?'#AAAAAB':m<=10?'#6D6E70':'#3a3a3c',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-wdi-21),MS={'落ち着いた':'◎','少し楽になった':'○','変わらない':'△','まだ重い':'▽'};
+const col=m=>!m?'var(--sub)':m<=5?'var(--h1)':m<=10?'var(--h2)':'var(--h3)',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-wdi-21),MS={'落ち着いた':'◎','少し楽になった':'○','変わらない':'△','まだ重い':'▽'};
 let g='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">'+'日月火水木金土'.split('').map(w=>'<div class="mut" style="text-align:center;font-size:13px">'+w+'</div>').join('');
-for(let i=0;i<28;i++){const x=addDay(st,i),m=by[x]||0;g+=x>td?'<div></div>':'<div style="aspect-ratio:1;border-radius:8px;background:'+col(m)+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+(m>5?'#fff':'#5F6062')+';border:2px solid '+(x===td?'#2A2326':'transparent')+'">'+Number(x.slice(8))+'</div>'}
+for(let i=0;i<28;i++){const x=addDay(st,i),m=by[x]||0;g+=x>td?'<div></div>':'<div style="aspect-ratio:1;border-radius:8px;background:'+col(m)+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+(m>5?'#fff':'var(--tx2)')+';border:2px solid '+(x===td?'#2A2326':'transparent')+'">'+Number(x.slice(8))+'</div>'}
 g+='</div><p class="mut" style="margin:6px 0 0">濃いほど長く瞑想した日（直近4週間）</p>';
 const days=[0,1,2,3,4,5,6].map(i=>addDay(td,i-6)),mx=Math.max(10,...days.map(x=>by[x]||0));
 const bars='<div style="display:flex;gap:6px;align-items:flex-end;height:96px">'+days.map(x=>{const m=by[x]||0;return '<div style="flex:1;text-align:center"><div class="mut" style="font-size:12px">'+(m||'')+'</div><div style="height:'+(m?Math.max(6,m/mx*60):4)+'px;background:'+(m?'var(--pg)':'var(--sub)')+';border-radius:6px"></div><div class="mut" style="font-size:12px">'+'日月火水木金土'[new Date(Date.parse(x+'T00:00:00Z')).getUTCDay()]+'</div></div>'}).join('')+'</div>';
@@ -266,9 +267,9 @@ function aRef(){const dn=S.assign.filter(a=>a.doneDate===rd),pd=S.assign.filter(
 return '<div class="card"><h3>課題</h3><p class="mut" style="margin:0 0 4px">提出 '+dn.length+' 件 ／ 未提出 '+pd.length+' 件</p>'+(dn.length||pd.length?dn.map(a=>row(a,'✓')).join('')+pd.map(a=>row(a,'○')).join(''):'<p class="mut" style="margin:0">なし</p>')+'</div>'}
 function studyLog(){const td=jst(),by={};S.study.log.forEach(x=>{by[x.d]=(by[x.d]||0)+x.sec});
 let c=0,d=by[td]?td:addDay(td,-1);while(by[d]){c++;d=addDay(d,-1)}
-const mn=x=>Math.round((by[x]||0)/60),col=m=>!m?'var(--sub)':m<30?'#AAAAAB':m<90?'#6D6E70':'#3a3a3c',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-wdi-21);
+const mn=x=>Math.round((by[x]||0)/60),col=m=>!m?'var(--sub)':m<30?'var(--h1)':m<90?'var(--h2)':'var(--h3)',wdi=new Date(Date.parse(td+'T00:00:00Z')).getUTCDay(),st=addDay(td,-wdi-21);
 let g='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">'+'日月火水木金土'.split('').map(w=>'<div class="mut" style="text-align:center;font-size:13px">'+w+'</div>').join('');
-for(let i=0;i<28;i++){const x=addDay(st,i),m=mn(x);g+=x>td?'<div></div>':'<div style="aspect-ratio:1;border-radius:8px;background:'+col(m)+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+(m>=30?'#fff':'#5F6062')+';border:2px solid '+(x===td?'#2A2326':'transparent')+'">'+Number(x.slice(8))+'</div>'}
+for(let i=0;i<28;i++){const x=addDay(st,i),m=mn(x);g+=x>td?'<div></div>':'<div style="aspect-ratio:1;border-radius:8px;background:'+col(m)+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+(m>=30?'#fff':'var(--tx2)')+';border:2px solid '+(x===td?'#2A2326':'transparent')+'">'+Number(x.slice(8))+'</div>'}
 g+='</div><p class="mut" style="margin:6px 0 0">濃いほど長く勉強した日（30分未満・90分未満・それ以上）</p>';
 const days=[0,1,2,3,4,5,6].map(i=>addDay(td,i-6)),mx=Math.max(60,...days.map(mn));
 const bars='<div style="display:flex;gap:6px;align-items:flex-end;height:110px">'+days.map(x=>{const m=mn(x);return '<div style="flex:1;text-align:center"><div class="mut" style="font-size:11px">'+(m||'')+'</div><div style="height:'+(m?Math.max(6,m/mx*70):4)+'px;background:'+(m?'var(--pg)':'var(--sub)')+';border-radius:6px"></div><div class="mut" style="font-size:12px">'+md(x)+'</div></div>'}).join('')+'</div>';
@@ -298,7 +299,7 @@ g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲
 const ts=S.tasks.filter(t=>t.date===calD),as=S.assign.filter(a=>a.due===calD);
 return g+'<h3 style="margin-top:8px">'+md(calD)+' の予定</h3>'+(ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(as.length?'<h3 style="font-size:15px;margin-top:8px">課題の期限</h3>'+as.map(aRow).join(''):'')}
 function dataCard(){return '<div class="card"><h3>データ管理</h3><p class="mut">データはこの端末のこのブラウザ内にのみ保存されます。端末変更やブラウザのデータ削除で消えるため、書き出しをおすすめします。</p><div class="row"><button class="ghost sm" onclick="exp()">書き出し</button><button class="ghost sm" onclick="$(\'imp\').click()">読み込み</button><button class="ghost sm" onclick="wipe()">全消去</button></div><input type="file" id="imp" accept=".json" style="display:none" onchange="imp(this)"></div>'}
-function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+soundCard()+navCard()+dataCard()}
+function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+themeCard()+soundCard()+navCard()+dataCard()}
 function drinkCustom(){const v=Math.round(+$('wml').value);if(!(v>0&&v<=3000))return toast('1〜3000の数字を入れてください');drinkMl(v)}
 function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+esc(CATS[v.c]||'')+'</span><h3 style="margin-top:6px">'+esc(v.r)+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</h3>'+(v.text?'<p style="margin:0 0 6px">'+esc(v.text)+'</p>':'<p class="mut" style="margin:0 0 6px">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut" style="margin:0 0 8px">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div>'}
 function taskRow(t,ctl){const sd=!ctl&&view==='home'&&filter==='all',body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(t.name)+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
@@ -368,7 +369,7 @@ const vh=Object.keys(S.vhist).sort().reverse().slice(0,7);
 return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:6px" onclick="vForm(-1)">＋ 聖句を追加</button><div style="text-align:right;margin-bottom:8px"><button class="tiny" onclick="catForm()">カテゴリー設定</button></div><div class="card deco"><h3>今日の聖句</h3>'+vCard(vToday())+'</div><div class="card"><input placeholder="キーワード検索" value="'+esc(vq)+'" onchange="vq=this.value;render()"><div class="row" style="margin-top:8px"><button class="sm '+(vcat===-1?'on':'ghost')+'" onclick="vcat=-1;render()">すべて</button><button class="sm '+(vcat===-2?'on':'ghost')+'" onclick="vcat=-2;render()">★お気に入り</button>'+CATS.map((c,i)=>'<button class="sm '+(vcat===i?'on':'ghost')+'" onclick="vcat='+i+';render()">'+c+'</button>').join('')+'</div></div>'+
 (ix.length?ix.map(vCard).join(''):'<p class="mut">該当なし</p>')+'<div class="card"><h3>過去に表示した聖句</h3>'+vh.map(d=>'<p class="mut" style="margin:0">'+d+'　'+VERSES[S.vhist[d]].r+'</p>').join('')+'</div>'}
 
-function render(){syncV();genRecur();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet,cal:vCal};$('app').innerHTML=V[view]();
+function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet,cal:vCal};$('app').innerHTML=V[view]();
 $('nav').innerHTML=S.nav.map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
 let ordMode=false,tOpt=false,showRec=false,sayMode='word',dr={tn:'',td:'',tt:'',tmm:'',tr:'none'},alm=null;
 function talk(){sref='';sayMode='word';saying=pick('w',WORDS);render()}
@@ -416,7 +417,7 @@ const list=ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):u
 return '<div style="text-align:right"><button class="ghost sm" onclick="go(\'set\')">⚙ 設定</button></div><h1>☾ Grimoire Garden</h1>'+
 '<div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+
 '<div class="row"><button class="sm '+(vm?'ghost':'on')+'" onclick="talk()">今日の一言</button><button class="sm '+(vm?'on':'ghost')+'" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
-'<div class="card"><div class="row sp"><h2 style="margin:0">今日のタスク</h2><button class="tiny" onclick="ordMode=!ordMode;render()">'+(ordMode?'完了':'並び替え')+'</button></div>'+
+'<div class="card"><div class="row sp"><h2 style="margin:0">今日のタスク</h2><button class="tiny" onclick="ordMode=!ordMode;render()">'+(ordMode?'完了':'並び替え')+'</button></div>'+evToday()+
 (all.length?'<div class="mut" style="margin-top:4px">今日の予定 '+dn+' / '+all.length+'</div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+
 '<div class="row" style="margin:6px 0">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+
 (filter==='cal'?calHtml():list)+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+tAdd()+'</div>'+aCard()}
@@ -469,7 +470,7 @@ const BREATH=[
 {k:'abd',n:'腹式呼吸',sub:'まずはこれ。おなかをふくらませて吸い、長めに吐く',seq:[['吸う',4],['吐く',6]],how:'鼻からゆっくり吸って、おなかをふくらませます。口をすぼめて、ゆっくり吐きます。'},
 {k:'box',n:'ボックス呼吸',sub:'集中したいとき・緊張をほぐしたいとき',seq:[['吸う',4],['止める',4],['吐く',4],['止める',4]],how:'四角を描くように、同じ長さで「吸う・止める・吐く・止める」をくり返します。'},
 {k:'478',n:'4-7-8 呼吸',sub:'眠る前に',seq:[['吸う',4],['止める',7],['吐く',8]],how:'鼻から4秒吸い、7秒止めて、口から8秒かけて吐きます。苦しければ、秒数を短くしてください。'}];
-const PHC={'吸う':'#6D6E70','止める':'#AAAAAB','吐く':'#3a3a3c'};
+const PHC={'吸う':'var(--ph1)','止める':'var(--ph2)','吐く':'var(--ph3)'};
 let mTab='timer',mMin=10,bk=null,bs=null;
 const fmtF=ms=>{const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
 function lungSvg(sc){return '<svg viewBox="0 0 200 170" width="200" height="170" style="display:block;margin:0 auto" role="img" aria-label="肺のイラスト"><rect x="96" y="6" width="8" height="52" rx="4" fill="#AAAAAB"/><path d="M100 58 L78 80 M100 58 L122 80" stroke="#AAAAAB" stroke-width="6" stroke-linecap="round" fill="none"/><g id="lung" transform="translate(100 105) scale('+sc+') translate(-100 -105)"><path d="M92 66 C58 60 24 86 28 132 C30 160 62 166 86 150 C94 142 96 102 92 66Z" fill="#D8D7DE" stroke="#6D6E70" stroke-width="3"/><path d="M108 66 C142 60 176 86 172 132 C170 160 138 166 114 150 C106 142 104 102 108 66Z" fill="#D8D7DE" stroke="#6D6E70" stroke-width="3"/></g></svg>'}
@@ -503,8 +504,8 @@ else if(bk){const b=BREATH.find(x=>x.k===bk);body='<div class="card" style="text
 else body=BREATH.map(b=>'<div class="card" onclick="bPick(\''+b.k+'\')" style="cursor:pointer"><div class="row sp"><h3 style="margin:0">'+b.n+'</h3><span class="mut">▶</span></div><p class="mut" style="margin:0;font-size:13px">'+b.sub+'</p>'+bTimeline(b)+'</div>').join('');
 return '<h1>瞑想</h1>'+tabs+body+((mTab==='br'&&bk)?'':medLog())}
 function lungSvg(sc){return ballSvg(Math.max(0,Math.min(1,(sc-0.8)/0.3)))}
-function ballSvg(pos){const y=200-pos*170;return '<svg viewBox="0 0 120 230" width="120" height="230" style="display:block;margin:0 auto" role="img" aria-label="呼吸のガイド"><line x1="60" y1="30" x2="60" y2="200" stroke="#C2C2C3" stroke-width="6" stroke-linecap="round"/><text x="88" y="34" font-size="12" fill="#5F6062">吸う</text><text x="88" y="204" font-size="12" fill="#5F6062">吐く</text><circle id="lung" cx="60" cy="'+y.toFixed(1)+'" r="17" fill="#6D6E70"/></svg>'}
-function bTick(){if(!bs)return;const c=bCalc(),g=$('lung'),a=$('bph'),n=$('bnum'),y=$('bcyc'),pos=Math.max(0,Math.min(1,(c.sc-0.8)/0.3));if(g){g.setAttribute('cy',(200-pos*170).toFixed(1));g.setAttribute('fill',PHC[c.ph])}if(a)a.textContent=c.ph;if(n)n.textContent=c.rem;if(y)y.textContent=c.cyc+' 回'}
+function ballSvg(pos){const y=200-pos*170;return '<svg viewBox="0 0 120 230" width="120" height="230" style="display:block;margin:0 auto" role="img" aria-label="呼吸のガイド"><line x1="60" y1="30" x2="60" y2="200" style="stroke:var(--bd)" stroke-width="6" stroke-linecap="round"/><text x="88" y="34" font-size="12" style="fill:var(--tx2)">吸う</text><text x="88" y="204" font-size="12" style="fill:var(--tx2)">吐く</text><circle id="lung" cx="60" cy="'+y.toFixed(1)+'" r="17" fill="#6D6E70"/></svg>'}
+function bTick(){if(!bs)return;const c=bCalc(),g=$('lung'),a=$('bph'),n=$('bnum'),y=$('bcyc'),pos=Math.max(0,Math.min(1,(c.sc-0.8)/0.3));if(g){g.setAttribute('cy',(200-pos*170).toFixed(1));g.style.fill=PHC[c.ph]}if(a)a.textContent=c.ph;if(n)n.textContent=c.rem;if(y)y.textContent=c.cyc+' 回'}
 /* ---- カレンダータブ（予定つき・日曜はじまり）---- */
 let cM=jst().slice(0,7),cD=jst(),eDr={n:'',t:'',m:'',e:''};
 function cNav(d){const p=cM.split('-');let y=+p[0],m=+p[1]+d;if(m<1){m=12;y--}if(m>12){m=1;y++}cM=y+'-'+String(m).padStart(2,'0');render()}
@@ -526,6 +527,11 @@ const none=!ts.length&&!as.length&&!es.length;
 return '<h1>カレンダー</h1><div class="card">'+g+'</div><div class="card"><h2>'+md(cD)+' の予定</h2>'+(none?'<p class="mut">予定はありません。</p>':'')+(es.length?es.map(evRow).join(''):'')+(ts.length?'<h3 style="font-size:15px;margin:8px 0 0">タスク</h3>'+ts.map(t=>taskRow(t)).join(''):'')+(as.length?'<h3 style="font-size:15px;margin:8px 0 0">課題の期限</h3>'+as.map(aRow).join(''):'')+(none?'':'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>')+
 '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)"><div class="row" style="flex-wrap:nowrap"><input id="en0" class="cp" placeholder="'+md(cD)+' に予定を追加" value="'+esc(eDr.n)+'"><button class="sm" style="flex:none" onclick="addEvent()">追加</button></div><div class="row" style="flex-wrap:nowrap;margin-top:4px;gap:6px"><span class="mut" style="font-size:11px;flex:none">終了日（任意）</span><input id="ee0" class="cp" type="date" value="'+esc(eDr.e)+'" style="flex:1"></div><div class="row" style="flex-wrap:nowrap;margin-top:4px;gap:6px"><span class="mut" style="font-size:11px;flex:none">時間</span><input id="et0" class="cp" type="time" value="'+esc(eDr.t)+'" style="flex:1"><input id="em0" class="cp" placeholder="メモ（任意）" value="'+esc(eDr.m)+'" style="flex:2"></div></div></div>'}
 function evOn(e,ds){return ds>=e.date&&ds<=(e.end&&e.end>e.date?e.end:e.date)}
+function applyTheme(){try{const t=S.theme||'light',dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',dark?'dark':'light');const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',dark?'#1b1b1d':'#E2E2E3')}catch(e){}}
+function setTheme(v){S.theme=v;save();render()}
+function themeCard(){const t=S.theme||'light',b=(v,l)=>'<button class="sm '+(t===v?'on':'ghost')+'" onclick="setTheme(\''+v+'\')">'+l+'</button>';return '<div class="card"><h3>画面の色</h3><div class="row">'+b('light','ライト')+b('dark','ダーク')+b('auto','端末にあわせる')+'</div></div>'}
+try{if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(S.theme==='auto')applyTheme()})}catch(e){}
+function evToday(){const td=jst(),es=(S.events||[]).filter(e=>evOn(e,td)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));if(!es.length)return '';return '<div style="margin:6px 0 2px;padding:4px 8px;background:var(--sub);border-radius:10px;font-size:14px">'+es.map(e=>{const mu=e.end&&e.end>e.date;return '<div style="display:flex;gap:6px;align-items:baseline;padding:1px 0"><span style="color:#5b7a99;font-size:11px">◆</span><span class="mut" style="font-size:12px;min-width:34px">'+(mu?'期間':(e.tm||'終日'))+'</span><span style="flex:1;min-width:0">'+esc(e.name)+(mu?' <span class="mut" style="font-size:12px">〜'+md(e.end)+'</span>':'')+'</span></div>'}).join('')+'</div>'}
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
