@@ -533,6 +533,30 @@ function themeCard(){const t=S.theme||'light',b=(v,l)=>'<button class="sm '+(t==
 try{if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(S.theme==='auto')applyTheme()})}catch(e){}
 function evToday(){const td=jst(),es=(S.events||[]).filter(e=>evOn(e,td)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));if(!es.length)return '';return '<div style="margin:6px 0 2px;padding:4px 8px;background:var(--sub);border-radius:10px;font-size:14px">'+es.map(e=>{const mu=e.end&&e.end>e.date;return '<div style="display:flex;gap:6px;align-items:baseline;padding:1px 0"><span style="color:#5b7a99;font-size:11px">◆</span><span class="mut" style="font-size:12px;min-width:34px">'+(mu?'期間':(e.tm||'終日'))+'</span><span style="flex:1;min-width:0">'+esc(e.name)+(mu?' <span class="mut" style="font-size:12px">〜'+md(e.end)+'</span>':'')+'</span></div>'}).join('')+'</div>'}
 document.addEventListener('focusout',()=>{setTimeout(()=>{try{window.scrollBy(0,1);window.scrollBy(0,-1)}catch(e){}},120)});
+/* ---- ジェイスのセリフ（場面別）---- */
+Object.assign(SAY,{
+open_morning:['おはよう。今日は、できる分だけ進めればいい。','朝か。まず水を一杯飲んでおけ。','おはよう。無理のない一日にしよう。','よく起きたな。ゆっくり始めればいい。'],
+open_day:['来たか。少し休んでから進めてもいい。','昼か。食事は取ったか。','調子はどうだ。急がなくていい。','ひと区切りついたら、肩の力を抜け。'],
+open_evening:['おつかれさま。今日の分は、ゆっくり片づけよう。','夜が近いな。残りは明日に回してもいい。','今日もよく動いたな。','ここからは、少しペースを落としていい。'],
+open_night:['遅い時間だな。区切りをつけて、休め。','夜更かしは、ほどほどにな。','今日はもう十分だ。休む準備をしよう。','眠れそうなら、早めに寝るのも仕事だ。'],
+study:['一区切りだな。よく集中した。','終わったか。水を飲んで、少し休め。','続けた時間は、ちゃんと残る。','今の時間は、無駄じゃない。'],
+breakEnd:['休憩は終わりだ。戻れそうなら、次へ。','少し休めたか。無理なら、もう少し休んでもいい。'],
+allDone:['今日の分は、全部片づいたな。ゆっくり休め。','全部終わったか。よくやった。','今日はもう、何も抱えなくていい。'],
+assignDone:['課題を出したか。ひとつ肩の荷が下りたな。','提出できたなら、それでいい。','よく仕上げたな。少し休め。'],
+waterGoal:['今日の水分は、目標に届いたな。','水の目標を達成だ。体が喜んでいる。','ちゃんと飲めたな。その調子だ。'],
+water:['一杯、飲んだな。','いい調子だ。','体にしみるな。'],
+medDone:['落ち着けたか。それで十分だ。','少し休めたなら、それでいい。'],
+breathDone:['呼吸が整ったなら、それでいい。','ゆっくり吐けたな。']});
+WORDS.push('今日の天気より、自分の調子を見てやれ。','小さな「できた」を拾っていこう。','予定は、組み直してもいい。','休むことも、計画のうちだ。','わからないところは、メモを残しておけ。','机の上を少し片づけるだけでも、始めやすくなる。','終わった課題は、もう振り返らなくていい。','今できることだけ見ればいい。','深呼吸のあと、一つだけ始めよう。','誰かと比べなくていい。','頑張った日は、ちゃんと眠れ。','集中が切れたら、窓の外を見ろ。');
+function periodOf(h){return h>=5&&h<11?'morning':h>=11&&h<17?'day':h>=17&&h<22?'evening':'night'}
+function period(){return periodOf(new Date(Date.now()+9*36e5).getUTCHours())}
+function say(k){sref='';sayMode='word';const a=SAY[k==='open'?'open_'+period():k]||SAY[k];return saying=pick(k,a)}
+const _toggle=toggle;toggle=function(id){_toggle(id);const t=S.tasks.find(x=>x.id===id);if(t&&t.done){const l=S.tasks.filter(x=>x.date===jst());if(l.length>1&&l.every(x=>x.done)){say('allDone');toast(saying)}}};
+const _togA=togA;togA=function(id){_togA(id);const a=S.assign.find(x=>x.id===id);if(a&&a.done){say('assignDone');toast(saying)}};
+const _dm=drinkMl;drinkMl=function(ml){const g=S.water.goal,before=wMl();_dm(ml);if(before<g&&wMl()>=g){say('waterGoal');toast(saying)}else say('water')};
+const _sd=sDone;sDone=function(){const was=ss&&ss.phase;_sd();if(was==='work'){say('study');toast(saying)}else if(was==='break'){say('breakEnd');toast(saying)}};
+const _be=bEnd;bEnd=function(){const long=bs&&(Date.now()-bs.t0)/1000>=30;_be();if(long){say('breathDone');toast(saying)}};
+const _sm=saveMedNote;saveMedNote=function(){_sm();say('medDone')};
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
