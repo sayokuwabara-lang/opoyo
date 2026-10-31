@@ -40,7 +40,7 @@ input,textarea,select{font:inherit;width:100%;min-height:44px;padding:8px 10px;b
 .chk.d{background:var(--pg);border-color:var(--pg)}
 .done .tt{text-decoration:line-through;color:var(--tx2)}
 nav{position:fixed;left:0;right:0;bottom:0;transform:translateZ(0);-webkit-transform:translateZ(0);background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
-nav button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:0;font-size:13px;min-height:56px;padding:4px 0}
+nav button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:0;font-size:11px;min-height:56px;padding:4px 0;white-space:nowrap}
 nav button.on{color:var(--ink);font-weight:700}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;z-index:9;max-width:88%;opacity:0;transition:opacity .25s;pointer-events:none}
 #toast.s{opacity:1}
@@ -257,7 +257,7 @@ st.subs.map(s=>{const a=sumSec(x=>x.sub===s&&x.d===td),b=sumSec(x=>x.sub===s);re
 (sel.mode==='pomo'?adj('作業','pw',5,5,60,'分')+adj('休憩','pb',1,1,30,'分'):sel.mode==='timer'?adj('時間','tm',5,5,180,'分'):'<p class="mut" style="margin:0">止めるまで時間を数えます。</p>')+'<button style="width:100%;margin-top:10px" onclick="sStart()">スタート</button></div>'+
 '<div class="card"><h3>科目</h3><div class="row" style="margin-bottom:8px">'+st.subs.map((s,i)=>'<span class="tag" style="font-size:15px;padding:2px 10px">'+esc(s)+' <a onclick="delSub('+i+')" style="padding:0 4px">✕</a></span>').join('')+'</div><div class="row" style="flex-wrap:nowrap"><input id="sn" placeholder="科目名"><button onclick="addSub()" style="flex:none">追加</button></div></div>'+
 studyLog()+(st.log.length?'<div class="card"><h3>最近の記録</h3>'+st.log.slice(-5).reverse().map(x=>'<p class="mut" style="margin:0">'+md(x.d)+'　'+esc(x.sub)+'　'+hm(x.sec)+'　'+MODE[x.mode]+'</p>').join('')+'</div>':'')}
-const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','勉強'],['cal','▦','カレンダー']];
+const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','勉強'],['hab','◐','習慣'],['cal','▦','カレンダー']];
 function moveTab(k,d){const a=S.nav,i=a.indexOf(k),j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();render()}
 function navCard(){return '<div class="card"><h3>タブの並び替え</h3>'+S.nav.map((k,i)=>{const t=TABS.find(x=>x[0]===k);return '<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>'+t[1]+' '+t[2]+'</span><span class="row"><button class="ghost sm" onclick="moveTab(\''+k+'\',-1)"'+(i===0?' disabled':'')+'>◀ 左へ</button><button class="ghost sm" onclick="moveTab(\''+k+'\',1)"'+(i===S.nav.length-1?' disabled':'')+'>右へ ▶</button></span></div>'}).join('')+'</div>'}
 function medForm(id){const m=id?S.medC.find(x=>x.id===id):{n:'',min:5,g:'',d:''};modal('<h3>'+(id?'瞑想を編集':'瞑想を追加')+'</h3><input id="mn1" placeholder="名前" value="'+esc(m.n)+'" style="margin-bottom:6px"><input id="mn2" type="number" min="1" max="60" value="'+m.min+'" style="margin-bottom:6px"><p class="mut" style="margin:-2px 0 6px">↑ 時間（分）</p><input id="mn3" placeholder="目的（例：気持ちを落ち着ける）" value="'+esc(m.g)+'" style="margin-bottom:6px"><textarea id="mn4" rows="3" placeholder="内容・やり方" style="margin-bottom:10px">'+esc(m.d)+'</textarea><div class="row"><button onclick="medSave(\''+(id||'')+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
@@ -369,7 +369,7 @@ const vh=Object.keys(S.vhist).sort().reverse().slice(0,7);
 return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:6px" onclick="vForm(-1)">＋ 聖句を追加</button><div style="text-align:right;margin-bottom:8px"><button class="tiny" onclick="catForm()">カテゴリー設定</button></div><div class="card deco"><h3>今日の聖句</h3>'+vCard(vToday())+'</div><div class="card"><input placeholder="キーワード検索" value="'+esc(vq)+'" onchange="vq=this.value;render()"><div class="row" style="margin-top:8px"><button class="sm '+(vcat===-1?'on':'ghost')+'" onclick="vcat=-1;render()">すべて</button><button class="sm '+(vcat===-2?'on':'ghost')+'" onclick="vcat=-2;render()">★お気に入り</button>'+CATS.map((c,i)=>'<button class="sm '+(vcat===i?'on':'ghost')+'" onclick="vcat='+i+';render()">'+c+'</button>').join('')+'</div></div>'+
 (ix.length?ix.map(vCard).join(''):'<p class="mut">該当なし</p>')+'<div class="card"><h3>過去に表示した聖句</h3>'+vh.map(d=>'<p class="mut" style="margin:0">'+d+'　'+VERSES[S.vhist[d]].r+'</p>').join('')+'</div>'}
 
-function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet,cal:vCal};$('app').innerHTML=V[view]();
+function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet,cal:vCal,hab:vHab};$('app').innerHTML=V[view]();
 $('nav').innerHTML=S.nav.map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
 let ordMode=false,tOpt=false,showRec=false,sayMode='word',dr={tn:'',td:'',tt:'',tmm:'',tr:'none'},alm=null;
 function talk(){sref='';sayMode='word';saying=pick('w',WORDS);render()}
@@ -557,6 +557,48 @@ const _dm=drinkMl;drinkMl=function(ml){const g=S.water.goal,before=wMl();_dm(ml)
 const _sd=sDone;sDone=function(){const was=ss&&ss.phase;_sd();if(was==='work'){say('study');toast(saying)}else if(was==='break'){say('breakEnd');toast(saying)}};
 const _be=bEnd;bEnd=function(){const long=bs&&(Date.now()-bs.t0)/1000>=30;_be();if(long){say('breathDone');toast(saying)}};
 const _sm=saveMedNote;saveMedNote=function(){_sm();say('medDone')};
+/* ---- ルーティン（習慣）：毎日 / 平日 / 土日 ---- */
+let hEdit=false,hDr={n:'',g:'',d:'all'};
+const HD={all:'毎日',wk:'平日',we:'土日'};
+Object.assign(SAY,{habDone:['今日のルーティンは、全部できたな。','決めたことを守れたな。それで十分だ。']});
+function hData(){return S.hab=S.hab||{items:[],log:{}}}
+function habOn(it,ds){const w=new Date(Date.parse(ds+'T00:00:00Z')).getUTCDay();return it.days==='all'||(it.days==='wk'&&w>0&&w<6)||(it.days==='we'&&(w===0||w===6))}
+function hKeep(){const g=id=>{const e=document.getElementById(id);return e?e.value:null};const a=g('hn'),b=g('hg');if(a!==null)hDr.n=a;if(b!==null)hDr.g=b}
+function hSetD(d){hKeep();hDr.d=d;render()}
+function hAdd(){hKeep();const n=hDr.n.trim();if(!n)return toast('項目を入力してください');hData().items.push({id:'h'+Date.now()+Math.random().toString(36).slice(2,4),name:n,group:hDr.g.trim(),days:hDr.d});hDr={n:'',g:hDr.g,d:hDr.d};save();render()}
+function hTog(id){const h=hData(),d=jst(),l=h.log[d]=h.log[d]||[],k=l.indexOf(id);if(k<0)l.push(id);else l.splice(k,1);save();render();const a=h.items.filter(i=>habOn(i,d));if(k<0&&a.length>0&&a.every(i=>l.includes(i.id))){say('habDone');toast(saying)}}
+function hCycle(id){const it=hData().items.find(x=>x.id===id);if(!it)return;it.days={all:'wk',wk:'we',we:'all'}[it.days]||'all';save();render()}
+function hDel(id){const h=hData(),it=h.items.find(x=>x.id===id);if(!it)return;ask('「'+esc(it.name)+'」を削除しますか？','削除する',()=>{h.items=h.items.filter(x=>x.id!==id);save();render()})}
+function habCard(){const h=hData(),td=jst(),done=h.log[td]||[],ap=h.items.filter(i=>habOn(i,td)),list=hEdit?h.items:ap,c=ap.filter(i=>done.includes(i.id)).length,groups=[];
+list.forEach(i=>{const g=i.group||'';if(!groups.includes(g))groups.push(g)});
+const row=i=>{const d=done.includes(i.id);return hEdit?'<div class="row" style="flex-wrap:nowrap;gap:6px;padding:2px 0;font-size:15px;'+(habOn(i,td)?'':'opacity:.55')+'"><span style="flex:1;min-width:0">'+esc(i.name)+'</span><button class="tiny" onclick="hCycle(\''+i.id+'\')">'+HD[i.days]+'</button><button class="tiny" onclick="hDel(\''+i.id+'\')">削除</button></div>':'<div class="row" style="flex-wrap:nowrap;gap:8px;padding:2px 0;font-size:15px"><button class="chk'+(d?' d':'')+'" style="width:20px;height:20px;min-width:20px;min-height:20px;margin:0;font-size:11px" onclick="hTog(\''+i.id+'\')" aria-label="できた">'+(d?'✓':'')+'</button><span style="flex:1;min-width:0'+(d?';text-decoration:line-through;color:var(--tx2)':'')+'">'+esc(i.name)+'</span></div>'};
+const body=groups.map(g=>(g?'<div class="mut" style="font-size:12px;margin-top:6px">'+esc(g)+'</div>':'')+list.filter(i=>(i.group||'')===g).map(row).join('')).join('');
+const dl='<datalist id="hgl">'+[...new Set(h.items.map(i=>i.group).filter(Boolean))].map(g=>'<option value="'+esc(g)+'"></option>').join('')+'</datalist>';
+return '<div class="card" style="padding:10px 12px"><div class="row sp"><b style="font-size:15px">ルーティン</b><span class="row" style="gap:6px;flex-wrap:nowrap"><span class="mut" style="font-size:13px">'+(ap.length?c+' / '+ap.length:'')+'</span><button class="tiny" onclick="hKeep();hEdit=!hEdit;render()">'+(hEdit?'完了':'編集')+'</button></span></div>'+
+(list.length?'<div style="margin-top:2px">'+body+'</div>':'<p class="mut" style="font-size:13px;margin:4px 0 0">'+(h.items.length?'今日の分はありません。':'「編集」から追加してください（例：ダイエット、今日のルール）')+'</p>')+
+(hEdit?'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)"><div class="row" style="flex-wrap:nowrap"><input id="hn" class="cp" placeholder="項目（例：夜は炭水化物を控える）" value="'+esc(hDr.n)+'"><button class="sm" style="flex:none" onclick="hAdd()">追加</button></div><div class="row" style="flex-wrap:nowrap;margin-top:4px"><input id="hg" class="cp" list="hgl" placeholder="グループ（例：ダイエット）" value="'+esc(hDr.g)+'">'+dl+'</div><div class="row" style="margin-top:4px">'+['all','wk','we'].map(d=>'<button class="sm '+(hDr.d===d?'on':'ghost')+'" style="min-height:30px" onclick="hSetD(\''+d+'\')">'+HD[d]+'</button>').join('')+'</div><p class="mut" style="font-size:12px;margin:4px 0 0">右の「毎日／平日／土日」を押すと、あとから切り替えられます。</p></div>':'')+'</div>'}
+/* ---- 習慣タブ：ルール／習慣、グループ折りたたみ、7日ドット ---- */
+const hKind=i=>i.kind||'habit';
+function hSetK(k){hKeep();hDr.k=k;render()}
+function hAdd(){hKeep();const n=hDr.n.trim();if(!n)return toast('項目を入力してください');hData().items.push({id:'h'+Date.now()+Math.random().toString(36).slice(2,4),name:n,group:hDr.g.trim(),days:hDr.d,kind:hDr.k||'habit'});hDr={n:'',g:hDr.g,d:hDr.d,k:hDr.k||'habit'};save();render()}
+function hKindT(id){const it=hData().items.find(x=>x.id===id);if(!it)return;it.kind=hKind(it)==='habit'?'rule':'habit';save();render()}
+function hCol(k){const h=hData(),key=decodeURIComponent(k);h.col=h.col||{};h.col[key]=!h.col[key];save();render()}
+function hTog(id){const h=hData(),d=jst(),l=h.log[d]=h.log[d]||[],k=l.indexOf(id);if(k<0)l.push(id);else l.splice(k,1);save();render();const a=h.items.filter(i=>hKind(i)==='habit'&&habOn(i,d));if(k<0&&a.length>0&&a.every(i=>l.includes(i.id))){say('habDone');toast(saying)}}
+function hDots(it){const td=jst(),h=hData();let s='';for(let i=6;i>=0;i--){const d=addDay(td,-i);if(!habOn(it,d)){s+='<span style="opacity:.3">·</span>';continue}const dn=(h.log[d]||[]).includes(it.id);s+='<span style="color:'+(dn?'var(--pg)':'var(--ac2)')+'">'+(dn?'●':'○')+'</span>'}return '<span style="font-size:11px;letter-spacing:1px;flex:none">'+s+'</span>'}
+function vHab(){const h=hData(),td=jst(),done=h.log[td]||[],col=h.col||{},habs=h.items.filter(i=>hKind(i)==='habit'),rules=h.items.filter(i=>hKind(i)==='rule'),vis=l=>hEdit?l:l.filter(i=>habOn(i,td)),apH=habs.filter(i=>habOn(i,td)),c=apH.filter(i=>done.includes(i.id)).length;
+const eb=i=>hEdit?'<button class="tiny" style="flex:none" onclick="hCycle(\''+i.id+'\')">'+HD[i.days]+'</button><button class="tiny" style="flex:none" onclick="hKindT(\''+i.id+'\')">'+(hKind(i)==='habit'?'→ルール':'→習慣')+'</button><button class="tiny" style="flex:none" onclick="hDel(\''+i.id+'\')">削除</button>':'';
+const dim=i=>hEdit&&!habOn(i,td)?';opacity:.55':'';
+const ruleRow=i=>'<div class="row" style="flex-wrap:nowrap;gap:8px;padding:5px 0;border-top:1px solid var(--bd)'+dim(i)+'"><span class="mut" style="flex:none">・</span><span style="flex:1;min-width:0">'+esc(i.name)+(i.group?' <span class="mut" style="font-size:12px">'+esc(i.group)+'</span>':'')+'</span>'+eb(i)+'</div>';
+const habRow=i=>{const d=done.includes(i.id);return '<div class="row" style="flex-wrap:nowrap;gap:8px;padding:5px 0;border-top:1px solid var(--bd)'+dim(i)+'">'+(hEdit?'':'<button class="chk'+(d?' d':'')+'" onclick="hTog(\''+i.id+'\')" aria-label="できた">'+(d?'✓':'')+'</button>')+'<span style="flex:1;min-width:0'+(d&&!hEdit?';text-decoration:line-through;color:var(--tx2)':'')+'">'+esc(i.name)+'</span>'+(hEdit?'':hDots(i))+eb(i)+'</div>'};
+const gl=[];vis(habs).forEach(i=>{const g=i.group||'';if(!gl.includes(g))gl.push(g)});
+const hb=gl.map(g=>{const its=vis(habs).filter(i=>(i.group||'')===g),ap=its.filter(i=>habOn(i,td)),dn=ap.filter(i=>done.includes(i.id)).length,key='h|'+g,shut=!!col[key],name=g||'グループなし';
+return '<div style="margin-top:6px"><div class="row sp" style="cursor:pointer;padding:6px 8px;background:var(--sub);border-radius:10px" onclick="hCol(\''+encodeURIComponent(key)+'\')"><b style="font-size:14px">'+(shut?'▶':'▼')+' '+esc(name)+'</b><span class="mut" style="font-size:13px">'+(ap.length?dn+' / '+ap.length:'')+'</span></div>'+(shut?'':its.map(habRow).join(''))+'</div>'}).join('');
+const dl='<datalist id="hgl">'+[...new Set(h.items.map(i=>i.group).filter(Boolean))].map(g=>'<option value="'+esc(g)+'"></option>').join('')+'</datalist>';
+const chips=(arr,cur,fn)=>arr.map(x=>'<button class="sm '+(cur===x[0]?'on':'ghost')+'" style="min-height:32px" onclick="'+fn+'(\''+x[0]+'\')">'+x[1]+'</button>').join('');
+return '<h1>ルーティン</h1><div class="card"><div class="row sp"><div><b>今日の習慣</b> <span class="mut">'+(apH.length?c+' / '+apH.length:'')+'</span></div><button class="tiny" onclick="hKeep();hEdit=!hEdit;render()">'+(hEdit?'完了':'編集')+'</button></div>'+(apH.length?'<div class="bar" style="margin-top:6px"><i style="width:'+c/apH.length*100+'%"></i></div>':'')+'</div>'+
+'<div class="card"><h3>今日のルール</h3>'+(vis(rules).length?vis(rules).map(ruleRow).join(''):'<p class="mut" style="font-size:14px;margin:0">'+(rules.length?'今日の分はありません。':'「編集」から、守りたいルールを追加できます。')+'</p>')+'</div>'+
+'<div class="card"><h3>習慣</h3>'+(hb||'<p class="mut" style="font-size:14px;margin:0">'+(habs.length?'今日の分はありません。':'「編集」から、続けたい習慣を追加できます。')+'</p>')+'<p class="mut" style="font-size:12px;margin:8px 0 0">右の ●○ は、直近7日（左が6日前、右が今日）。· はお休みの日です。</p></div>'+
+(hEdit?'<div class="card"><h3>追加</h3><div class="row" style="flex-wrap:nowrap"><input id="hn" class="cp" placeholder="項目（例：夜は炭水化物を控える）" value="'+esc(hDr.n)+'"><button class="sm" style="flex:none" onclick="hAdd()">追加</button></div><div class="row" style="flex-wrap:nowrap;margin-top:4px"><input id="hg" class="cp" list="hgl" placeholder="グループ（例：ダイエット）" value="'+esc(hDr.g)+'">'+dl+'</div><div class="row" style="margin-top:6px">'+chips([['habit','習慣'],['rule','ルール']],hDr.k||'habit','hSetK')+'<span style="width:8px"></span>'+chips([['all','毎日'],['wk','平日'],['we','土日']],hDr.d,'hSetD')+'</div></div>':'')}
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
