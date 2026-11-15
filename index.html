@@ -51,6 +51,48 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 .cp{min-height:34px;padding:3px 8px;font-size:14px;border-radius:10px}
 .tiny{min-height:0;padding:2px 10px;font-size:12px;background:transparent;color:var(--tx2);border:1px solid var(--bd);border-radius:8px}
 .big{font-size:46px;text-align:center;letter-spacing:.08em;font-weight:700}
+/* ---- ジェイスの部屋・隠れ家 ---- */
+.room{display:block;width:100%;height:auto;border-radius:14px}
+.room .r-lt{pointer-events:none}
+.room .w-breathe{animation:wB 5.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.room .w-tail{animation:wT 6s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:0 100%}
+.room .w-z{animation:wZ 4s ease-in-out infinite}
+.room .fl{animation:wF 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.room .lt{animation:wL 3.4s ease-in-out infinite}
+.room.listen .w-earL{transform:rotate(-9deg);transform-box:fill-box;transform-origin:50% 100%}
+.room.listen .w-earR{transform:rotate(9deg);transform-box:fill-box;transform-origin:50% 100%}
+@keyframes wH{0%,100%{transform:rotate(0)}30%{transform:rotate(2.2deg) translateY(1px)}62%{transform:rotate(-2deg)}}
+.room .w-hw{animation:wH 9s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes wB{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,1.022)}}
+@keyframes wT{from{transform:rotate(-2deg)}to{transform:rotate(3deg)}}
+@keyframes wZ{50%{transform:translate(4px,-6px)}}
+@keyframes wF{0%,100%{transform:scale(1,.94)}40%{transform:scale(1.06,1.1)}70%{transform:scale(.96,.98)}}
+@keyframes wL{0%,100%{opacity:.85}35%{opacity:1}60%{opacity:.7}}
+.dn2{position:fixed;left:0;top:0;right:0;bottom:0;z-index:40;background:radial-gradient(120% 80% at 50% 0%,#141c34 0%,#0a0f1c 70%);color:#c8ccd4;display:flex;flex-direction:column;-webkit-user-select:none;user-select:none;touch-action:manipulation;overflow:hidden}
+.dn2 *{box-sizing:border-box}
+.dn2-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 8px}
+.dn2-b{font:inherit;font-size:14px;min-height:36px;padding:5px 14px;border-radius:999px;border:1px solid rgba(200,204,212,.28);background:rgba(14,20,36,.6);color:#c8ccd4;cursor:pointer}
+.dn2-b.on{background:rgba(224,160,80,.2);border-color:rgba(224,160,80,.55);color:#f3d9ac}
+.dn2-stage{flex:none;width:100%;max-width:560px;margin:0 auto;padding:0 8px}
+.dn2-text{min-height:4.2em;padding:12px 24px 2px;text-align:center;font-size:17px;line-height:1.9;color:#dadde4;text-shadow:0 1px 8px rgba(0,0,0,.7);transition:opacity 1.2s}
+.dn2-sub{padding:0 24px;text-align:center;font-size:12.5px;line-height:1.7;color:#aab0bc}
+.dn2-bot{margin-top:auto;padding:8px 12px calc(env(safe-area-inset-bottom,0px) + 12px)}
+.dn2-in{display:flex;gap:8px;margin-top:8px}
+.dn2-in input{flex:1;min-width:0;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid rgba(200,204,212,.28);background:rgba(14,20,36,.7);color:#e4e6ec;font:inherit;font-size:16px}
+.dn2-in input::placeholder{color:#7d8496}
+.dn2-sheet{position:absolute;left:12px;right:12px;top:58px;bottom:84px;overflow:auto;padding:12px 14px;border-radius:18px;background:rgba(10,14,28,.95);border:1px solid rgba(200,204,212,.18);display:none}
+.dn2-sheet.on{display:block}
+.dn2-sheet h4{margin:12px 0 6px;font-size:13px;color:#aab0bc;font-weight:500}
+.dn2-sheet h4:first-child{margin-top:0}
+.dn2-row{display:flex;flex-wrap:wrap;gap:6px}
+.dn2-breath{position:absolute;left:0;top:0;right:0;bottom:0;background:rgba(6,9,18,.95);display:none;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.dn2-breath.on{display:flex}
+.dn2-bc{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(224,160,80,.6),rgba(224,160,80,.14) 62%,rgba(224,160,80,0));transform:scale(.55)}
+.dn2-bl{font-size:20px;letter-spacing:.2em;color:#e8c98f}
+.rm-chip{font:inherit;font-size:13px;min-height:32px;padding:3px 11px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--tx)}
+.rm-chip.on{background:var(--pg);border-color:var(--pg);color:#fff}
+.dn2-sheet .rm-chip{border-color:rgba(200,204,212,.28);color:#c8ccd4}
+.dn2-sheet .rm-chip.on{background:rgba(224,160,80,.22);border-color:rgba(224,160,80,.55);color:#f3d9ac}
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -257,7 +299,7 @@ st.subs.map(s=>{const a=sumSec(x=>x.sub===s&&x.d===td),b=sumSec(x=>x.sub===s);re
 (sel.mode==='pomo'?adj('作業','pw',5,5,60,'分')+adj('休憩','pb',1,1,30,'分'):sel.mode==='timer'?adj('時間','tm',5,5,180,'分'):'<p class="mut" style="margin:0">止めるまで時間を数えます。</p>')+'<button style="width:100%;margin-top:10px" onclick="sStart()">スタート</button></div>'+
 '<div class="card"><h3>科目</h3><div class="row" style="margin-bottom:8px">'+st.subs.map((s,i)=>'<span class="tag" style="font-size:15px;padding:2px 10px">'+esc(s)+' <a onclick="delSub('+i+')" style="padding:0 4px">✕</a></span>').join('')+'</div><div class="row" style="flex-wrap:nowrap"><input id="sn" placeholder="科目名"><button onclick="addSub()" style="flex:none">追加</button></div></div>'+
 studyLog()+(st.log.length?'<div class="card"><h3>最近の記録</h3>'+st.log.slice(-5).reverse().map(x=>'<p class="mut" style="margin:0">'+md(x.d)+'　'+esc(x.sub)+'　'+hm(x.sec)+'　'+MODE[x.mode]+'</p>').join('')+'</div>':'')}
-const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','勉強'],['hab','◐','習慣'],['cal','▦','カレンダー']];
+const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','STUDY'],['hab','◐','習慣'],['cal','▦','カレンダー']];
 function moveTab(k,d){const a=S.nav,i=a.indexOf(k),j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();render()}
 function navCard(){return '<div class="card"><h3>タブの並び替え</h3>'+S.nav.map((k,i)=>{const t=TABS.find(x=>x[0]===k);return '<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>'+t[1]+' '+t[2]+'</span><span class="row"><button class="ghost sm" onclick="moveTab(\''+k+'\',-1)"'+(i===0?' disabled':'')+'>◀ 左へ</button><button class="ghost sm" onclick="moveTab(\''+k+'\',1)"'+(i===S.nav.length-1?' disabled':'')+'>右へ ▶</button></span></div>'}).join('')+'</div>'}
 function medForm(id){const m=id?S.medC.find(x=>x.id===id):{n:'',min:5,g:'',d:''};modal('<h3>'+(id?'瞑想を編集':'瞑想を追加')+'</h3><input id="mn1" placeholder="名前" value="'+esc(m.n)+'" style="margin-bottom:6px"><input id="mn2" type="number" min="1" max="60" value="'+m.min+'" style="margin-bottom:6px"><p class="mut" style="margin:-2px 0 6px">↑ 時間（分）</p><input id="mn3" placeholder="目的（例：気持ちを落ち着ける）" value="'+esc(m.g)+'" style="margin-bottom:6px"><textarea id="mn4" rows="3" placeholder="内容・やり方" style="margin-bottom:10px">'+esc(m.d)+'</textarea><div class="row"><button onclick="medSave(\''+(id||'')+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
@@ -299,7 +341,7 @@ g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲
 const ts=S.tasks.filter(t=>t.date===calD),as=S.assign.filter(a=>a.due===calD);
 return g+'<h3 style="margin-top:8px">'+md(calD)+' の予定</h3>'+(ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(as.length?'<h3 style="font-size:15px;margin-top:8px">課題の期限</h3>'+as.map(aRow).join(''):'')}
 function dataCard(){return '<div class="card"><h3>データ管理</h3><p class="mut">データはこの端末のこのブラウザ内にのみ保存されます。端末変更やブラウザのデータ削除で消えるため、書き出しをおすすめします。</p><div class="row"><button class="ghost sm" onclick="exp()">書き出し</button><button class="ghost sm" onclick="$(\'imp\').click()">読み込み</button><button class="ghost sm" onclick="wipe()">全消去</button></div><input type="file" id="imp" accept=".json" style="display:none" onchange="imp(this)"></div>'}
-function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+denCard()+themeCard()+leadCard()+navCard()+dataCard()}
+function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+denCard()+themeCard()+ambCard()+leadCard()+navCard()+dataCard()}
 function drinkCustom(){const v=Math.round(+$('wml').value);if(!(v>0&&v<=3000))return toast('1〜3000の数字を入れてください');drinkMl(v)}
 function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+esc(CATS[v.c]||'')+'</span><h3 style="margin-top:6px">'+esc(v.r)+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</h3>'+(v.text?'<p style="margin:0 0 6px">'+esc(v.text)+'</p>':'<p class="mut" style="margin:0 0 6px">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut" style="margin:0 0 8px">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div>'}
 function taskRow(t,ctl){const sd=!ctl&&view==='home'&&filter==='all',body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(t.name)+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
@@ -749,150 +791,334 @@ function soonTick(){try{const mins=leadsOf().filter(x=>typeof x==='number');soon
 function leadCard(){const L=leadsOf();return '<div class="card"><h3>予定の予告</h3><p class="mut" style="font-size:13px;margin:0 0 6px">「ジェイスが話す」をオンにした予定とタスクについて、いつ話すか（複数選べます。アプリを開いている間）</p><div class="row">'+LEADS.map(x=>'<button class="sm '+(L.includes(x[0])?'on':'ghost')+'" onclick="toggleLead(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div><p class="mut" style="font-size:12px;margin:6px 0 0">「前日」は、予定の前の日に、ホームで話します。</p></div>'}
 function toggleLead(v){const k=/^\d+$/.test(v)?+v:v;let L=leadsOf().slice();const i=L.indexOf(k);if(i<0)L.push(k);else if(L.length>1)L.splice(i,1);else return toast('1つは選んでおいてください');S.leads=L;save();render()}
 /* ====== 隠れ家（裏モード）：静かな夜の森の小さな隠れ家 ====== */
-const DL={
-greet:['…来たか。','顔を上げた。ここにいる。','よく来たな。ゆっくりしていけ。','静かだな。それがいい。'],
-greetNight:['…遅いな。ここなら、眠っても構わない。','夜だな。灯りは小さいままでいい。','来たか。もう目は半分閉じかけている。'],
-back:['…おかえり。','戻ったか。ずっとここにいた。','起きた。待っていたわけではない、たまたまだ。'],
-pet:['…悪くない。','ふ。','そこは、いい。','もう少し、そのままでいい。'],
-relax:['雨の音は、考えごとを少し遠くへ運ぶ。','火を見ていると、時間がゆっくりになる。','森は、何も求めてこない。','今は、何もしなくていい。','息は、勝手に整っていく。','音に身をまかせればいい。'],
-quiet:['…。','窓の外は、静かだ。','となりにいる。それだけでいい。','月が出ているな。','急がなくていい。','ここは、安全だ。','あくびが出た。','今日も、よく生きたな。'],
-sleepIntro:['今日も、おつかれさま。','よく頑張った。もう十分だ。','今日あったことは、全部ここに置いていけ。'],
-sleepEnd:['もう、目を閉じていい。','おやすみ。','…おやすみ。'],
-mood:{
-tired:['…疲れたか。今日は、ここで休め。','何もしなくていい。横になるだけでいい。','よくここまで来たな。あとは、ゆっくりでいい。','疲れた日は、休むのが正解だ。','体が休みたがっている。逆らわなくていい。'],
-lonely:['ここにいる。どこにも行かない。','ひとりじゃない。となりにいる。','寂しい夜は、そばにいるだけでいい。','何も話さなくていい。ただ、いる。','静かな時間も、ふたりなら悪くない。'],
-anxious:['大丈夫だ。今は、ここにいればいい。','考えは、波のようなものだ。そのうち引く。','足の裏を、地面に感じてみろ。','今できることは、ひとつだけでいい。','不安は、敵じゃない。ただ、騒がしいだけだ。'],
-happy:['…いい顔をしているな。','それは、よかった。','嬉しいことは、ちゃんと味わっておけ。','今日は、尻尾が勝手に揺れる。','その気持ちを、少し覚えておこう。'],
-irritated:['腹が立つ日もある。それでいい。','怒りは、疲れが出ているだけのこともある。','少し、深く息を吐いてみろ。','誰にも言わなくていい。ここで、吐き出せ。','気がすむまで、そこにいていい。'],
-chat:['今日は、空気が静かだ。','小さなことでも、話していい。','聞いている。耳は、ちゃんと向いている。','ゆっくり話そう。急ぐ用事はない。','何でもない話が、いちばん落ち着く。'],
-none:['理由はなくていい。ここにいるだけでいい。','何でもない夜も、悪くない。','ただ座っていよう。','それでいい。']}};
-const MOODS2=[['tired','疲れた'],['lonely','寂しい'],['anxious','不安'],['happy','嬉しい'],['irritated','イライラする'],['chat','何となく話したい'],['none','特に理由はない']];
-const MOOD_GO={tired:['sleep','おやすみモードで休む'],anxious:['breath','呼吸を整える'],irritated:['breath','呼吸を整える'],lonely:['quiet','寄り添いモードへ']};
-let D={open:false,mode:'home',pose:'sit',eye:'open',amb:'',vol:.6,timer:0,last:0,hid:0,tm:[],iv:null,lt:0,lineAt:0,petT:0,sk:'sleep',stage:0,mood:null,chooser:0,qi:0,raise:0,tmr:0};
-let DA=null,denWL=null,jt=0,jt0=0;
-const dNight=()=>{const h=new Date(Date.now()+9*36e5).getUTCHours();return h>=22||h<5};
-const dT=(fn,ms)=>{const t=setTimeout(fn,ms);D.tm.push(t);return t};
-const dClear=()=>{D.tm.forEach(clearTimeout);D.tm=[]};
-const STARS=Array.from({length:24},(_,i)=>'<i style="left:'+((i*37+11)%97)+'%;top:'+((i*53+7)%48)+'%;animation-delay:'+((i%7)*0.6)+'s"></i>').join('');
-const FOREST='<svg class="d-forest" viewBox="0 0 360 120" preserveAspectRatio="none"><path d="M0 120 V74 L18 34 L36 72 L48 48 L68 84 L90 26 L112 80 L130 52 L152 90 L176 38 L200 86 L222 54 L246 92 L268 30 L292 82 L312 50 L336 86 L360 44 V120Z" fill="#070d1a"/></svg>'+['18%:34%','72%:28%','40%:56%','86%:60%','56%:40%'].map((p,i)=>'<i class="ff" style="left:'+p.split(':')[0]+';top:'+p.split(':')[1]+';animation-delay:'+i*1.3+'s"></i>').join('');
-function denCss(){if($('denCss'))return;const s=document.createElement('style');s.id='denCss';s.textContent=`
-.den{position:fixed;inset:0;z-index:60;background:#070c18;color:#c3cbda;overflow:hidden;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.d-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 28%,#172345 0%,#0b1326 55%,#070c18 100%);transition:background 3s}
-.d-m-relax .d-bg{background:radial-gradient(ellipse at 50% 40%,#13203d 0%,#0a1224 60%,#060a14 100%)}
-.d-m-sleep .d-bg{background:radial-gradient(ellipse at 50% 40%,#0c1428 0%,#070c18 65%,#04070e 100%)}
-.d-deep .d-bg{background:#02040a;transition:background 7s}.d-deep .d-stage{opacity:.5;transition:opacity 7s}
-.d-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#b9c2d3;opacity:.5;animation:dtw 4s ease-in-out infinite}
-@keyframes dtw{50%{opacity:.12}}
-.d-win{position:absolute;right:7%;top:calc(env(safe-area-inset-top,0px) + 54px);width:24%;max-width:110px;opacity:.9}
-.d-rain{position:absolute;inset:0;background:repeating-linear-gradient(103deg,transparent 0 19px,rgba(170,195,230,.17) 19px 20px);animation:drain .7s linear infinite}
-@keyframes drain{to{background-position:-26px 120px}}
-.d-fire{position:absolute;left:50%;bottom:14%;width:260px;height:260px;margin-left:-130px;background:radial-gradient(circle,rgba(240,170,80,.42),rgba(240,140,60,.1) 45%,transparent 70%);animation:dfl 2.3s ease-in-out infinite}
-@keyframes dfl{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
-.d-forest{position:absolute;left:0;right:0;bottom:0;width:100%;height:34%}
-.ff{position:absolute;width:4px;height:4px;border-radius:50%;background:#f0c36a;box-shadow:0 0 8px 2px rgba(240,195,106,.6);animation:dff 6s ease-in-out infinite}
-@keyframes dff{0%,100%{opacity:.1;transform:translate(0,0)}50%{opacity:.9;transform:translate(10px,-14px)}}
-.d-x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:12px;background:rgba(255,255,255,.07);color:#c3cbda;border:0;border-radius:50%;width:38px;height:38px;min-height:0;padding:0;font-size:20px;opacity:.55;z-index:3}
-.d-stage{position:absolute;left:0;right:0;top:15%;height:46%;display:flex;align-items:flex-end;justify-content:center;transition:opacity 2s}
-.d-wolf{width:min(94%,430px)}.wolf{width:100%;height:auto;display:block;overflow:visible}
-.raise .w-headwrap{animation:drs .9s ease-out}@keyframes drs{from{transform:translateY(34px)}to{transform:none}}
-.w-breathe{transform-box:fill-box;transform-origin:50% 100%;animation:dbr 4.6s ease-in-out infinite}@keyframes dbr{50%{transform:scaleY(1.018)}}
-.w-tail{transform-box:fill-box;transform-origin:0% 100%;animation:dtl 5s ease-in-out infinite}@keyframes dtl{50%{transform:rotate(-5deg)}}
-.wolf.happy .w-tail{animation-duration:1.1s}
-.w-earL,.w-earR{transform-box:fill-box;transform-origin:50% 100%}
-.w-earL{animation:det 9s infinite}.w-earR{animation:det 12s 3s infinite}@keyframes det{0%,90%,100%{transform:none}94%{transform:rotate(-9deg)}}
-.wolf.listen .w-earL{animation:none;transform:rotate(-16deg)}.wolf.listen .w-earR{animation:none;transform:rotate(6deg)}
-.w-eyes{transform-box:fill-box;transform-origin:50% 50%;animation:dbl 5.5s infinite}@keyframes dbl{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
-.zz{fill:#b9c2d3;font-size:20px;opacity:0;animation:dzz 4.5s infinite}.zz.z2{animation-delay:1.4s}.zz.z3{animation-delay:2.8s}
-@keyframes dzz{0%{opacity:0;transform:translateY(8px)}30%{opacity:.8}100%{opacity:0;transform:translateY(-20px)}}
-.d-line{position:absolute;left:9%;right:9%;top:63%;text-align:center;min-height:3.4em;font-size:17px;line-height:1.8;color:#e0d6b8;opacity:0;transition:opacity 1.4s;text-shadow:0 0 12px rgba(240,180,92,.25)}
-.d-line.on{opacity:1}
-.d-panel{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 62px);padding:0 16px;text-align:center}
-.d-nav{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:0 8px;transition:opacity 2s}
-.d-btn,.d-chip,.d-nav button,.d-big{background:rgba(255,255,255,.06);color:#c3cbda;border:1px solid rgba(185,194,211,.18);border-radius:999px;min-height:36px;padding:3px 13px;font-size:14px;margin:3px}
-.d-nav button{font-size:12px;padding:2px 10px;min-height:32px;opacity:.7}.d-nav button.on{opacity:1;border-color:rgba(230,169,75,.5);color:#f0d9a8}
-.d-chip.on{background:rgba(230,169,75,.2);border-color:rgba(230,169,75,.55);color:#f2dcae}
-.d-lnk{background:none;border:0;color:#8f9ab0;text-decoration:underline;min-height:0;font-size:13px;padding:4px 8px}
-.d-big{display:inline-block;width:44%;border-radius:18px;padding:10px 8px;line-height:1.4}.d-big small{display:block;font-size:11px;opacity:.65}
-.d-hint{font-size:12px;opacity:.55;margin:4px 0}
-.d-breath{width:112px;height:112px;margin:0 auto 4px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,92,.5),rgba(240,180,92,.07) 70%);animation:dbt 10s ease-in-out infinite}
-@keyframes dbt{0%{transform:scale(.55)}40%{transform:scale(1)}100%{transform:scale(.55)}}
-.d-fade .d-nav{opacity:0;pointer-events:none}.d-fade .d-x{opacity:.12}
-.den input[type=range]{width:60%;min-height:0;padding:0;accent-color:#e6a94b;background:transparent;border:0}
-`;try{document.head.appendChild(s)}catch(e){document.body.appendChild(s)}}
-/* オオカミ（前向き・全身）*/
 function wHead(eye){const A='#f0b45c',E={open:'<g class="w-eyes"><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="'+A+'"/></g>',half:'<g class="w-eyes"><path d="M19 37.2 L28 39 L27 40.6 L20 40Z M45 37.2 L36 39 L37 40.6 L44 40Z" fill="'+A+'" opacity=".9"/></g>',closed:'<path d="M19.5 38.5 L27.5 39.8 M44.5 38.5 L36.5 39.8" stroke="'+A+'" stroke-width="1" stroke-linecap="round" fill="none" opacity=".75"/>',happy:'<path d="M19 39.5 Q23.5 34.5 28 39.5 M36 39.5 Q40.5 34.5 45 39.5" stroke="'+A+'" stroke-width="1.2" stroke-linecap="round" fill="none"/>'};
 return '<g class="w-earL"><path d="M14 28 L17 8 L29 20Z" fill="#2a2e3a"/><path d="M18 24 L19.2 13 L26 20Z" fill="#4b5166"/></g><g class="w-earR"><path d="M50 28 L47 8 L35 20Z" fill="#2a2e3a"/><path d="M46 24 L44.8 13 L38 20Z" fill="#4b5166"/></g><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#363b4a" stroke="rgba(185,194,211,.35)" stroke-width=".6"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#565c70"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#14161d"/>'+(E[eye]||E.open)}
-function denWolf(pose,eye,cls){const B='#363b4a',K='#2a2e3a',L='#4a5063',S='rgba(185,194,211,.4)';let g='';
-if(pose==='lie'){g='<g class="w-tail"><path d="M268 234 C306 234 312 206 292 196 C300 214 290 226 268 228Z" fill="'+K+'"/></g><g class="w-breathe"><ellipse cx="180" cy="216" rx="112" ry="34" fill="'+B+'" stroke="'+S+'"/><ellipse cx="116" cy="228" rx="30" ry="14" fill="'+K+'"/></g><g class="w-headwrap"><g transform="translate(180 192) scale(2.2) translate(-32 -33.5)">'+wHead(eye)+'</g></g><ellipse cx="150" cy="238" rx="26" ry="10" fill="'+B+'"/><ellipse cx="210" cy="238" rx="26" ry="10" fill="'+B+'"/>'}
-else if(pose==='sleep'){g='<g class="w-breathe"><ellipse cx="180" cy="212" rx="124" ry="40" fill="'+B+'" stroke="'+S+'"/></g><g class="w-headwrap"><g transform="translate(138 214) rotate(-10) scale(1.9) translate(-32 -33.5)">'+wHead('closed')+'</g></g><ellipse cx="120" cy="240" rx="24" ry="9" fill="'+K+'"/><g class="w-tail"><path d="M300 216 C270 260 120 262 86 234 C122 248 264 248 300 216Z" fill="'+K+'"/><path d="M96 238 C92 232 88 232 86 234 C90 240 96 242 104 242Z" fill="#b9c2d3" opacity=".6"/></g><text class="zz" x="206" y="150">z</text><text class="zz z2" x="226" y="128">z</text><text class="zz z3" x="248" y="104">Z</text>'}
-else{const gz=pose==='gaze',hx=gz?192:180,hy=gz?102:106,rot=gz?9:0;g='<g class="w-tail"><path d="M226 238 C282 238 296 202 280 170 C270 198 256 216 226 224Z" fill="'+K+'"/><path d="M280 170 C284 180 284 190 280 198 C276 188 276 178 280 170Z" fill="#b9c2d3" opacity=".65"/></g><g class="w-breathe"><path d="M138 164 C128 194 124 218 128 242 L232 242 C236 218 232 194 222 164Z" fill="'+B+'" stroke="'+S+'" stroke-width="1"/><path d="M166 170 L180 212 L194 170Z" fill="'+L+'"/><path d="M150 206 L169 206 L171 242 L146 242Z" fill="'+K+'"/><path d="M191 206 L210 206 L214 242 L189 242Z" fill="'+K+'"/><ellipse cx="158" cy="242" rx="16" ry="7" fill="'+B+'"/><ellipse cx="202" cy="242" rx="16" ry="7" fill="'+B+'"/></g><g class="w-headwrap"><g transform="translate('+hx+' '+hy+') rotate('+rot+') scale(2.6) translate(-32 -33.5)">'+wHead(eye)+'</g></g>'}
-return '<svg viewBox="0 0 360 262" class="wolf '+(cls||'')+'" role="img" aria-label="狼">'+g+'</svg>'}
-function denScene(){const m=D.mode,a=D.amb;let h='<div class="d-stars">'+STARS+'</div>';
-if(m==='quiet'||m==='home'||m==='talk')h+='<svg class="d-win" viewBox="0 0 100 130"><rect x="4" y="4" width="92" height="122" rx="6" fill="#0e1830" stroke="#4a5570" stroke-width="3"/><path d="M50 4 V126 M4 66 H96" stroke="#4a5570" stroke-width="2"/><circle cx="72" cy="30" r="9" fill="#e9e2c8"/><circle cx="76" cy="27" r="8" fill="#0e1830"/></svg>';
-if(m==='relax'||m==='sleep'){if(a==='rain')h+='<div class="d-rain"></div>';if(a==='fire')h+='<div class="d-fire"></div>';if(a==='forest')h+=FOREST}
-return h}
-function denNav(){return '<div class="d-nav">'+[['home','隠れ家'],['relax','リラックス'],['talk','気分'],['quiet','寄り添い'],['sleep','おやすみ']].map(x=>'<button class="'+(D.mode===x[0]?'on':'')+'" onclick="denGo(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div>'}
-function denMoodNow(){const d=S.den||{};return D.mood&&Date.now()-(d.moodAt||0)<6*36e5?D.mood:null}
-function denPanel(){const m=D.mode;
-if(m==='home')return '<div><button class="d-big" onclick="denGo(\'relax\')">リラックス<small>環境音と、くつろぐ狼</small></button><button class="d-big" onclick="denGo(\'talk\')">気分で話す<small>今の気分に合わせて</small></button><button class="d-big" onclick="denGo(\'quiet\')">寄り添い<small>何もしなくていい</small></button><button class="d-big" onclick="denGo(\'sleep\')">おやすみ<small>呼吸を整えて眠る</small></button></div>';
-if(m==='relax'){const A=[['rain','雨音'],['fire','焚き火'],['forest','森'],['','なし']],T=[[0,'タイマーなし'],[15,'15分'],[30,'30分'],[60,'60分']];return '<div>'+A.map(x=>'<button class="d-chip '+(D.amb===x[0]?'on':'')+'" onclick="denAmb(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div><div style="margin:6px 0"><input type="range" min="5" max="100" value="'+Math.round(D.vol*100)+'" oninput="denVol(this.value)" aria-label="音量"></div><div>'+T.map(x=>'<button class="d-chip '+(D.timer===x[0]?'on':'')+'" onclick="denTimer('+x[0]+')">'+x[1]+'</button>').join('')+'</div><p class="d-hint">何もしなくて大丈夫です。時間がきたら、音はゆっくり消えます。</p>'}
-if(m==='talk'){const mm=denMoodNow();if(!mm||D.chooser)return '<div>'+MOODS2.map(x=>'<button class="d-chip" onclick="denMood(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div><p class="d-hint">選ばなくても、ここにいていいです。</p>';const lab=MOODS2.find(x=>x[0]===mm)[1],go=MOOD_GO[mm];return '<div><span class="d-chip on">'+lab+'</span><button class="d-btn" onclick="denMore()">もうひとこと</button></div><div>'+(go?'<button class="d-lnk" onclick="denGo(\''+go[0]+'\')">'+go[1]+'</button>':'')+'<button class="d-lnk" onclick="D.chooser=1;denRender()">気分を変える</button></div>'}
-if(m==='quiet')return '<p class="d-hint">何も話さなくていい。ただ、となりにいる。</p>';
-if(m==='sleep'||m==='breath'){if(D.stage===0)return '<div class="d-hint" style="margin-bottom:6px">'+(D.sk==='breath'?'ゆっくり呼吸を整えます':'一日をゆっくり終えます')+'</div><div>'+[['','音なし'],['rain','雨音'],['fire','焚き火'],['forest','森']].map(x=>'<button class="d-chip '+(D.amb===x[0]?'on':'')+'" onclick="denAmb(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div><div style="margin-top:8px"><button class="d-btn" onclick="denSleepStart()">はじめる</button></div>';if(D.stage===2)return '<div class="d-breath"></div><div class="d-hint" id="dbl" style="font-size:14px;opacity:.8">吸う…</div>';return ''}
+
+/* ====== ジェイスの部屋：背景・服装・照明・装飾 ====== */
+const BGS=[['church','ゴシック教会'],['chapel','ステンドグラスの礼拝堂'],['library','古い図書館'],['study','蝋燭のある書斎'],['rain','雨の降る窓辺'],['stars','星空の見える部屋']];
+const OUTFITS=[['suit','ブラックスーツ'],['coat','ゴシックロングコート'],['vest','シャツとベスト'],['monk','修道士風の衣装'],['sweater','カジュアルなセーター']];
+const LIGHTS=[['auto','自動'],['morning','朝の光'],['dusk','夕暮れ'],['candle','夜の蝋燭'],['moon','月明かり'],['glass','ステンドグラスの光']];
+const DECOR=[[0,0,'シンプルな部屋'],[1,30,'机の上の本'],[2,60,'蝋燭と小さな飾り'],[4,120,'本棚とアンティーク'],[7,300,'絨毯・カーテン・額縁'],[14,600,'シャンデリアと星飾り']];
+function roomOpt(){const r=S.room||{};return{bg:r.bg||'church',outfit:r.outfit||'suit',light:r.light||'auto'}}
+function lightNow(){const o=roomOpt().light;if(o!=='auto')return o;const h=new Date(Date.now()+9*36e5).getUTCHours();return h>=5&&h<15?'morning':h>=15&&h<19?'dusk':h>=19&&h<23?'candle':'moon'}
+function lancet(x,y,w,h,fill,stroke){const r=w*0.9;return '<path d="M'+x+' '+(y+h)+' V'+(y+r)+' Q'+x+' '+(y+w*0.1)+' '+(x+w/2)+' '+y+' Q'+(x+w)+' '+(y+w*0.1)+' '+(x+w)+' '+(y+r)+' V'+(y+h)+'Z" fill="'+fill+'" stroke="'+stroke+'" stroke-width="3"/><path d="M'+(x+w/2)+' '+(y+4)+' V'+(y+h)+' M'+x+' '+(y+h*0.55)+' H'+(x+w)+'" stroke="'+stroke+'" stroke-width="1.6" opacity=".8"/>'}
+function books(x,y,w,h,seed){let s='',cx=x;const C=['#5a2a34','#2f4a5e','#3d5a40','#6a5230','#40355c','#5b3b2a','#2c3e50','#6b4a52'];let i=0;while(cx<x+w-5){const bw=5+((i*7+seed)%6),bh=h-6-((i*5+seed*3)%14);s+='<rect x="'+cx+'" y="'+(y+h-bh)+'" width="'+bw+'" height="'+bh+'" fill="'+C[(i+seed)%8]+'"/><rect x="'+cx+'" y="'+(y+h-bh+4)+'" width="'+bw+'" height="1.4" fill="#c9b27a" opacity=".5"/>';cx+=bw+1;i++}return s}
+function shelf(x,y,w,h,rows,seed){let s='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="#2a1d18" stroke="#16100d" stroke-width="2"/>';const rh=h/rows;for(let r=0;r<rows;r++){s+=books(x+3,y+r*rh+3,w-6,rh-6,seed+r*3)+'<rect x="'+x+'" y="'+(y+(r+1)*rh-3)+'" width="'+w+'" height="3" fill="#3a2a22"/>'}return s}
+const RB={
+church(){let s='<rect width="360" height="300" fill="url(#gCh)"/><path d="M-10 78 Q90 -34 180 22 Q270 -34 370 78" fill="none" stroke="#2c3556" stroke-width="8"/><path d="M36 118 Q108 26 180 54 Q252 26 324 118" fill="none" stroke="#263050" stroke-width="5"/>';
+s+=lancet(66,78,56,150,'#1a2c52','#3b4a72')+lancet(138,32,84,196,'#20386a','#46567e')+lancet(238,78,56,150,'#1a2c52','#3b4a72');
+[6,316].forEach(x=>{s+='<rect x="'+x+'" y="44" width="38" height="224" fill="#1a2036"/><rect x="'+(x-5)+'" y="38" width="48" height="11" fill="#2b3352"/><rect x="'+(x-5)+'" y="262" width="48" height="11" fill="#2b3352"/><path d="M'+(x+10)+' 52 V260 M'+(x+28)+' 52 V260" stroke="#232b45" stroke-width="2"/>'});
+s+='<rect x="0" y="238" width="360" height="62" fill="#161b2b"/>';for(let i=0;i<9;i++)s+='<path d="M'+(i*45)+' 238 L'+(180+(i-4)*70)+' 300" stroke="#222a40" stroke-width="1.5"/>';s+='<path d="M0 262 H360 M0 282 H360" stroke="#222a40" stroke-width="1.5"/>';
+s+='<rect x="150" y="200" width="60" height="38" rx="2" fill="#241d1c" stroke="#3a2e2a"/><rect x="178.5" y="158" width="3" height="42" fill="#b9b3a2" opacity=".85"/><rect x="170" y="168" width="20" height="3" fill="#b9b3a2" opacity=".85"/><rect x="156" y="190" width="5" height="10" fill="#d9d2bd"/><rect x="199" y="190" width="5" height="10" fill="#d9d2bd"/><ellipse cx="158.5" cy="187" rx="2.2" ry="3.6" class="fl" fill="#f5c26a"/><ellipse cx="201.5" cy="187" rx="2.2" ry="3.6" class="fl" fill="#f5c26a"/>';return s},
+chapel(){let s='<rect width="360" height="300" fill="url(#gCp)"/><path d="M80 236 V92 Q80 24 180 12 Q280 24 280 92 V236Z" fill="#101626" stroke="#3a4260" stroke-width="5"/>';
+const cols=['#a83a4a','#2f5fa8','#2f8a5a','#d9a441','#7a3fa0','#2a8aa0'];
+s+='<g opacity=".92">';for(let i=0;i<12;i++){const a=i*Math.PI/6,b=(i+1)*Math.PI/6;s+='<path d="M180 92 L'+(180+54*Math.cos(a)).toFixed(1)+' '+(92+54*Math.sin(a)).toFixed(1)+' L'+(180+54*Math.cos(b)).toFixed(1)+' '+(92+54*Math.sin(b)).toFixed(1)+'Z" fill="'+cols[i%6]+'" stroke="#10131d" stroke-width="2.2"/>'}s+='</g><circle cx="180" cy="92" r="54" fill="none" stroke="#10131d" stroke-width="4"/><circle cx="180" cy="92" r="14" fill="#f0c27a" stroke="#10131d" stroke-width="3"/>';
+for(let r=0;r<3;r++)for(let c=0;c<4;c++){const x=102+c*40,y=160+r*26,ci=(r*4+c)%6;s+='<path d="M'+x+' '+(y+22)+' V'+(y+8)+' Q'+(x+8)+' '+(y-2)+' '+(x+16)+' '+(y+8)+' V'+(y+22)+'Z" fill="'+cols[ci]+'" opacity=".85" stroke="#10131d" stroke-width="2"/>'}
+s+='<path d="M0 0 V300 M360 0 V300" stroke="#0d111d" stroke-width="2"/><rect x="0" y="244" width="360" height="56" fill="#141827"/>';
+[[10,250],[286,250]].forEach(([x,y])=>{s+='<rect x="'+x+'" y="'+y+'" width="64" height="9" fill="#2a1f1b"/><rect x="'+(x+4)+'" y="'+(y-18)+'" width="56" height="18" fill="#1f1714"/>'});s+='<path d="M0 270 H360" stroke="#20263a" stroke-width="1.5"/>';return s},
+library(){let s='<rect width="360" height="300" fill="url(#gLb)"/>'+shelf(10,24,96,214,5,1)+shelf(254,24,96,214,5,4)+'<rect x="116" y="40" width="128" height="120" rx="3" fill="#1a1612" stroke="#3a2e26" stroke-width="4"/><circle cx="180" cy="100" r="42" fill="#d8c9a4" stroke="#3a2e26" stroke-width="5" opacity=".95"/><path d="M180 100 V70 M180 100 L200 112" stroke="#2a2018" stroke-width="3" stroke-linecap="round"/><circle cx="180" cy="100" r="3" fill="#2a2018"/>';
+for(let i=0;i<12;i++){const a=i*Math.PI/6;s+='<circle cx="'+(180+34*Math.sin(a)).toFixed(1)+'" cy="'+(100-34*Math.cos(a)).toFixed(1)+'" r="1.6" fill="#2a2018"/>'}
+s+='<rect x="0" y="238" width="360" height="62" fill="#1d1510"/>';for(let i=0;i<8;i++)s+='<path d="M0 '+(244+i*8)+' H360" stroke="#2a1d16" stroke-width="1.5"/>';s+='<path d="M96 40 L104 236 M108 40 L116 236 M98 90 H110 M100 140 H112 M102 190 H114" stroke="#6a4a30" stroke-width="3" fill="none"/>';return s},
+study(){let s='<rect width="360" height="300" fill="url(#gSt)"/>';for(let i=0;i<9;i++)s+='<rect x="'+(i*40)+'" y="0" width="38" height="238" fill="#2a1d17" opacity="'+(i%2?.8:1)+'"/>';
+s+='<rect x="42" y="38" width="64" height="84" fill="#120d0b" stroke="#6a4a30" stroke-width="4"/><path d="M52 112 L70 78 L82 96 L92 84 L100 112Z" fill="#3a4a5c"/><circle cx="90" cy="58" r="8" fill="#d8c9a4"/>'+shelf(266,34,78,96,3,6);
+s+='<rect x="0" y="238" width="360" height="62" fill="#1a110d"/><rect x="214" y="196" width="146" height="14" fill="#4a3226"/><rect x="224" y="210" width="10" height="64" fill="#3a2619"/><rect x="342" y="210" width="10" height="64" fill="#3a2619"/>';
+[[236,176],[262,184],[330,180]].forEach(([x,y])=>{s+='<rect x="'+(x-4)+'" y="'+y+'" width="8" height="20" fill="#e6dcc0"/><ellipse cx="'+x+'" cy="'+(y-6)+'" rx="3" ry="6" class="fl" fill="#f5c26a"/>'});
+s+='<rect x="288" y="186" width="30" height="10" fill="#6a2a34"/><rect x="291" y="178" width="24" height="8" fill="#2f4a5e"/>';return s},
+rain(){let s='<rect width="360" height="300" fill="url(#gRn)"/><rect x="74" y="26" width="212" height="214" fill="#1b2a42" stroke="#0c1119" stroke-width="8"/><path d="M180 26 V240 M74 132 H286" stroke="#0c1119" stroke-width="5"/>';
+for(let i=0;i<46;i++){const x=80+(i*37)%200,y=32+(i*53)%200;s+='<path d="M'+x+' '+y+' l-2 '+(10+(i%4)*3)+'" stroke="#8fa8c8" stroke-width="1.1" opacity="'+(0.25+(i%5)*0.07).toFixed(2)+'"/>'}
+for(let i=0;i<14;i++)s+='<circle cx="'+(84+(i*61)%194)+'" cy="'+(36+(i*43)%196)+'" r="'+(1.4+(i%3)*0.7)+'" fill="#bcd0ea" opacity=".35"/><path d="M'+(84+(i*61)%194)+' '+(38+(i*43)%196)+' l0 '+(6+(i%3)*4)+'" stroke="#bcd0ea" stroke-width="1" opacity=".22"/>';
+s+='<path d="M0 0 H70 Q60 120 74 240 H0Z" fill="#2b1c2c"/><path d="M360 0 H290 Q300 120 286 240 H360Z" fill="#2b1c2c"/><path d="M14 0 Q24 120 14 240 M40 0 Q50 120 40 240 M346 0 Q336 120 346 240 M320 0 Q310 120 320 240" stroke="#1d1220" stroke-width="3" fill="none"/>';
+s+='<rect x="64" y="240" width="232" height="12" fill="#3a2a22"/><rect x="0" y="252" width="360" height="48" fill="#171019"/><ellipse cx="256" cy="236" rx="14" ry="4" fill="#2a1d18"/><path d="M256 236 Q244 214 250 200 Q256 214 258 200 Q268 218 256 236Z" fill="#2f5a40"/>';return s},
+stars(){let s='<rect width="360" height="300" fill="url(#gSr)"/><path d="M60 236 V120 Q60 28 180 14 Q300 28 300 120 V236Z" fill="#070b18" stroke="#3a4260" stroke-width="6"/>';
+for(let i=0;i<54;i++){const x=70+(i*53)%220,y=26+(i*37)%200;s+='<circle cx="'+x+'" cy="'+y+'" r="'+(0.7+(i%4)*0.35).toFixed(2)+'" fill="#f2f0e0" opacity="'+(0.45+(i%5)*0.12).toFixed(2)+'"/>'}
+s+='<circle cx="238" cy="70" r="15" fill="#e6e1c8"/><circle cx="246" cy="64" r="13" fill="#070b18"/><path d="M180 14 V236 M60 130 H300" stroke="#3a4260" stroke-width="4"/>';
+s+='<path d="M96 236 L120 188 L134 188 L116 236Z" fill="#241a18"/><rect x="104" y="170" width="46" height="9" rx="4" transform="rotate(-24 127 175)" fill="#3a3f52"/><rect x="0" y="236" width="360" height="64" fill="#15111a"/><path d="M0 262 H360" stroke="#1f1a26" stroke-width="1.5"/>';return s}};
+const RB_DEFS='<defs><linearGradient id="gCh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1426"/><stop offset="1" stop-color="#1a2136"/></linearGradient><linearGradient id="gCp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1120"/><stop offset="1" stop-color="#191c2c"/></linearGradient><linearGradient id="gLb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1510"/><stop offset="1" stop-color="#2a1d16"/></linearGradient><linearGradient id="gSt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1d15"/><stop offset="1" stop-color="#1a110d"/></linearGradient><linearGradient id="gRn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121a2a"/><stop offset="1" stop-color="#1b1622"/></linearGradient><linearGradient id="gSr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e1c"/><stop offset="1" stop-color="#17121e"/></linearGradient><radialGradient id="lgCa" cx="50%" cy="78%" r="62%"><stop offset="0" stop-color="#f0a850" stop-opacity=".42"/><stop offset="1" stop-color="#f0a850" stop-opacity="0"/></radialGradient><radialGradient id="lgVg" cx="50%" cy="50%" r="72%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient><linearGradient id="lgDu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8823e" stop-opacity=".30"/><stop offset=".6" stop-color="#8a4a78" stop-opacity=".16"/><stop offset="1" stop-color="#40305a" stop-opacity=".26"/></linearGradient></defs>';
+function decorSvg(lv){let s='';
+if(lv>=4)s+='<ellipse cx="180" cy="270" rx="140" ry="17" fill="#4a2630"/><ellipse cx="180" cy="270" rx="124" ry="13" fill="none" stroke="#8a6a3a" stroke-width="2"/><ellipse cx="180" cy="270" rx="100" ry="9" fill="none" stroke="#6a3a46" stroke-width="1.5"/><path d="M0 0 H34 Q26 60 38 124 L0 118Z" fill="#4a2234" opacity=".92"/><path d="M360 0 H326 Q334 60 322 124 L360 118Z" fill="#4a2234" opacity=".92"/><path d="M0 0 H34 M360 0 H326" stroke="#c9a65a" stroke-width="3"/><rect x="48" y="46" width="30" height="38" fill="#12100d" stroke="#8a6a3a" stroke-width="3"/><circle cx="63" cy="62" r="7" fill="#6a7a8c"/><rect x="282" y="46" width="30" height="38" fill="#12100d" stroke="#8a6a3a" stroke-width="3"/><path d="M286 78 L297 56 L308 78Z" fill="#6a3a46"/>';
+if(lv>=3)s+='<g transform="translate(14 112)">'+shelf(0,0,52,118,4,9)+'</g><circle cx="320" cy="198" r="12" fill="#3a5a6a" stroke="#c9a65a" stroke-width="2"/><path d="M308 198 H332 M320 186 V210" stroke="#c9a65a" stroke-width="1.2" opacity=".7"/><rect x="316" y="208" width="8" height="6" fill="#6a4a30"/><rect x="290" y="212" width="16" height="3" fill="#6a4a30"/>';
+if(lv>=2)s+='<g><rect x="278" y="186" width="7" height="22" fill="#e6dcc0"/><ellipse cx="281.5" cy="180" rx="3" ry="6.5" class="fl" fill="#f5c26a"/><rect x="298" y="192" width="6" height="16" fill="#e6dcc0"/><ellipse cx="301" cy="187" rx="2.6" ry="5.5" class="fl" fill="#f5c26a"/><ellipse cx="40" cy="262" rx="12" ry="5" fill="#2a1d18"/><path d="M40 258 Q28 240 34 226 Q40 240 42 226 Q52 242 40 258Z" fill="#2f5a40"/></g>';
+if(lv>=1)s+='<rect x="266" y="208" width="84" height="8" fill="#4a3226"/><rect x="272" y="216" width="7" height="46" fill="#3a2619"/><rect x="337" y="216" width="7" height="46" fill="#3a2619"/><rect x="292" y="200" width="30" height="8" fill="#6a2a34"/><rect x="295" y="192" width="26" height="8" fill="#2f4a5e"/><rect x="298" y="185" width="22" height="7" fill="#6a5230"/>';
+if(lv>=5)s+='<path d="M180 0 V30" stroke="#8a6a3a" stroke-width="2"/><path d="M146 42 Q180 22 214 42 L206 46 Q180 34 154 46Z" fill="#8a6a3a"/><g>'+[150,166,180,194,210].map((x,i)=>'<rect x="'+(x-2)+'" y="'+(44+(i%2)*3)+'" width="4" height="10" fill="#e6dcc0"/><ellipse cx="'+x+'" cy="'+(41+(i%2)*3)+'" rx="2.2" ry="4.4" class="fl" fill="#f5c26a"/>').join('')+'</g><g fill="#f0d890">'+[[40,20],[96,34],[130,14],[236,18],[300,32],[330,16],[70,60],[290,64]].map(p=>'<path d="M'+p[0]+' '+(p[1]-4)+' L'+(p[0]+1.2)+' '+(p[1]-1)+' L'+(p[0]+4)+' '+p[1]+' L'+(p[0]+1.2)+' '+(p[1]+1)+' L'+p[0]+' '+(p[1]+4)+' L'+(p[0]-1.2)+' '+(p[1]+1)+' L'+(p[0]-4)+' '+p[1]+' L'+(p[0]-1.2)+' '+(p[1]-1)+'Z" opacity=".9"/>').join('')+'</g>';
+return s}
+function lightSvg(l){switch(l){
+case'morning':return '<rect width="360" height="300" fill="#ffe9b8" opacity=".10"/><path d="M200 -10 L260 -10 L150 300 L60 300Z" fill="#fff3cf" opacity=".12"/><path d="M270 -10 L330 -10 L240 300 L170 300Z" fill="#fff3cf" opacity=".08"/>';
+case'dusk':return '<rect width="360" height="300" fill="url(#lgDu)"/><rect width="360" height="300" fill="url(#lgVg)" opacity=".5"/>';
+case'candle':return '<rect width="360" height="300" fill="#0a0604" opacity=".30"/><rect width="360" height="300" fill="url(#lgCa)" class="lt"/><rect width="360" height="300" fill="url(#lgVg)"/>';
+case'moon':return '<rect width="360" height="300" fill="#5a78b8" opacity=".16"/><path d="M262 0 L320 0 L200 300 L100 300Z" fill="#cfe0ff" opacity=".10"/><rect width="360" height="300" fill="url(#lgVg)" opacity=".7"/>';
+case'glass':return '<rect width="360" height="300" fill="#0a0814" opacity=".18"/><g opacity=".22"><path d="M120 150 L170 150 L186 196 L132 196Z" fill="#d94a5a"/><path d="M178 160 L226 160 L240 210 L192 210Z" fill="#4a7ad9"/><path d="M130 206 L182 206 L196 250 L142 250Z" fill="#e0b341"/><path d="M200 218 L250 218 L262 262 L214 262Z" fill="#4aa86a"/><path d="M84 200 L126 200 L136 240 L94 240Z" fill="#9a5ad0"/></g><rect width="360" height="300" fill="url(#lgVg)" opacity=".5"/>';}
 return ''}
-function denRender(){const el=$('den');if(!el)return;const deep=D.mode==='sleep'&&D.stage>=3;el.className='den d-m-'+(D.mode==='breath'?'sleep':D.mode)+(deep?' d-deep d-fade':'');
-el.innerHTML='<div class="d-bg"></div><div class="d-bgs">'+denScene()+'</div><button class="d-x" onclick="denExit()" aria-label="出る">×</button><div class="d-stage"><div id="dw" class="d-wolf">'+denWolf(D.pose,D.eye,D.cls)+'</div></div><div id="dl" class="d-line'+(D.line?' on':'')+'">'+esc(D.line||'')+'</div><div class="d-panel">'+denPanel()+'</div>'+((D.mode==='sleep'&&D.stage>=1)?'':denNav())}
-function denWolfUpdate(){const e=$('dw');if(!e)return;e.innerHTML=denWolf(D.pose,D.eye,D.cls);e.className='d-wolf'+(D.raise?' raise':'');if(D.raise)setTimeout(()=>{D.raise=0;const x=$('dw');if(x)x.className='d-wolf'},1000)}
-function denSay(t,hold){D.line=t;D.lineAt=Date.now();const e=$('dl');if(!e)return;e.textContent=t;e.className='d-line on';clearTimeout(D.lt);if(hold!==0)D.lt=setTimeout(()=>{const x=$('dl');if(x){x.className='d-line'}D.line=''},hold||7500)}
-function denFlavor(base){const m=denMoodNow();return(m&&Math.random()<0.5)?DL.mood[m]:base}
-function denAwake(){D.pose='sit';D.eye=dNight()?'half':'open'}
-function openDen(){denCss();let el=$('den');if(!el){el=document.createElement('div');el.id='den';document.body.appendChild(el);el.addEventListener('pointerdown',denTouch)}
-D.open=true;D.mode='home';D.stage=0;D.cls='';D.last=Date.now();D.chooser=0;D.line='';const sd=S.den||{};D.mood=sd.mood||null;D.pose='lie';D.eye='closed';el.style.display='block';denRender();
-dT(()=>{denAwake();D.raise=1;denWolfUpdate();denSay(pick('dg',dNight()?DL.greetNight:DL.greet))},800);
-clearInterval(D.iv);D.iv=setInterval(denTick,5000);try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{denWL=l}).catch(()=>{})}catch(e){}}
-function denExit(){dClear();clearInterval(D.iv);D.iv=null;ambStop(1.2);try{if(denWL)denWL.release()}catch(e){}denWL=null;D.open=false;const el=$('den');if(el){el.style.display='none';el.innerHTML=''}}
-function denGo(m){dClear();clearTimeout(D.lt);D.line='';D.chooser=0;D.stage=0;if(m==='breath'){D.sk='breath';m='sleep'}else if(m==='sleep'){D.sk='sleep'}
-if(m!=='relax'&&m!=='sleep')ambStop(1.5);D.mode=m;denAwake();D.cls='';
-if(m==='relax'){D.pose='lie';D.eye=dNight()?'closed':'half';if(!D.amb)denAmb('rain',true)}
-if(m==='sleep'){D.pose='lie';D.eye='half'}
-if(m==='talk'){D.cls='listen';const mm=denMoodNow();if(mm)denSay(pick('dm'+mm,DL.mood[mm]),8000)}
-if(m==='quiet'){D.qi=0;D.line='';dT(denQuiet,3000)}
-if(m==='home'){D.pose=dNight()?'lie':'sit'}
-denRender();D.last=Date.now()}
-function denTouch(){if(!D.open)return;const idle=(Date.now()-D.last)/1000;D.last=Date.now();if(D.mode==='sleep'&&D.stage>=3){const x=document.querySelector&&document.querySelector('.d-x');return}
-if((D.pose==='sleep'||D.pose==='lie')&&D.mode!=='quiet'&&D.mode!=='sleep'&&idle>20){denAwake();D.raise=1;denWolfUpdate();if(idle>90)denSay(pick('db',DL.back),5500)}}
-function denPet(){if(!D.open||Date.now()-D.petT<2500)return;D.petT=Date.now();const pe=D.eye,pc=D.cls;D.eye='happy';D.cls=(pc||'')+' happy';denWolfUpdate();dT(()=>{D.eye=pe;D.cls=pc;denWolfUpdate()},1800);if(Math.random()<0.5)denSay(pick('dp',DL.pet),4000)}
-function denTick(){if(!D.open)return;const now=Date.now(),idle=(now-D.last)/1000;
-if(D.mode==='home'||D.mode==='relax'||D.mode==='talk'){if(idle>90&&D.pose!=='sleep'){D.pose='sleep';D.eye='closed';denWolfUpdate()}else if(idle>40&&D.pose==='sit'){D.pose='lie';D.eye=dNight()?'closed':'half';denWolfUpdate()}}
-const gap=D.mode==='quiet'?75000:60000;if(now-D.lineAt>gap&&D.pose!=='sleep'&&D.mode!=='sleep'&&!(D.mode==='talk'&&!denMoodNow())){const base=D.mode==='relax'?DL.relax:D.mode==='quiet'?DL.quiet:DL.relax;denSay(pick('dx',denFlavor(base)),7000)}}
-function denQuiet(){if(!D.open||D.mode!=='quiet')return;const S2=[['sit','open'],['gaze','open'],['sit','half'],['lie','half'],['gaze','half'],['sit','open']],s=S2[D.qi++%S2.length];D.pose=s[0];D.eye=(dNight()&&s[1]==='open')?'half':s[1];denWolfUpdate();if(D.qi%3===0)denSay(pick('dq',denFlavor(DL.quiet)),6500);dT(denQuiet,12000+Math.random()*8000)}
-function denMood(k){const sd=S.den=S.den||{};sd.mood=k;sd.moodAt=Date.now();save();D.mood=k;D.chooser=0;denAwake();D.cls='listen'+(k==='happy'?' happy':'');if(k==='tired')D.eye='half';denRender();denSay(pick('dm'+k,DL.mood[k]),9000);[9000,19000].forEach(ms=>dT(()=>{if(D.open&&D.mode==='talk')denSay(pick('dm'+k,DL.mood[k]),8000)},ms))}
-function denMore(){const mm=denMoodNow();if(mm)denSay(pick('dm'+mm,DL.mood[mm]),9000)}
-/* 環境音（ファイル不要・端末内で合成）*/
-function dNoise(type){const c=AC,n=Math.floor(c.sampleRate*2),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);let l=0;for(let i=0;i<n;i++){const w=Math.random()*2-1;if(type==='brown'){l=(l+0.02*w)/1.02;d[i]=l*3.5}else d[i]=w*0.6}const s=c.createBufferSource();s.buffer=b;s.loop=true;return s}
-function dBurst(c,g,f,amp,dur){const n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=c.createBufferSource();s.buffer=b;const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=f;bp.Q.value=1.2;const e=c.createGain();e.gain.value=amp;s.connect(bp);bp.connect(e);e.connect(g);s.start()}
-function ambStop(fade){if(!DA)return;const d=DA;DA=null;D.amb=D.amb;d.tm.forEach(clearTimeout);try{d.g.gain.setTargetAtTime(0,AC.currentTime,Math.max(.05,fade/3))}catch(e){}setTimeout(()=>{d.nodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}});try{d.g.disconnect()}catch(e){}},fade*1000+400)}
-function ambStart(kind){ambStop(0.4);if(!kind)return;unlockAudio();try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}const c=AC;if(!c)return;const g=c.createGain();g.gain.value=0;g.gain.setTargetAtTime(D.vol,c.currentTime,0.6);g.connect(c.destination);const nodes=[],tm=[];DA={g,nodes,tm,kind};const add=n=>{nodes.push(n);return n};
-const live=()=>DA&&DA.kind===kind;
-if(kind==='rain'){const n1=add(dNoise('white')),hp=add(c.createBiquadFilter()),lp=add(c.createBiquadFilter()),gg=add(c.createGain());hp.type='highpass';hp.frequency.value=700;lp.type='lowpass';lp.frequency.value=7500;gg.gain.value=0.3;n1.connect(hp);hp.connect(lp);lp.connect(gg);gg.connect(g);n1.start();
-const drop=()=>{if(!live())return;const o=c.createOscillator(),e=c.createGain();o.frequency.value=1500+Math.random()*2500;e.gain.setValueAtTime(0.0001,c.currentTime);e.gain.exponentialRampToValueAtTime(0.04+Math.random()*0.04,c.currentTime+0.004);e.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+0.06);o.connect(e);e.connect(g);o.start();o.stop(c.currentTime+0.08);tm.push(setTimeout(drop,60+Math.random()*320))};drop()}
-else if(kind==='fire'){const n1=add(dNoise('brown')),lp=add(c.createBiquadFilter()),gg=add(c.createGain());lp.type='lowpass';lp.frequency.value=520;gg.gain.value=0.55;n1.connect(lp);lp.connect(gg);gg.connect(g);n1.start();
-const pop=()=>{if(!live())return;dBurst(c,g,1800+Math.random()*2800,0.12+Math.random()*0.25,0.01+Math.random()*0.03);if(Math.random()<0.18)dBurst(c,g,900+Math.random()*900,0.35,0.06);tm.push(setTimeout(pop,90+Math.random()*750))};pop()}
-else if(kind==='forest'){const n1=add(dNoise('brown')),bp=add(c.createBiquadFilter()),gg=add(c.createGain()),lfo=add(c.createOscillator()),lg=add(c.createGain());bp.type='bandpass';bp.frequency.value=380;bp.Q.value=0.6;gg.gain.value=0.32;lfo.frequency.value=0.09;lg.gain.value=0.12;lfo.connect(lg);lg.connect(gg.gain);n1.connect(bp);bp.connect(gg);gg.connect(g);n1.start();lfo.start();
-const cricket=()=>{if(!live())return;const o=c.createOscillator(),am=c.createOscillator(),ag=c.createGain(),e=c.createGain(),dur=1.5+Math.random()*2;o.frequency.value=4200+Math.random()*400;am.frequency.value=5+Math.random()*2;ag.gain.value=0.5;e.gain.value=0.012;am.connect(ag);ag.connect(e.gain);o.connect(e);e.connect(g);o.start();am.start();o.stop(c.currentTime+dur);am.stop(c.currentTime+dur);tm.push(setTimeout(cricket,2000+Math.random()*4000))};cricket();
-const bird=()=>{if(!live())return;const k=2+Math.floor(Math.random()*2);for(let i=0;i<k;i++){const o=c.createOscillator(),e=c.createGain(),t0=c.currentTime+i*0.2;o.frequency.setValueAtTime(2200,t0);o.frequency.exponentialRampToValueAtTime(3600,t0+0.12);e.gain.setValueAtTime(0.0001,t0);e.gain.exponentialRampToValueAtTime(0.03,t0+0.02);e.gain.exponentialRampToValueAtTime(0.0001,t0+0.14);o.connect(e);e.connect(g);o.start(t0);o.stop(t0+0.16)}tm.push(setTimeout(bird,9000+Math.random()*13000))};tm.push(setTimeout(bird,4000))}}
-function denAmb(k,silent){D.amb=k;if(k)ambStart(k);else ambStop(1);if(!silent){}denRender()}
-function denVol(v){D.vol=Math.max(.05,Math.min(1,v/100));if(DA&&AC)try{DA.g.gain.setTargetAtTime(D.vol,AC.currentTime,0.05)}catch(e){}}
-function denTimer(min){D.timer=min;clearTimeout(D.tmr);if(min>0)D.tmr=setTimeout(()=>{ambStop(20);D.pose='sleep';D.eye='closed';if(D.open){D.amb='';denWolfUpdate();denSay('おやすみ。',9000)}},min*60000);denRender()}
-/* おやすみ／呼吸ガイド */
-function denSleepStart(){dClear();D.stage=1;D.pose='lie';D.eye='half';denRender();let t=0;const intro=D.sk==='breath'?['ゆっくり、息を合わせよう。']:DL.sleepIntro;intro.forEach((l,i)=>dT(()=>denSay(l,6500),t+i*7000));t+=intro.length*7000+500;
-dT(()=>{D.stage=2;denRender();const cycles=D.sk==='breath'?5:6;for(let i=0;i<cycles;i++){dT(()=>{const e=$('dbl');if(e)e.textContent='吸う…'},i*10000);dT(()=>{const e=$('dbl');if(e)e.textContent='吐く…'},i*10000+4000)}dT(denSleepEnd,cycles*10000)},t)}
-function denSleepEnd(){D.stage=3;if(D.sk==='breath'){D.pose='sit';D.eye='open';D.stage=0;D.mode='talk';denRender();denSay('…少し、落ち着いたか。',9000);return}
-D.pose='sleep';D.eye='closed';denRender();DL.sleepEnd.forEach((l,i)=>dT(()=>{denSay(l,i<DL.sleepEnd.length-1?6000:0)},i*7000));ambStop(25);try{if(denWL)denWL.release()}catch(e){}denWL=null}
-document.addEventListener('visibilitychange',()=>{try{if(!D.open)return;if(document.visibilityState==='hidden'){D.hid=Date.now()}else if(D.hid&&Date.now()-D.hid>60000&&D.mode!=='sleep'){D.hid=0;D.last=Date.now();denAwake();D.raise=1;denWolfUpdate();denSay(pick('db',DL.back),6000)}}catch(e){}});
-/* 入口：設定のボタン／アイコンを素早く5回タップ */
-function jTap(){const n=Date.now();jt=(n-jt0<2000)?jt+1:1;jt0=n;if(jt>=5){jt=0;openDen();return}talk()}
-function denCard(){return '<div class="card"><h3>隠れ家</h3><p class="mut" style="font-size:13px;margin:0 0 8px">静かな夜の森の隠れ家で、狼と過ごします（環境音、気分に合わせた会話、寄り添い、おやすみ）。</p><button onclick="openDen()">隠れ家へ入る</button><p class="mut" style="font-size:12px;margin:6px 0 0">ホームのジェイスのアイコンを、素早く5回タップしても入れます。</p></div>'}
+function outfitSvg(id){const o={back:'',front:''};
+switch(id){
+case'suit':o.front='<path d="M136 160 C124 192 120 224 124 250 L236 250 C240 224 236 192 224 160 L204 172 L180 214 L156 172Z" fill="#15171f" stroke="#2c3040" stroke-width="1.4"/><path d="M162 168 L180 212 L198 168 Q180 160 162 168Z" fill="#d8dbe3"/><path d="M177 178 H183 L186 214 L180 228 L174 214Z" fill="#6a2434"/><path d="M156 172 L170 200 M204 172 L190 200" stroke="#2c3040" stroke-width="1.6"/><circle cx="176" cy="232" r="2" fill="#6a7088"/>';break;
+case'coat':o.front='<path d="M126 156 C108 196 100 232 102 254 L258 254 C260 232 252 196 234 156 L214 166 L180 226 L146 166Z" fill="#202433" stroke="#3a4156" stroke-width="1.6"/><path d="M146 150 L160 176 L176 160Z M214 150 L200 176 L184 160Z" fill="#2a3044" stroke="#4a5370" stroke-width="1.2"/><path d="M180 176 V254" stroke="#3a4156" stroke-width="1.6"/>'+[188,206,224,242].map(y=>'<circle cx="170" cy="'+y+'" r="2.4" fill="#b9c2d3"/><circle cx="190" cy="'+y+'" r="2.4" fill="#b9c2d3"/>').join('')+'<path d="M102 236 Q180 250 258 236" stroke="#3a4156" stroke-width="1.4" fill="none"/>';break;
+case'vest':o.front='<path d="M134 160 C124 192 120 224 124 250 L236 250 C240 224 236 192 226 160Z" fill="#dfe1e8"/><path d="M146 164 L180 214 L214 164 L218 250 L142 250Z" fill="#3a3f52" stroke="#4a5068" stroke-width="1.4"/><path d="M164 164 L180 190 L196 164Z" fill="#f0f1f5"/>'+[200,216,232].map(y=>'<circle cx="180" cy="'+y+'" r="2" fill="#b9c2d3"/>').join('')+'<path d="M124 190 Q116 220 124 250 M236 190 Q244 220 236 250" stroke="#c7cad6" stroke-width="1.4" fill="none"/>';break;
+case'monk':o.back='<path d="M104 120 Q104 40 180 38 Q256 40 256 120 L250 170 L110 170Z" fill="#4a3a2c"/>';o.front='<path d="M124 156 C106 196 100 232 102 254 L258 254 C260 232 254 196 236 156 Q180 188 124 156Z" fill="#5a4636" stroke="#3a2c20" stroke-width="1.6"/><path d="M128 158 Q180 192 232 158 Q180 176 128 158Z" fill="#3a2c20"/><path d="M180 176 V254" stroke="#3a2c20" stroke-width="1.4"/><path d="M122 214 Q180 228 238 214" stroke="#c8baa3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M200 220 Q204 238 198 250" stroke="#c8baa3" stroke-width="3" fill="none" stroke-linecap="round"/>';break;
+case'sweater':o.front='<path d="M132 160 C120 192 116 224 120 250 L240 250 C244 224 240 192 228 160Z" fill="#a8947a" stroke="#8a7762" stroke-width="1.4"/>'+[176,188,200,212,224,236].map(y=>'<path d="M122 '+y+' Q180 '+(y+6)+' 238 '+y+'" stroke="#8a7762" stroke-width="1.6" fill="none"/>').join('')+'<path d="M154 160 Q180 182 206 160 Q180 170 154 160Z" fill="#8a7762"/><path d="M138 244 H222" stroke="#8a7762" stroke-width="5"/>';break}
+return o}
+function wolfG(pose,eye,outfit,ao){const B='#333847',L='#4b5166',K='#2a2e3a',S='rgba(185,194,211,.30)',oc=outfit?outfitSvg(outfit):{back:'',front:''},col={suit:'#15171f',coat:'#202433',vest:'#3a3f52',monk:'#5a4636',sweater:'#a8947a'}[outfit]||'#333847';
+const tail='<g class="w-tail"><path d="M232 238 C286 248 300 202 282 174 C284 208 262 228 230 224Z" fill="'+K+'"/><path d="M282 174 C284 192 278 206 268 214 C278 200 282 188 282 174Z" fill="#b9c2d3" opacity=".55"/></g>';
+if(pose==='sleep')return '<g class="w-breathe"><path d="M74 224 C70 176 144 154 218 156 C296 158 340 188 332 224 C326 250 258 256 196 256 C130 256 76 250 74 224Z" fill="'+B+'" stroke="'+S+'"/><ellipse cx="'+(outfit?236:272)+'" cy="'+(outfit?204:210)+'" rx="'+(outfit?86:46)+'" ry="'+(outfit?36:30)+'" fill="'+(outfit?col:L)+'" opacity="'+(outfit?.94:.5)+'"/><path d="M146 174 C190 160 254 162 296 184" stroke="'+S+'" stroke-width="2" fill="none"/></g><g class="w-tail"><path d="M332 224 C326 254 258 260 196 260 C132 260 88 254 70 238 C108 250 192 248 256 246 C304 244 326 236 332 224Z" fill="'+K+'"/><path d="M70 238 C78 246 94 252 112 254 C100 248 88 242 84 236Z" fill="#b9c2d3" opacity=".55"/></g><ellipse cx="110" cy="244" rx="26" ry="9" fill="'+L+'"/><ellipse cx="156" cy="250" rx="26" ry="9" fill="'+L+'"/><g transform="translate(128 214) rotate(-12) scale(2.05) translate(-32 -33.5)">'+wHead('closed')+'</g><g class="w-z" fill="#b9c2d3" font-family="serif"><text x="196" y="140" font-size="22">z</text><text x="218" y="116" font-size="17">z</text><text x="238" y="94" font-size="13">z</text></g>';
+if(pose==='lie')return tail.replace('M232 238 C286 248 300 202 282 174 C284 208 262 228 230 224Z','M310 238 C346 238 352 206 332 190 C334 214 322 228 304 228Z').replace('M282 174 C284 192 278 206 268 214 C278 200 282 188 282 174Z','M332 190 C334 204 330 218 322 226 C330 214 332 202 332 190Z')+'<g class="w-breathe"><path d="M78 238 C76 200 124 180 194 180 C264 180 312 200 310 238 C308 256 248 258 194 258 C136 258 80 256 78 238Z" fill="'+B+'" stroke="'+S+'"/><ellipse cx="'+(outfit?240:268)+'" cy="'+(outfit?224:228)+'" rx="'+(outfit?62:38)+'" ry="'+(outfit?28:22)+'" fill="'+(outfit?col:L)+'" opacity="'+(outfit?.94:.5)+'"/></g><ellipse cx="118" cy="250" rx="27" ry="9" fill="'+L+'"/><ellipse cx="168" cy="253" rx="27" ry="9" fill="'+L+'"/><g transform="translate(142 184) rotate(-3) scale(2.15) translate(-32 -33.5)">'+wHead(eye)+'</g>';
+const hx=pose==='gaze'?-14:0,hr=pose==='gaze'?-8:0;
+return tail+'<g class="w-breathe">'+(oc.back||'')+'<path d="M138 158 C126 190 122 222 126 250 L234 250 C238 222 234 190 222 158Z" fill="'+B+'" stroke="'+S+'"/><path d="M164 168 L180 212 L196 168Z" fill="'+L+'" opacity=".7"/><ellipse cx="158" cy="252" rx="20" ry="8" fill="'+L+'"/><ellipse cx="202" cy="252" rx="20" ry="8" fill="'+L+'"/>'+(oc.front||'')+'</g><g class="w-hw"><g class="w-head" transform="translate('+(180+hx)+' 104) rotate('+hr+') scale(2.7) translate(-32 -33.5)">'+wHead(eye)+'</g></g>'}
+function roomSvg(o,wolf,min,cls){o=o||roomOpt();const lg=lightNow();const bgf=RB[o.bg]||RB.church;
+return '<svg viewBox="0 0 360 300" class="room '+(cls||'')+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ジェイスの部屋">'+RB_DEFS+'<g class="r-bg">'+bgf()+'</g><g class="r-dec">'+decorSvg(min==null?decorLv():min)+'</g><g class="r-wolf" id="rwolf" transform="translate(14 36) scale(.9)">'+wolfG(wolf&&wolf.pose||'sit',wolf&&wolf.eye||'open',o.outfit)+'</g><g class="r-lt">'+lightSvg(lg)+'</g></svg>'}
+function studyDays(){const d=new Set();((S.study&&S.study.log)||[]).forEach(x=>{if(x.d)d.add(x.d)});((S.vocab&&S.vocab.days)||[]).forEach(x=>d.add(x));return d.size}
+function decorLv(){const m=totalMin(),n=studyDays();let lv=0;DECOR.forEach((d,i)=>{if(i>0&&(n>=d[0]||m>=d[1]))lv=i});return lv}
+function decorNext(){const lv=decorLv(),d=DECOR[lv+1];if(!d)return null;const m=totalMin(),n=studyDays();return{name:d[2],days:Math.max(0,d[0]-n),min:Math.max(0,d[1]-m)}}
+function totalMin(){const a=(S.study&&S.study.log||[]).reduce((t,x)=>t+(x.sec||0),0),b=(S.vocab&&S.vocab.sec)||0;return Math.floor((a+b)/60)}
+
+/* ====== AMBIENT SOUND（環境音）====== */
+const BG_ENV={church:'church',chapel:'church',library:'library',study:'library',rain:'rainy',stars:'forest'};
+const ENV_NAME={church:'ゴシック教会',library:'古い図書館',rainy:'雨の書斎',forest:'月夜の森'};
+const ALAYERS={
+church:[['air','室内の空気音','ベース'],['wind','ステンドグラス付近の風','環境'],['candle','蝋燭の燃焼音','補助'],['bell','遠くの鐘','アクセント'],['creak','古い建物の軋み','アクセント']],
+library:[['room','室内の空気音','ベース'],['clock','時計の秒針','補助'],['wind','窓の外の風','環境'],['fire','暖炉の薪','補助'],['page','ページをめくる音','アクセント'],['floor','木の床の軋み','アクセント'],['book','本を置く音','アクセント']],
+rainy:[['room','室内の空気音','ベース'],['glass','窓ガラスに当たる雨','環境'],['roof','屋根に落ちる雨粒','環境'],['gap','窓の隙間の風','環境'],['fire','暖炉の燃焼音','補助'],['thunder','遠くの雷鳴','アクセント']],
+forest:[['wind','木々を抜ける風','環境'],['leaf','葉の擦れる音','環境'],['insect','虫の声','環境'],['owl','遠くのフクロウ','アクセント'],['branch','枝の揺れる音','アクセント']]};
+const BIRD_LAYER=['birds','朝の鳥の声','アクセント'];
+let AA=null,AM=null,ACUR=null,AGAP=0,APREV=0;
+function ambS(){const a=S.amb=S.amb||{};if(a.on==null)a.on=false;if(a.mute==null)a.mute=false;if(a.auto==null)a.auto=true;if(!a.env)a.env='church';if(a.master==null)a.master=70;if(!a.vol)a.vol={};return a}
+function ambEnv(){const a=ambS();return a.auto?(BG_ENV[roomOpt().bg]||'church'):a.env}
+function ambPeriod(){const h=new Date(Date.now()+9*36e5).getUTCHours();return h>=5&&h<10?'morning':h>=10&&h<16?'day':h>=16&&h<19?'evening':h>=19&&h<23?'night':'late'}
+function ambTod(id,p){const W={morning:.7,day:.8,evening:1.2,night:.6,late:.45},F={morning:.5,day:.4,evening:1,night:1.2,late:.8},K={morning:.8,day:.8,evening:1.2,night:.6,late:.25},O={morning:.1,day:.1,evening:.6,night:1.2,late:1},S2={morning:.9,day:.9,evening:1,night:1,late:1.15};
+if(id==='wind'||id==='gap'||id==='leaf')return W[p];if(id==='fire'||id==='candle')return F[p];if(id==='bell')return K[p];if(id==='owl'||id==='insect')return O[p];if(id==='creak'||id==='floor'||id==='book'||id==='branch'||id==='page')return S2[p];if(id==='birds')return p==='morning'?1:p==='day'?.5:0;return 1}
+function ambMaster(){const a=ambS(),p=ambPeriod(),f={morning:.9,day:.95,evening:1,night:.85,late:.6}[p];return a.mute||!a.on?0:Math.pow(a.master/100,1.5)*0.9*f}
+function aCtx(){try{if(!AA){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AA=new C();AM=AA.createGain();AM.gain.value=0;const c=AA.createDynamicsCompressor();c.threshold.value=-26;c.knee.value=24;c.ratio.value=3;c.attack.value=.02;c.release.value=.4;AM.connect(c);c.connect(AA.destination)}if(AA.state==='suspended')AA.resume();if(navigator.audioSession)navigator.audioSession.type='ambient';return AA}catch(e){return null}}
+const ABUF={};
+function aNoise(a,type,sec){const k=type+sec;if(ABUF[k])return ABUF[k];const sr=a.sampleRate,x=Math.floor(sr*0.5),n=Math.floor(sr*sec),tot=n+x,b=a.createBuffer(1,n,sr),d=new Float32Array(tot);let last=0,b0=0,b1=0,b2=0;for(let i=0;i<tot;i++){const w=Math.random()*2-1;if(type==='brown'){last=(last+0.02*w)/1.02;d[i]=last*3.5}else if(type==='pink'){b0=0.99765*b0+w*0.099046;b1=0.963*b1+w*0.2965164;b2=0.57*b2+w*1.0526913;d[i]=(b0+b1+b2+w*0.1848)*0.11}else d[i]=w}
+const o=b.getChannelData(0);for(let i=0;i<n;i++)o[i]=d[i];for(let i=0;i<x;i++){const t=i/x;o[i]=o[i]*t+d[n+i]*(1-t)}return ABUF[k]=b}
+function aDrops(a,sec,rate,amp,tmin,tmax,lpLo,lpHi){const k='d'+[sec,rate,amp,tmin,tmax].join(),sr=a.sampleRate;if(ABUF[k])return ABUF[k];const n=Math.floor(sr*sec),b=a.createBuffer(1,n,sr),d=b.getChannelData(0),nd=Math.floor(sec*rate);for(let j=0;j<nd;j++){const st=Math.floor(Math.random()*n),len=Math.floor(sr*(tmin+Math.random()*(tmax-tmin))),g=amp*(0.2+Math.random()*0.8)*(Math.random()<0.07?2.2:1),cf=lpLo+Math.random()*(lpHi-lpLo);let lp=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;lp+=cf*(w-lp);d[(st+i)%n]+=lp*g*Math.exp(-i/(len*0.35))}}
+let mx=0;for(let i=0;i<n;i++)mx=Math.max(mx,Math.abs(d[i]));if(mx>0)for(let i=0;i<n;i++)d[i]/=mx;return ABUF[k]=b}
+function aImpulse(a,sec,tone){const sr=a.sampleRate,n=Math.floor(sr*sec),b=a.createBuffer(2,n,sr);for(let c=0;c<2;c++){const d=b.getChannelData(c);let lp=0;for(let i=0;i<n;i++){const t=i/n,cf=Math.max(0.04,tone*(1-t*0.85));lp+=cf*((Math.random()*2-1)-lp);d[i]=lp*Math.pow(1-t,2.4)*(i<sr*0.01?i/(sr*0.01):1)}}return b}
+const AREVSET={church:[4.6,.5,.9],library:[1.3,.55,.4],rainy:[.9,.6,.3],forest:[.45,.7,.15]};
+function ambBuild(env,period){const a=aCtx();if(!a)return null;const rv=AREVSET[env],cur={env,period,t:[],layers:{},stopped:false,lastAcc:0};
+cur.bus=a.createGain();cur.bus.gain.value=0;cur.bus.connect(AM);cur.rev=a.createConvolver();cur.rev.buffer=aImpulse(a,rv[0],rv[1]);cur.revG=a.createGain();cur.revG.gain.value=rv[2];cur.rev.connect(cur.revG);cur.revG.connect(cur.bus);
+const list=ALAYERS[env].slice();if(ambTod('birds',period)>0&&(env==='church'||env==='forest'||env==='library'))list.push(BIRD_LAYER);
+list.forEach(L=>{const id=L[0],lay={id,g:a.createGain(),w:a.createGain(),nodes:[],mul:ambTod(id,period)};lay.g.connect(cur.bus);lay.w.connect(cur.rev);cur.layers[id]=lay;ambLayerVol(env,lay);ambLayerStart(a,cur,lay)});
+cur.bus.gain.setTargetAtTime(1,a.currentTime,0.9);return cur}
+function ambLayerVol(env,lay){const v=(ambS().vol[env+'.'+lay.id]);const u=(v==null?70:v)/70,g=u*lay.mul;try{lay.g.gain.setTargetAtTime(g,AA.currentTime,0.12);lay.w.gain.setTargetAtTime(g,AA.currentTime,0.12)}catch(e){}}
+function aLater(cur,fn,sMin,sMax,rate){const ms=(sMin+Math.random()*(sMax-sMin))*1000/(rate||1);const id=setTimeout(()=>{if(ACUR===cur&&!cur.stopped)fn()},ms);cur.t.push(id)}
+function aAcc(cur,lay,fn,sMin,sMax,first){const rate=(cur.period==='late'?1.5:1);const go=()=>{const a=AA;if(!a)return;const now=Date.now();if(now-cur.lastAcc<7000){aLater(cur,go,4,9);return}cur.lastAcc=now;fn(a,cur,lay);aLater(cur,go,sMin,sMax,rate)};aLater(cur,go,first[0],first[1])}
+function aNode(a,lay,n,dry,wet){const d=a.createGain();d.gain.value=dry;n.connect(d);d.connect(lay.g);if(wet>0){const w=a.createGain();w.gain.value=wet;n.connect(w);w.connect(lay.w)}return d}
+function aLoop(a,lay,type,sec,filters,gain,wet){const s=a.createBufferSource();s.buffer=aNoise(a,type,sec);s.loop=true;let n=s;filters.forEach(f=>{const x=a.createBiquadFilter();x.type=f[0];x.frequency.value=f[1];if(f[2])x.Q.value=f[2];n.connect(x);n=x});s.start();lay.nodes.push(s);return aNode(a,lay,n,gain,wet||0)}
+function aLfo(a,lay,freq,depth,target){const o=a.createOscillator(),g=a.createGain();o.frequency.value=freq;g.gain.value=depth;o.connect(g);g.connect(target);o.start();lay.nodes.push(o)}
+function aEnv(a,g,t,att,peak,dec){g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(peak,0.0002),t+att);g.gain.exponentialRampToValueAtTime(0.0001,t+att+dec)}
+function aBurst(a,lay,t,dur,type,f,q,peak,dry,wet,sweepTo){const s=a.createBufferSource();s.buffer=aNoise(a,type,2);const fl=a.createBiquadFilter();fl.type='bandpass';fl.frequency.setValueAtTime(f,t);if(sweepTo)fl.frequency.exponentialRampToValueAtTime(sweepTo,t+dur);fl.Q.value=q;const g=a.createGain();aEnv(a,g,t,Math.min(0.02,dur/4),peak,dur);s.connect(fl);fl.connect(g);g.connect(lay.g);if(wet){const w=a.createGain();w.gain.value=wet;g.connect(w);w.connect(lay.w)}s.start(t,Math.random()*1.2);s.stop(t+dur+0.2)}
+function aTone(a,lay,t,f0,f1,dur,peak,type,filt,wet){const o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f0,t);if(f1)o.frequency.exponentialRampToValueAtTime(f1,t+dur);aEnv(a,g,t,Math.min(dur*0.3,0.12),peak,dur);let n=o;if(filt){const fl=a.createBiquadFilter();fl.type=filt[0];fl.frequency.value=filt[1];if(filt[2])fl.Q.value=filt[2];o.connect(fl);n=fl}n.connect(g);g.connect(lay.g);if(wet){const w=a.createGain();w.gain.value=wet;g.connect(w);w.connect(lay.w)}o.start(t);o.stop(t+dur+0.2)}
+function ambLayerStart(a,cur,lay){const id=lay.id,env=cur.env;
+const wind=(c,q,lp,gain,wet)=>{const g=aLoop(a,lay,'pink',8,[['bandpass',c,q],['lowpass',lp]],gain,wet);aLfo(a,lay,0.07,gain*0.55,g.gain);return g};
+if(id==='air'||id==='room'){aLoop(a,lay,'brown',10,[['lowpass',id==='air'?190:160],['highpass',30]],id==='air'?0.5:0.4,id==='air'?0.5:0.2)}
+else if(id==='wind'){wind(env==='forest'?380:env==='church'?600:450,0.7,env==='forest'?2200:1500,env==='forest'?0.55:0.4,env==='church'?0.6:env==='library'?0.1:0.1)}
+else if(id==='gap'){const g=aLoop(a,lay,'pink',8,[['bandpass',850,9]],0.07,0.2);aLfo(a,lay,0.11,0.04,g.gain)}
+else if(id==='leaf'){const g=aLoop(a,lay,'white',6,[['bandpass',4600,0.5],['highpass',2500]],0.05,0.05);aLfo(a,lay,0.17,0.03,g.gain);aLfo(a,lay,0.29,0.02,g.gain)}
+else if(id==='glass'){const s=a.createBufferSource();s.buffer=aDrops(a,6.3,260,0.5,0.002,0.006,0.5,0.9);s.loop=true;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=4200;bp.Q.value=0.6;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=2200;s.connect(bp);bp.connect(hp);s.start();lay.nodes.push(s);aNode(a,lay,hp,0.55,0.05)}
+else if(id==='roof'){const s=a.createBufferSource();s.buffer=aDrops(a,7.1,90,0.7,0.006,0.018,0.12,0.45);s.loop=true;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1500;bp.Q.value=0.45;s.connect(bp);s.start();lay.nodes.push(s);aNode(a,lay,bp,0.65,0.3);aLoop(a,lay,'pink',9,[['lowpass',700]],0.12,0.2)}
+else if(id==='fire'){aLoop(a,lay,'brown',10,[['lowpass',380]],0.45,0.1);const pop=()=>{const t=a.currentTime+0.02,big=Math.random()<0.08;aBurst(a,lay,t,0.015+Math.random()*0.04,'white',1400+Math.random()*3200,1.4,(big?0.32:0.05+Math.random()*0.11),1,0.12);aLater(cur,pop,0.08,0.9)};aLater(cur,pop,0.2,0.8)}
+else if(id==='candle'){const tick=()=>{const t=a.currentTime+0.02;aBurst(a,lay,t,0.006+Math.random()*0.02,'white',3000+Math.random()*3000,1,0.02+Math.random()*0.03,1,0.3);aLater(cur,tick,0.15,1.8)};aLater(cur,tick,0.3,1)}
+else if(id==='clock'){let next=0;const sched=()=>{const t0=a.currentTime;if(!next||next<t0)next=Math.ceil(t0)+0.05;while(next<t0+1.6){const hi=Math.round(next)%2===0;aTone(a,lay,next,hi?1250:980,hi?900:700,0.03,0.05,'sine',null,0.1);aBurst(a,lay,next,0.012,'white',3600,1.2,0.035,1,0.1);next+=1}aLater(cur,sched,0.35,0.45)};sched()}
+else if(id==='insect'){[4200,4650,5100].forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain(),l=a.createOscillator(),lg=a.createGain();o.frequency.value=f;g.gain.value=0;l.frequency.value=5+i*1.3;lg.gain.value=0.012;l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(lay.g);o.start();l.start();lay.nodes.push(o,l);const drift=()=>{try{l.frequency.setTargetAtTime(4+Math.random()*5,a.currentTime,2)}catch(e){}aLater(cur,drift,8,20)};aLater(cur,drift,6,14)})}
+else if(id==='bell'){aAcc(cur,lay,(a,c,L)=>{const k=1+Math.floor(Math.random()*3),fb=190+Math.random()*50,sp=4+Math.random()*2.2;for(let j=0;j<k;j++){const t=a.currentTime+0.05+j*sp;[[0.5,.6,9],[1,1,7],[1.19,.55,5.5],[1.5,.45,4],[2,.35,3],[2.5,.2,2],[3,.12,1.5]].forEach(p=>aTone(a,L,t,fb*p[0],0,p[2],0.07*p[1],'sine',['lowpass',1400],0.9))}},70,190,[8,22])}
+else if(id==='creak'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05;aTone(a,L,t,150,240,1.4+Math.random(),0.04,'sawtooth',['bandpass',320,4],0.5)},40,140,[20,60])}
+else if(id==='floor'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05;aTone(a,L,t,95,135,0.6+Math.random()*0.3,0.05,'triangle',['bandpass',240,3],0.2);aBurst(a,L,t,0.08,'white',500,1,0.02,1,0.1)},45,120,[25,70])}
+else if(id==='page'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05;aBurst(a,L,t,0.38,'white',2200,1.2,0.06,1,0.15,4800);aBurst(a,L,t+0.17,0.18,'white',3000,1.2,0.03,1,0.15,5200)},25,80,[12,35])}
+else if(id==='book'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05;aTone(a,L,t,90,60,0.16,0.09,'sine',null,0.25);aBurst(a,L,t,0.07,'white',500,0.8,0.03,1,0.2)},60,150,[30,90])}
+else if(id==='thunder'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05,s=a.createBufferSource();s.buffer=aNoise(a,'brown',10);s.loop=true;const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(260,t);lp.frequency.exponentialRampToValueAtTime(80,t+5);const g=a.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.35,t+1.2);g.gain.setValueAtTime(0.35,t+1.8);g.gain.exponentialRampToValueAtTime(0.0001,t+6.5);const l=a.createOscillator(),lg=a.createGain();l.frequency.value=6;lg.gain.value=0.08;l.connect(lg);lg.connect(g.gain);s.connect(lp);lp.connect(g);g.connect(L.g);const w=a.createGain();w.gain.value=0.6;g.connect(w);w.connect(L.w);s.start(t,Math.random()*4);l.start(t);s.stop(t+7);l.stop(t+7)},50,160,[15,40])}
+else if(id==='owl'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05,f=320+Math.random()*60;aTone(a,L,t,f,f*0.88,0.32,0.04,'sine',['lowpass',900],0.7);aTone(a,L,t+0.55,f,f*0.86,0.32,0.04,'sine',['lowpass',900],0.7);if(Math.random()<0.6)aTone(a,L,t+1.2,f*0.97,f*0.8,0.7,0.045,'sine',['lowpass',900],0.7)},20,70,[10,30])}
+else if(id==='branch'){aAcc(cur,lay,(a,c,L)=>{const t=a.currentTime+0.05;aBurst(a,L,t,0.9,'pink',900,2,0.03,1,0.3,600)},30,90,[15,45])}
+else if(id==='birds'){aAcc(cur,lay,(a,c,L)=>{const n=3+Math.floor(Math.random()*4),f0=2400+Math.random()*1200;for(let j=0;j<n;j++)aTone(a,L,a.currentTime+0.05+j*(0.12+Math.random()*0.08),f0+Math.random()*600,f0*(0.7+Math.random()*0.5),0.1+Math.random()*0.08,0.025,'sine',['lowpass',5500],0.2)},6,18,[3,9])}}
+function ambStop(fade){const c=ACUR;ACUR=null;if(!c)return;c.stopped=true;c.t.forEach(clearTimeout);const f=fade==null?1.2:fade;try{c.bus.gain.setTargetAtTime(0,AA.currentTime,f/3)}catch(e){}setTimeout(()=>{Object.values(c.layers).forEach(l=>l.nodes.forEach(n=>{try{n.stop()}catch(e){}}));try{c.bus.disconnect();c.rev.disconnect();c.revG.disconnect()}catch(e){}},f*1000+400)}
+function ambApply(){if(AM&&AA){try{AM.gain.setTargetAtTime(ambMaster(),AA.currentTime,0.15)}catch(e){}}if(ACUR)Object.values(ACUR.layers).forEach(l=>ambLayerVol(ACUR.env,l))}
+function ambWanted(){return APREV>Date.now()||(ambS().on&&!ambS().mute&&((typeof DN2!=='undefined'&&DN2&&DN2.open)||view==='study'))}
+function ambSync(){const want=ambWanted();if(!want){ambStop(1.2);return}const env=ambEnv(),p=ambPeriod();if(ACUR&&ACUR.env===env&&ACUR.period===p){ambApply();return}if(ACUR)ambStop(1.5);const a=aCtx();if(!a)return;ACUR=ambBuild(env,p);ambApply()}
+function ambToggle(k){const a=ambS();a[k]=!a[k];save();if(a.on)aCtx();ambSync();ambApply();if(view==='set'||view==='study')render()}
+function ambVol(v){ambS().master=+v;clearTimeout(ambVol.h);ambVol.h=setTimeout(save,400);ambApply()}
+function ambLay(key,v){ambS().vol[key]=+v;clearTimeout(ambLay.h);ambLay.h=setTimeout(save,400);if(ACUR)Object.values(ACUR.layers).forEach(l=>ambLayerVol(ACUR.env,l))}
+function ambEnvSet(e){const a=ambS();a.env=e;save();ambSync();if(view==='set')render()}
+function ambPreview(){aCtx();APREV=Date.now()+25000;const a=ambS();ambSync();ambApply();if(AM&&!a.on){try{AM.gain.setTargetAtTime(Math.pow(a.master/100,1.5)*0.9,AA.currentTime,0.2)}catch(e){}}clearTimeout(ambPreview.h);ambPreview.h=setTimeout(()=>{APREV=0;ambSync();ambApply()},25500);toast('環境音を25秒、試聴します')}
+function ambCard(){const a=ambS(),env=ambEnv(),p=ambPeriod(),PN={morning:'朝',day:'昼',evening:'夕方',night:'夜',late:'深夜'}[p],on=(k,l)=>'<button class="sm '+(a[k]?'on':'ghost')+'" onclick="ambToggle(\''+k+'\')">'+l+'</button>';
+const lays=ALAYERS[env].concat(ambTod('birds',p)>0&&env!=='rainy'?[BIRD_LAYER]:[]);
+return '<div class="card"><h3>AMBIENT SOUND</h3><p class="mut" style="font-size:13px;margin:0 0 8px">背景ごとの環境音を、いくつかの音に分けて重ねています。STUDYと隠れ家の画面で流れます。</p><div class="row" style="margin-bottom:8px">'+on('on','環境音 '+(a.on?'ON':'OFF'))+on('mute','ミュート')+on('auto','背景に合わせて自動切り替え')+'<button class="sm ghost" onclick="ambPreview()">試聴</button></div>'+
+(a.auto?'<p class="mut" style="margin:0 0 6px;font-size:13px">いまの環境：<b>'+ENV_NAME[env]+'</b>（'+PN+'の音）</p>':'<div class="row" style="margin-bottom:8px">'+Object.keys(ENV_NAME).map(k=>'<button class="sm '+(a.env===k?'on':'ghost')+'" onclick="ambEnvSet(\''+k+'\')">'+ENV_NAME[k]+'</button>').join('')+'</div>')+
+'<div class="row sp" style="margin-bottom:6px"><span>全体の音量</span><input type="range" min="0" max="100" value="'+a.master+'" oninput="ambVol(this.value)" style="width:56%;min-height:0;padding:0;border:0;background:transparent"></div>'+
+lays.map(L=>{const k=env+'.'+L[0],v=a.vol[k]==null?70:a.vol[k];return '<div class="row sp" style="padding:3px 0;border-top:1px solid var(--bd)"><span style="font-size:14px">'+L[1]+' <span class="mut" style="font-size:11px">'+L[2]+'</span></span><input type="range" min="0" max="100" value="'+v+'" oninput="ambLay(\''+k+'\',this.value)" style="width:42%;min-height:0;padding:0;border:0;background:transparent"></div>'}).join('')+
+'<p class="mut" style="font-size:12px;margin:8px 0 0">音は、アプリの中で作った環境音です（録音素材は入っていません）。時間帯（朝・夕方・夜・深夜）で、鳴る音と大きさが変わります。</p></div>'}
+setInterval(()=>{if(ACUR||ambWanted())ambSync()},300000);
+
+/* ====== 隠れ家（ジェイスの部屋）====== */
+let DN2=null,DNT=[],dTapAt=[];
+const DNL={
+open:['よく来たな。ここは静かだ。','火がついている。あたっていけ。'],openNight:['こんな時間か。ゆっくりしていけ。','夜は、静かでいい。'],ret:['おかえり。','戻ったか。','…来たな。'],
+pet:['…悪くない。','そこ、いい。','ふん。もう少し。'],
+idle:['ゆっくりしていけ。','今は、何もしなくていい。','少し目を閉じてもいい。','急がなくていい。'],
+rainy:['雨の音は、考え事を洗い流してくれる。','外は雨か。ここは濡れない。'],church:['静かだな。声が、遠くまで響く。','ここは、時間がゆっくり流れる。'],library:['本の匂いは、落ち着く。','秒針の音だけが、聞こえる。'],forest:['森は、夜も静かに動いている。','風が、枝をゆらしている。'],
+mood:{
+tired:['おつかれさま。今日はもう、頑張らなくていい。','ここで少し休んでいけ。時間は気にしなくていい。','重たい日は、ゆっくり進むのが正解だ。','温かいものを、少し口にしておけ。'],
+sleepy:['眠いなら、無理に起きていなくていい。','目を閉じるだけでも、体は休まる。','今日はもう、十分やった。'],
+lonely:['ここにいる。静かに、そばにいよう。','寂しい日もある。無理に消さなくていい。','何も話さなくていい。並んで座っているだけでいい。','誰かに、ひとこと送ってみるのも悪くない。'],
+anxious:['ゆっくり息を吐こう。急がなくていい。','今は、ここは安全だ。','全部を今、考えなくていい。いまの呼吸だけで十分だ。','不安は波みたいなものだ。そのうち、引いていく。'],
+hurry:['焦ると、息が浅くなる。まず、ゆっくり吐こう。','全部は、一度にできない。ひとつだけ決めよう。','数十秒、止まっても、遅れは取り戻せる。'],
+sad:['つらかったな。ここでは、無理に笑わなくていい。','泣きたいなら、泣いてもいい。','何も解決しなくていい。ただ、ここにいればいい。'],
+angry:['そうか。まず、長めに息を吐いてみろ。','無理に収めなくていい。ここでは、黙っていていい。','怒りたい日もある。それは悪いことじゃない。','水を一口飲んで、肩を落としてみろ。'],
+happy:['いいことがあったんだな。その気持ち、大事にしろ。','嬉しい日は、ちゃんと味わっておけ。','よかったな。尻尾が勝手に揺れる。'],
+bored:['退屈な日もある。ぼんやりしていていい。','何もしない時間も、悪くない。'],
+other:['そうか。聞いたぞ。','うん。そのままでいい。','言葉にできただけで、十分だ。','ここに置いていっていい。']},
+crisis:'それは、重い気持ちだな。ここで、ひとりで抱えなくていい。',crisisSub:'つらくて自分を傷つけたい気持ちがあるときは、身近な人や、よりそいホットライン（0120-279-338・24時間・無料）に話してほしい。危険が迫っているときは、119へ。',
+calm:['息が、整ってきたな。','それでいい。少し、楽になったか。','ゆっくり吐けたな。']};
+const MOOD_RE=[['crisis',/死にたい|消えたい|自殺|自傷|リスカ|いなくなりたい|生きていたくない|終わらせたい|死のう/],['sleepy',/眠|ねむ|寝れ|寝たい|不眠/],['tired',/疲|つかれ|だる|しんど|くたくた|限界|ぐったり/],['lonely',/寂|さび|さみ|ひとり|独り|孤独/],['hurry',/焦|あせ|急が|間に合わ|時間がない/],['anxious',/不安|心配|こわ|怖|ドキドキ|どきどき|緊張|プレッシャー/],['angry',/イライラ|いらいら|腹立|むかつ|ムカ|怒|うざ|ストレス/],['sad',/悲|かなし|泣|つら|辛|落ち込|凹|へこ|憂鬱|ゆううつ/],['happy',/嬉|うれ|楽し|やった|最高|よかった|幸せ|ほっと|安心|わくわく|ワクワク/],['bored',/退屈|ひま|暇|つまら/]];
+const MOOD_POSE={tired:['lie','half'],sleepy:['lie','half'],lonely:['sit','open'],anxious:['sit','open'],hurry:['sit','open'],sad:['lie','half'],angry:['gaze',null],happy:['sit','happy'],bored:['gaze',null],other:['sit',null]};
+const MOOD_BREATH={tired:[4,0,8,5],sleepy:[4,0,8,5],lonely:[4,0,6,5],anxious:[4,0,6,6],hurry:[4,0,6,6],sad:[4,0,6,5],angry:[4,0,8,5],crisis:[4,0,6,4]};
+function denMoodKey(t){for(const [k,re] of MOOD_RE)if(re.test(t))return k;return 'other'}
+function dnT2(fn,ms){const id=setTimeout(()=>{if(DN2)fn()},ms);DNT.push(id);return id}
+function dnNight(){const h=new Date(Date.now()+9*36e5).getUTCHours();return h>=22||h<5}
+function dnEye(){return dnNight()?'half':'open'}
+function dnEl(id){return document.getElementById(id)}
+function dnSay(text,sub){const t=dnEl('dtext'),s=dnEl('dsub');if(t)t.textContent=text||'';if(s)s.textContent=sub||''}
+function dnWolf(){const g=dnEl('rwolf');if(g)g.innerHTML=wolfG(DN2.pose,DN2.eye,roomOpt().outfit)}
+function dnPose(pose,eye){DN2.pose=pose;DN2.eye=eye||dnEye();dnWolf()}
+function dnListen(on){const s=dnEl('dsvg');if(s)s.setAttribute('class','room'+(on?' listen':''))}
+function dnStage(){const o=roomOpt();let svg=roomSvg(o,{pose:DN2.pose,eye:DN2.eye},decorLv(),'');svg=svg.replace('class="room ','id="dsvg" class="room ').replace('</svg>','<rect x="60" y="30" width="240" height="262" fill="transparent" style="touch-action:none;cursor:pointer" onpointerdown="denPet(event)" onpointermove="denStroke(event)"/></svg>');return svg}
+function dnSheetHtml(){const o=roomOpt(),lv=decorLv(),nx=decorNext(),n=studyDays();return '<h4>背景</h4><div class="dn2-row">'+roomChips('bg',BGS,o.bg)+'</div><h4>服装</h4><div class="dn2-row">'+roomChips('outfit',OUTFITS,o.outfit)+'</div><h4>照明</h4><div class="dn2-row">'+roomChips('light',LIGHTS,(S.room&&S.room.light)||'auto')+'</div><h4>部屋の飾り（学習 '+n+'日・累計 '+hm(totalMin()*60)+'）</h4><div style="font-size:13px;line-height:1.8;color:#c8ccd4">'+DECOR.map((x,i)=>'<div style="opacity:'+(lv>=i?1:.4)+'">'+(lv>=i?'✓ ':'・ ')+x[2]+(i?'（'+x[0]+'日 または '+x[1]+'分）':'')+'</div>').join('')+(nx?'<div style="margin-top:4px;color:#e8c98f">次の飾りまで あと '+(nx.days?nx.days+'日の学習':'')+(nx.days&&nx.min?' または ':'')+(nx.min?nx.min+'分':'')+'</div>':'<div style="margin-top:4px;color:#e8c98f">すべて解放済み</div>')+'</div><div class="dn2-row" style="margin-top:12px"><button class="dn2-b" onclick="denSheet()">閉じる</button></div>'}
+function denRender(){const r=dnEl('den');if(!r||!DN2)return;const on=ambS().on&&!ambS().mute;r.innerHTML='<div class="dn2-top"><button class="dn2-b" onclick="denClose()">← 戻る</button><span class="dn2-row"><button class="dn2-b" onclick="denSheet()">模様替え</button><button class="dn2-b'+(on?' on':'')+'" id="dsnd" onclick="denSound()">音 '+(on?'ON':'OFF')+'</button></span></div><div class="dn2-stage" id="dstage">'+dnStage()+'</div><div class="dn2-text" id="dtext"></div><div class="dn2-sub" id="dsub"></div><div class="dn2-bot"><div id="dbr" style="text-align:center"></div><div class="dn2-in"><input id="dmi" type="text" maxlength="80" placeholder="いまの気分を、ひとこと" autocomplete="off" enterkeyhint="send" onkeydown="if(event.key===\'Enter\')denFree()"><button class="dn2-b" onclick="denFree()">送る</button></div></div><div class="dn2-sheet" id="dsheet"></div><div class="dn2-breath" id="dbreath"><div class="dn2-bl" id="dbl"></div><div class="dn2-bc" id="dbc"></div><button class="dn2-b" onclick="denBreathEnd(false)">やめる</button></div>';dnSay(DN2.line||'',DN2.sub||'');dnOffer()}
+function dnOffer(){const b=dnEl('dbr');if(!b)return;const pt=DN2.pat;b.innerHTML=pt?'<button class="dn2-b on" onclick="denBreath()">深呼吸を一緒にする（約'+Math.round(pt[3]*(pt[0]+pt[1]+pt[2])/10)*10+'秒）</button>':''}
+function openDen(){denOpen()}
+function denOpen(){if(DN2)return;const r=document.createElement('div');r.id='den';r.className='dn2';r.setAttribute('onpointerdown','denTouch(event)');document.body.appendChild(r);DN2={open:true,pose:'lie',eye:'half',last:Date.now(),petAt:0,line:'',sub:'',pat:null,breath:0,bk:0,sheet:false,hid:0,nextWord:Date.now()+70000,nextAct:Date.now()+9000,nextBlink:Date.now()+4000};document.body.style.overflow='hidden';denRender();DN2.iv=setInterval(denTick,1000);
+dnT2(()=>{dnPose('sit',dnEye());dnListen(false);DN2.line=pick('dno',dnNight()?DNL.openNight:DNL.open);dnSay(DN2.line,'')},700);ambSync()}
+function denClose(){if(!DN2)return;clearInterval(DN2.iv);DNT.forEach(clearTimeout);DNT=[];clearTimeout(DN2.pe);const r=dnEl('den');if(r){if(r.parentNode)r.parentNode.removeChild(r);else if(r.remove)r.remove()}document.body.style.overflow='';DN2=null;ambSync()}
+function denSheet(){if(!DN2)return;DN2.sheet=!DN2.sheet;const s=dnEl('dsheet');if(!s)return;if(DN2.sheet){s.innerHTML=dnSheetHtml();s.classList.add('on')}else s.classList.remove('on')}
+function denSound(){const a=ambS();a.on=!a.on;if(a.on&&a.mute)a.mute=false;save();if(a.on)aCtx();ambSync();ambApply();const b=dnEl('dsnd');if(b){b.textContent='音 '+(a.on?'ON':'OFF');b.className='dn2-b'+(a.on?' on':'')}}
+function denTouch(e){if(!DN2)return;DN2.last=Date.now();if((DN2.pose==='sleep'||DN2.rest)&&!DN2.breath){DN2.rest=false;dnPose('sit',dnEye())}}
+function denPet(e){if(!DN2||DN2.breath)return;DN2.last=Date.now();dnPose(DN2.pose==='sleep'||DN2.pose==='lie'?'sit':DN2.pose,'happy');clearTimeout(DN2.pe);DN2.pe=setTimeout(()=>{if(DN2&&!DN2.breath)dnPose(DN2.pose,dnEye())},2300);if(Date.now()-DN2.petAt>9000){DN2.petAt=Date.now();dnSay(pick('dnp',DNL.pet),'')}}
+function denStroke(e){if(e&&(e.buttons>0||e.pointerType==='touch'))denPet(e)}
+function denTick(){if(!DN2||DN2.breath)return;const n=Date.now(),idle=n-DN2.last;
+if(dnNight()&&idle>300000&&DN2.pose!=='sleep'){dnPose('sleep','closed');return}
+if(idle>150000&&DN2.pose!=='sleep'&&DN2.pose!=='lie'){DN2.rest=true;dnPose('lie','half')}
+if(DN2.pose==='sleep')return;
+if(n>DN2.nextBlink&&(DN2.eye==='open'||DN2.eye==='half')){DN2.nextBlink=n+3500+Math.random()*4500;const p=DN2.pose,e=DN2.eye;dnPose(p,'closed');dnT2(()=>{if(DN2&&DN2.eye==='closed'&&DN2.pose===p)dnPose(p,e)},170)}
+if(n>DN2.nextAct&&!DN2.rest){DN2.nextAct=n+11000+Math.random()*11000;const o=dnNight()?['sit','sit','gaze','lie','lie']:['sit','sit','sit','gaze','gaze','lie'];const p=o[Math.floor(Math.random()*o.length)];dnPose(p,p==='lie'?'half':dnEye())}
+if(n>DN2.nextWord){DN2.nextWord=n+70000+Math.random()*60000;const env=ambEnv(),pool=(ambS().on&&!ambS().mute&&DNL[env])?DNL[env]:DNL.idle;DN2.line=pick('dnw',pool);dnSay(DN2.line,'')}}
+document.addEventListener('visibilitychange',()=>{if(!DN2)return;if(document.visibilityState==='hidden'){DN2.hid=Date.now();return}const away=Date.now()-(DN2.hid||Date.now());DN2.last=Date.now();try{if(AA&&AA.state==='suspended')AA.resume()}catch(e){}if(away>20000&&!DN2.breath){dnPose('sit',dnEye());DN2.line=pick('dnr',DNL.ret);dnSay(DN2.line,'')}});
+function denFree(){if(!DN2)return;const i=dnEl('dmi'),t=i?String(i.value||'').trim():'';if(!t)return;DN2.last=Date.now();const k=denMoodKey(t);if(i)i.value='';
+const p=MOOD_POSE[k]||MOOD_POSE.other;if(k==='crisis'){dnPose('sit','open');DN2.line=DNL.crisis;DN2.sub=DNL.crisisSub;DN2.pat=MOOD_BREATH.crisis;dnSay(DN2.line,DN2.sub);dnOffer();dnListen(true);return}
+dnPose(p[0],p[1]||dnEye());dnListen(true);dnT2(()=>dnListen(false),8000);DN2.line=pick('dnm'+k,DNL.mood[k]);DN2.sub='';DN2.pat=MOOD_BREATH[k]||null;dnSay(DN2.line,'');dnOffer()}
+function denBreath(){if(!DN2||!DN2.pat)return;const pt=DN2.pat,tok=++DN2.bk;DN2.breath=tok;const ov=dnEl('dbreath'),c=dnEl('dbc'),lab=dnEl('dbl');if(ov)ov.classList.add('on');const ph=[['吸って…',pt[0],1.15]];if(pt[1]>0)ph.push(['止めて…',pt[1],1.15]);ph.push(['吐いて…',pt[2],.55]);
+let t=300;for(let i=0;i<pt[3];i++){ph.forEach(p=>{dnT2(()=>{if(!DN2||DN2.breath!==tok)return;if(lab)lab.textContent=p[0];if(c){c.style.transition='transform '+p[1]+'s ease-in-out';c.style.transform='scale('+p[2]+')'}},t);t+=p[1]*1000})}
+dnT2(()=>{if(DN2&&DN2.breath===tok)denBreathEnd(true)},t+400)}
+function denBreathEnd(done){if(!DN2)return;DN2.breath=0;DN2.bk++;const ov=dnEl('dbreath');if(ov)ov.classList.remove('on');DN2.last=Date.now();DN2.nextAct=Date.now()+25000;DN2.nextWord=Date.now()+60000;if(done){dnPose('lie','half');DN2.line=pick('dnc',DNL.calm);DN2.sub='';DN2.pat=null;dnSay(DN2.line,'');dnOffer()}}
+function roomChips(k,list,cur){return list.map(x=>'<button class="rm-chip'+(cur===x[0]?' on':'')+'" onclick="roomSet(\''+k+'\',\''+x[0]+'\')">'+x[1]+'</button>').join('')}
+function roomSet(k,v){S.room=S.room||{};S.room[k]=v;save();if(DN2){const s=dnEl('dstage');if(s)s.innerHTML=dnStage();const sh=dnEl('dsheet');if(sh&&DN2.sheet)sh.innerHTML=dnSheetHtml();ambSync()}else{if(typeof ambSync==='function')ambSync();render()}}
+function jTap(){talk();const n=Date.now();dTapAt=dTapAt.filter(t=>n-t<3500);dTapAt.push(n);if(dTapAt.length>=5){dTapAt=[];denOpen()}}
+function denCard(){return '<div class="card"><h3>隠れ家</h3><p class="mut" style="font-size:13px;margin:0 0 8px">ジェイスの部屋で、静かに過ごします。背景・服装・照明を選べて、気分を入力すると、ジェイスが話して、深呼吸を一緒にします。撫でることもできます。</p><button onclick="denOpen()">隠れ家へ入る</button><p class="mut" style="font-size:12px;margin:6px 0 0">ホームのジェイスのアイコンを、素早く5回タップしても入れます。</p></div>'}
+
+/* ====== 単語帳・テスト勉強（STUDY）／ STUDY ROOM ====== */
+const WEAK_MIN=5;
+const VL={
+open:['今日は何を覚えるんだ？','急がなくていい。ひとつずつ確認していこう。','無理に全部覚えようとするな。まずは始めてみろ。','さて、今日はどこまで進めるかな。'],
+tail:['なかなか進んだな。','少し休憩してもいいぞ。','まだ続けるのか？無理はするなよ。','水でも飲んで、ひと息つけ。'],
+better:['さっきより迷わず答えられているな。','迷いが減ってきたな。いい流れだ。'],
+long:['集中が続いているな。目を休ませるのも忘れるな。','ここまで来たなら、もう十分な成果だ。'],
+weak:['このあたり、少し苦戦しているようだな。','間違えた問題だけ、もう一度確認してみるか？','焦らなくていい。苦手なところから片付けよう。'],
+endHi:['上出来だ。この調子でいい。','よく覚えているな。'],endMid:['悪くない。間違えたところは、また確認しよう。','覚えたところと、これからのところが見えてきたな。'],endLo:['今日は難しい日だったな。焦らなくていい。','間違えた分だけ、次に伸びる。'],
+streak1:['今日も来たのか。習慣になってきたな。'],streakN:['昨日も今日も続けている。悪くない。','少しずつ積み重なっているな。'],unlock:['また部屋が少し変わったな。','部屋に新しいものが増えたぞ。'],
+room:['ここは、おまえが積み重ねた時間でできた部屋だ。','机の上を見ろ。少しずつ、増えているだろう。','今日は、ゆっくりしていけ。']};
+let vCur='',vSess=null,vDr={q:'',a:'',c:'',bulk:'',dn:''},stTab='rec',stLine='';
+function vS(){const v=S.vocab=S.vocab||{};if(!v.decks)v.decks=[];if(v.sec==null)v.sec=0;if(!v.days)v.days=[];if(!v.day)v.day={};if(!v.cfg)v.cfg={filter:'all',order:'random',side:'q',tmode:'type',cat:''};return v}
+function vDeck(){const v=vS();let d=v.decks.find(x=>x.id===vCur);if(!d){d=v.decks[0]||null;vCur=d?d.id:''}return d}
+function vcGet(id){const d=vDeck();return d?d.cards.find(c=>c.id===id):null}
+function isWeak(c){return c.st==='unknown'||c.ng>=2||(c.ok+c.ng>=3&&c.ok/(c.ok+c.ng)<0.6)}
+function vAll(){return vS().decks.reduce((a,d)=>a.concat(d.cards),[])}
+function vAcc(cards){const o=cards.reduce((a,c)=>a+c.ok,0),n=cards.reduce((a,c)=>a+c.ng,0);return o+n?Math.round(o/(o+n)*100):null}
+function vTdy(){const v=vS(),td=jst();return v.day[td]||{ids:[],ok:0,ng:0,sec:0}}
+function vStreak(){const v=vS(),d=new Set(v.days),td=jst();let cur=0,x=d.has(td)?td:addDay(td,-1);while(d.has(x)){cur++;x=addDay(x,-1)}const arr=[...d].sort();let best=0,run=0,prev=null;arr.forEach(k=>{run=(prev&&addDay(prev,1)===k)?run+1:1;if(run>best)best=run;prev=k});return{cur,best,month:arr.filter(k=>k.startsWith(td.slice(0,7))).length}}
+function studyTodaySec(){const td=jst();return(S.study.log||[]).filter(x=>x.d===td).reduce((a,x)=>a+x.sec,0)+vTdy().sec}
+function vShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function vKeep(){const g=id=>{const e=document.getElementById(id);return e?e.value:null};[['vq','q'],['va','a'],['vc','c'],['vbulk','bulk'],['vdn','dn']].forEach(x=>{const v=g(x[0]);if(v!==null)vDr[x[1]]=v})}
+function vCfg(k,val){vKeep();vS().cfg[k]=val;save();render()}
+function vAddDeck(){vKeep();const n=vDr.dn.trim();if(!n)return toast('単語帳の名前を入力してください');const d={id:'k'+Date.now()+Math.random().toString(36).slice(2,4),name:n,cards:[]};vS().decks.push(d);vCur=d.id;vDr.dn='';save();render()}
+function vPickDeck(id){vKeep();vCur=id;vS().cfg.cat='';render()}
+function vRenDeck(){const d=vDeck();if(!d)return;modal('<h3>単語帳の名前</h3><input id="vrn" value="'+esc(d.name)+'" style="margin-bottom:10px"><div class="row"><button onclick="vRenSave()">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function vRenSave(){const d=vDeck(),n=$('vrn').value.trim();if(!n)return toast('名前を入力してください');d.name=n;save();closeM();render()}
+function vDelDeck(){const d=vDeck();if(!d)return;ask('単語帳「'+esc(d.name)+'」と、中のカード '+d.cards.length+' 枚を削除しますか？','削除する',()=>{const v=vS();v.decks=v.decks.filter(x=>x.id!==d.id);vCur='';save();render()})}
+function vNewCard(q,a,c){return{id:'c'+Date.now()+Math.random().toString(36).slice(2,5),q,a,cat:c||'',st:'new',ok:0,ng:0,last:null,t:Date.now()}}
+function vAddCard(){vKeep();const d=vDeck();if(!d)return toast('先に単語帳を作ってください');const q=vDr.q.trim(),a=vDr.a.trim();if(!q||!a)return toast('問題と答えを入力してください');d.cards.push(vNewCard(q,a,vDr.c.trim()));vDr.q='';vDr.a='';save();render()}
+function vBulk(){vKeep();const d=vDeck();if(!d)return toast('先に単語帳を作ってください');let n=0;vDr.bulk.split(/\r?\n/).forEach(line=>{const L=line.trim();if(!L)return;const p=L.split(/\t|,|，|｜|\|/).map(x=>x.trim());if(p.length<2||!p[0]||!p[1])return;d.cards.push(vNewCard(p[0],p[1],p[2]||''));n++});if(!n)return toast('「問題,答え」の形で、1行ずつ入力してください');vDr.bulk='';save();toast(n+'枚を追加しました');render()}
+function vEditCard(id){const c=vcGet(id);if(!c)return;modal('<h3>カードを編集</h3><div class="mut" style="font-size:12px">問題</div><input id="veq" value="'+esc(c.q)+'" style="margin-bottom:6px"><div class="mut" style="font-size:12px">答え</div><input id="vea" value="'+esc(c.a)+'" style="margin-bottom:6px"><div class="mut" style="font-size:12px">カテゴリー</div><input id="vec" value="'+esc(c.cat||'')+'" style="margin-bottom:10px"><div class="row"><button onclick="vEditSave(\''+id+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
+function vEditSave(id){const c=vcGet(id),q=$('veq').value.trim(),a=$('vea').value.trim();if(!q||!a)return toast('問題と答えを入力してください');c.q=q;c.a=a;c.cat=$('vec').value.trim();save();closeM();render()}
+function vDelCard(id){const c=vcGet(id);if(!c)return;ask('「'+esc(c.q)+'」を削除しますか？','削除する',()=>{const d=vDeck();d.cards=d.cards.filter(x=>x.id!==id);save();render()})}
+function vCats(d){return[...new Set((d?d.cards:[]).map(c=>c.cat).filter(Boolean))]}
+function vPool(d){const cfg=vS().cfg;let cs=d.cards.filter(c=>!cfg.cat||c.cat===cfg.cat);return{all:cs,unknown:cs.filter(c=>c.st!=='known'),wrong:cs.filter(c=>c.last===false||c.st==='unknown'),weak:cs.filter(isWeak)}}
+function vTime(){const s=vSess;if(!s)return;const n=Date.now(),v=vS();if(s.act&&n-s.act<=90000){const dt=Math.floor((n-s.act)/1000),dy=vTodayRef();v.sec+=dt;dy.sec+=dt}s.act=n}
+function vTodayRef(){const v=vS(),td=jst();return v.day[td]=v.day[td]||{ids:[],ok:0,ng:0,sec:0}}
+function vStart(mode,filter){const d=vDeck();if(!d)return;const v=vS();if(filter)v.cfg.filter=filter;const P=vPool(d)[v.cfg.filter]||[];if(!P.length)return toast('出題できる問題がありません');let ids=P.map(c=>c.id);if(v.cfg.order==='random')vShuffle(ids);
+vSess={mode,deck:d.id,ids,i:0,solved:{},n:0,okN:0,ngN:0,flip:false,res:null,opts:null,requeued:{},hist:[],act:Date.now(),line:pick('vo',VL.open),sugg:false,done:false};if(mode==='test'&&v.cfg.tmode==='choice')vMkOpts();save();render()}
+function vMkOpts(){const s=vSess,d=vDeck(),c=vcGet(s.ids[s.i]);if(!c){s.opts=null;return}if(vS().cfg.side==='a'){s.opts=null;return}const others=vShuffle([...new Set(d.cards.filter(x=>x.id!==c.id&&x.a!==c.a).map(x=>x.a))]).slice(0,3);if(others.length<3){s.opts=null;return}s.opts=vShuffle(others.concat([c.a]))}
+function vRecord(c,ok){const s=vSess,v=vS(),td=jst(),dy=vTodayRef();c.seen=(c.seen||0)+1;if(ok){c.ok++;c.st='known';c.last=true;s.okN++;dy.ok++}else{c.ng++;c.st='unknown';c.last=false;s.ngN++;dy.ng++}
+s.hist.push(ok?1:0);let fresh=false;if(!s.solved[c.id]){s.solved[c.id]=1;s.n++;fresh=true}if(dy.ids.indexOf(c.id)<0)dy.ids.push(c.id);
+let firstToday=false;if(v.days.indexOf(td)<0){v.days.push(td);firstToday=true}
+if(fresh&&s.n%10===0)vEvery(s.n);if(firstToday)vStreakSay();vRoomUnlock();return fresh}
+function vEvery(n){const s=vSess,h=s.hist,last=h.slice(-10),prev=h.slice(-20,-10),a=last.reduce((x,y)=>x+y,0)/Math.max(1,last.length),b=prev.length?prev.reduce((x,y)=>x+y,0)/prev.length:null;let t;if(b!=null&&a>=b+0.15)t=pick('vb',VL.better);else if(n>=30&&Math.random()<0.5)t=pick('vl',VL.long);else t=pick('vt',VL.tail);s.line=(n===10?'10問か。':n+'問。')+t;toast(s.line);vWeakCheck()}
+function vWeakCheck(){const s=vSess,d=vDeck();if(!s||!d||s.sugg)return;if(d.cards.filter(isWeak).length>=WEAK_MIN){s.sugg=true;s.line=pick('vw',VL.weak)}}
+function vStreakSay(){const st=vStreak(),s=vSess;const t=st.cur>=2?(st.cur+'日連続か。'+pick('vsn',VL.streakN)):pick('vs1',VL.streak1);if(s)s.line=t;stLine=t;toast(t)}
+function vRoomUnlock(){S.room=S.room||{};const lv=decorLv(),seen=S.room.tier==null?0:S.room.tier;if(lv>seen){S.room.tier=lv;const t=pick('vu',VL.unlock)+'（'+DECOR[lv][2]+'）';stLine=t;toast(t)}else if(S.room.tier==null)S.room.tier=lv}
+function vRate(ok){const s=vSess;if(!s||s.done)return;const c=vcGet(s.ids[s.i]);if(!c)return;vTime();vRecord(c,ok);if(!ok&&!s.requeued[c.id]){s.requeued[c.id]=1;s.ids.push(c.id)}vNext()}
+function vNext(){const s=vSess;s.i++;s.flip=false;s.res=null;if(s.i>=s.ids.length){vFinish();save();render();return}if(s.mode==='test'&&vS().cfg.tmode==='choice')vMkOpts();else s.opts=null;save();render()}
+function vFinish(){const s=vSess;s.done=true;const att=s.okN+s.ngN,acc=att?s.okN/att:0;s.line=pick('ve',acc>=0.8?VL.endHi:acc>=0.5?VL.endMid:VL.endLo);if(vDeck()&&vDeck().cards.filter(isWeak).length>=WEAK_MIN)s.sugg=true}
+function vFlip(){if(!vSess)return;vSess.flip=!vSess.flip;render()}
+function vSkip(){const s=vSess;if(!s||s.done)return;vTime();s.i++;s.flip=false;s.res=null;if(s.i>=s.ids.length){vFinish()}else if(s.mode==='test'&&vS().cfg.tmode==='choice')vMkOpts();else s.opts=null;render()}
+function vNorm(t){return String(t).normalize('NFKC').toLowerCase().replace(/[\s　・、,，.．。!！?？]/g,'')}
+function vJudge(c,typed){const forms=[vNorm(c.a)].concat(String(c.a).split(/[／\/;；、,，]/).map(vNorm)).filter(Boolean);return forms.indexOf(vNorm(typed))>=0}
+function vSubmit(val){const s=vSess;if(!s||s.done||s.res)return;vTime();const c=vcGet(s.ids[s.i]);if(val==null){const e=document.getElementById('vans');val=e?e.value:''}if(!String(val).trim())return toast('答えを入力してください');const ok=vJudge(c,val);s.res={ok,ans:val};vRecord(c,ok);if(!ok&&!s.requeued[c.id]){s.requeued[c.id]=1;s.ids.push(c.id)}save();render()}
+function vChoice(i){const s=vSess;if(!s||!s.opts||s.res)return;vSubmit(s.opts[i])}
+function vEnd(){vTime();vSess=null;save();render()}
+function vBub(text,extra){return '<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:14px;margin-bottom:10px"><div style="flex:none">'+jIcon()+'</div><div class="bub t" style="flex:1">'+esc(text)+(extra||'')+'</div></div>'}
+function vChips(list,cur,fn){return list.map(x=>'<button class="sm '+(cur===x[0]?'on':'ghost')+'" style="min-height:32px" onclick="'+fn+'(\''+x[0]+'\')">'+x[1]+'</button>').join('')}
+function vSetF(k){vCfg('filter',k)}function vSetO(k){vCfg('order',k)}function vSetS(k){vCfg('side',k)}function vSetT(k){vCfg('tmode',k)}function vSetC(k){vCfg('cat',k==='_'?'':k)}
+function vSessHtml(){const s=vSess,d=vDeck(),cfg=vS().cfg;if(s.done){const att=s.okN+s.ngN,acc=att?Math.round(s.okN/att*100):0,weak=d?d.cards.filter(isWeak).length:0,wrong=d?d.cards.filter(c=>c.last===false).length:0;
+return '<h1>結果</h1>'+vBub(s.line)+'<div class="card"><div class="row" style="gap:10px;flex-wrap:nowrap"><div style="flex:1;text-align:center"><div class="mut">解いた問題</div><div style="font-size:26px;font-weight:700">'+s.n+'</div></div><div style="flex:1;text-align:center"><div class="mut">正答率</div><div style="font-size:26px;font-weight:700">'+acc+'%</div></div><div style="flex:1;text-align:center"><div class="mut">苦手</div><div style="font-size:26px;font-weight:700">'+weak+'</div></div></div></div>'+(s.sugg&&weak>0?'<div class="card"><p style="margin:0 0 8px">苦手な単語が '+weak+' 個あります。</p><button onclick="vStart(\''+s.mode+'\',\'weak\')">苦手だけ復習する</button></div>':'')+'<div class="row"><button onclick="vStart(\''+s.mode+'\')">もう一度</button>'+(wrong?'<button class="ghost" onclick="vStart(\''+s.mode+'\',\'wrong\')">間違えた問題だけ（'+wrong+'）</button>':'')+'<button class="ghost" onclick="vEnd()">閉じる</button></div>'}
+const c=vcGet(s.ids[s.i]);if(!c)return '<p class="mut">カードがありません。</p><button onclick="vEnd()">閉じる</button>';const qside=cfg.side==='a'?c.a:c.q,aside=cfg.side==='a'?c.q:c.a;
+let body='';if(s.mode==='card'){body='<div class="card" onclick="vFlip()" style="min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer"><div class="mut" style="font-size:12px">'+(s.flip?(cfg.side==='a'?'問題':'答え'):(cfg.side==='a'?'答え':'問題'))+(c.cat?' ・ '+esc(c.cat):'')+'</div><div style="font-size:24px;font-weight:700;margin:8px 0;word-break:break-word">'+esc(s.flip?aside:qside)+'</div><div class="mut" style="font-size:12px">'+(s.flip?'もう一度タップで戻る':'タップして答えを見る')+'</div></div><div class="row" style="margin-top:6px"><button class="ghost" style="flex:1" onclick="vRate(false)">まだ</button><button style="flex:1" onclick="vRate(true)">覚えた</button></div><div style="text-align:center;margin-top:6px"><button class="tiny" onclick="vSkip()">スキップ</button></div>'}
+else{const resHtml=s.res?'<div class="bub" style="margin:8px 0;text-align:center"><b style="font-size:18px">'+(s.res.ok?'○ 正解':'× 不正解')+'</b>'+(s.res.ok?'':'<div>答え：'+esc(c.a)+'</div>')+'</div><button style="width:100%" onclick="vNext()">次へ</button>':'';
+let inp='';if(!s.res){if(s.opts&&cfg.side!=='a')inp='<div style="display:grid;gap:8px;margin-top:8px">'+s.opts.map((o,i)=>'<button class="ghost" style="text-align:left" onclick="vChoice('+i+')">'+esc(o)+'</button>').join('')+'</div>';else inp='<div class="row" style="flex-wrap:nowrap;margin-top:8px"><input id="vans" placeholder="答えを入力" autocomplete="off" onkeydown="if(event.key===\'Enter\')vSubmit()"><button style="flex:none" onclick="vSubmit()">答える</button></div><div style="text-align:center;margin-top:6px"><button class="tiny" onclick="vSkip()">スキップ</button></div>'}
+body='<div class="card" style="min-height:110px;text-align:center"><div class="mut" style="font-size:12px">問題'+(c.cat?' ・ '+esc(c.cat):'')+'</div><div style="font-size:24px;font-weight:700;margin:8px 0;word-break:break-word">'+esc(cfg.side==='a'?c.a:c.q)+'</div></div>'+resHtml+inp}
+return '<div class="row sp" style="margin-bottom:6px"><b>'+(s.mode==='card'?'カード':'テスト')+'</b><span class="mut">'+Math.min(s.i+1,s.ids.length)+' / '+s.ids.length+'　解いた '+s.n+'</span><button class="tiny" onclick="vEnd()">終了</button></div><div class="bar" style="margin-bottom:8px"><i style="width:'+Math.min(100,s.i/s.ids.length*100)+'%"></i></div>'+vBub(s.line)+body}
+function vHomeHtml(){const v=vS(),d=vDeck(),cfg=v.cfg,td=vTdy();let h='';
+h+=vBub(stLine||pick('vo',VL.open),(d&&d.cards.filter(isWeak).length>=WEAK_MIN)?'<div style="margin-top:6px"><button class="sm" onclick="vStart(\'card\',\'weak\')">苦手だけ復習する</button></div>':'');
+h+='<div class="card"><div class="row" style="margin-bottom:8px">'+v.decks.map(x=>'<button class="sm '+(d&&d.id===x.id?'on':'ghost')+'" onclick="vPickDeck(\''+x.id+'\')">'+esc(x.name)+'</button>').join('')+'</div><div class="row" style="flex-wrap:nowrap"><input id="vdn" class="cp" placeholder="新しい単語帳の名前" value="'+esc(vDr.dn)+'"><button class="sm" style="flex:none" onclick="vAddDeck()">作成</button></div>'+(d?'<div class="row" style="margin-top:6px;justify-content:flex-end"><button class="tiny" onclick="vRenDeck()">名前を変える</button><button class="tiny" onclick="vDelDeck()">この単語帳を削除</button></div>':'')+'</div>';
+if(!d)return h+'<p class="mut">単語帳を作ると、問題と答えを登録できます。外国語、テスト用語、資格の用語など、何でも使えます。</p>';
+const P=vPool(d),known=d.cards.filter(c=>c.st==='known').length,acc=vAcc(d.cards),cats=vCats(d);
+h+='<div class="card"><div class="row sp"><b>'+esc(d.name)+'</b><span class="mut">'+d.cards.length+'枚</span></div><div class="bar" style="margin:6px 0"><i style="width:'+(d.cards.length?known/d.cards.length*100:0)+'%"></i></div><div class="mut" style="font-size:13px">覚えた '+known+' / '+d.cards.length+'　正答率 '+(acc==null?'—':acc+'%')+'　今日 '+td.ids.length+'問　苦手 '+d.cards.filter(isWeak).length+'</div></div>';
+h+='<div class="card"><h3>出題する</h3><div class="mut" style="font-size:12px">出題する問題</div><div class="row" style="margin-bottom:6px">'+vChips([['all','全部 '+P.all.length],['unknown','未暗記 '+P.unknown.length],['wrong','間違えた問題 '+P.wrong.length],['weak','苦手 '+P.weak.length]],cfg.filter,'vSetF')+'</div>'+(cats.length?'<div class="mut" style="font-size:12px">カテゴリー</div><div class="row" style="margin-bottom:6px">'+vChips([['_','すべて']].concat(cats.map(c=>[c,c])),cfg.cat||'_','vSetC')+'</div>':'')+
+'<div class="row" style="margin-bottom:6px">'+vChips([['random','ランダム'],['seq','順番どおり']],cfg.order,'vSetO')+'<span style="width:6px"></span>'+vChips([['q','問題から'],['a','答えから']],cfg.side,'vSetS')+'</div><div class="row" style="margin-bottom:8px"><span class="mut" style="font-size:12px">テスト形式</span>'+vChips([['type','入力'],['choice','4択']],cfg.tmode,'vSetT')+'</div><div class="row"><button style="flex:1" onclick="vStart(\'card\')">カードで覚える</button><button style="flex:1" onclick="vStart(\'test\')">テスト</button></div></div>';
+h+='<div class="card"><h3>カードを追加</h3><input id="vq" class="cp" placeholder="問題（単語）" value="'+esc(vDr.q)+'" style="margin-bottom:4px"><input id="va" class="cp" placeholder="答え（意味）。複数ある答えは「／」で区切る" value="'+esc(vDr.a)+'" style="margin-bottom:4px"><div class="row" style="flex-wrap:nowrap"><input id="vc" class="cp" list="vcl" placeholder="カテゴリー（任意）" value="'+esc(vDr.c)+'"><datalist id="vcl">'+cats.map(c=>'<option value="'+esc(c)+'"></option>').join('')+'</datalist><button class="sm" style="flex:none" onclick="vAddCard()">追加</button></div><h3 style="font-size:14px;margin-top:12px">まとめて追加</h3><textarea id="vbulk" rows="3" placeholder="1行に1枚。「問題,答え」または「問題,答え,カテゴリー」" style="min-height:0">'+esc(vDr.bulk)+'</textarea><button class="ghost sm" style="margin-top:6px" onclick="vBulk()">まとめて追加</button></div>';
+const list=d.cards.filter(c=>!cfg.cat||c.cat===cfg.cat);
+h+='<div class="card"><h3>カード一覧</h3>'+(list.length?list.slice(0,60).map(c=>{const a=c.ok+c.ng?Math.round(c.ok/(c.ok+c.ng)*100)+'%':'—';return '<div class="sw"><div class="acts"><button class="ghost" onclick="vEditCard(\''+c.id+'\')">編集</button><button class="del" onclick="vDelCard(\''+c.id+'\')">削除</button></div><div class="swi task"><span style="flex:none;width:18px;color:var(--pg)">'+(c.st==='known'?'●':c.st==='unknown'?'○':'·')+'</span><div style="flex:1;min-width:0"><div class="tt">'+esc(c.q)+' <span class="mut">→ '+esc(c.a)+'</span></div><div class="mut" style="font-size:12px">'+(c.cat?esc(c.cat)+'　':'')+'正答率 '+a+(isWeak(c)?'　苦手':'')+'</div></div></div></div>'}).join('')+(list.length>60?'<p class="mut" style="font-size:12px">ほか '+(list.length-60)+'枚</p>':'')+'<p class="mut" style="font-size:12px;margin:4px 0 0">● 覚えた　○ まだ　· 未挑戦　／ ← 左にスライドで編集・削除</p>':'<p class="mut">カードがありません。</p>')+'</div>';
+return h}
+function vRoomHtml(){const m=totalMin(),st=vStreak(),td=vTdy(),all=vAll(),lv=decorLv(),nx=decorNext(),o=roomOpt(),on=ambS().on&&!ambS().mute,nd=studyDays();
+const stat=(k,x)=>'<div style="flex:1;min-width:46%;padding:6px 4px;border-top:1px solid var(--bd)"><div class="mut" style="font-size:12px">'+k+'</div><div style="font-size:19px;font-weight:700">'+x+'</div></div>';
+let svg=roomSvg(o,{pose:RM.pose,eye:RM.eye},lv,'').replace('</svg>','<rect x="60" y="30" width="240" height="262" fill="transparent" style="touch-action:pan-y;cursor:pointer" onpointerdown="rmPet()" onpointermove="rmStroke(event)"/></svg>');
+return vBub(stLine||pick('vr',VL.room))+'<div class="card" style="padding:8px">'+svg+'<div class="row" style="margin-top:8px"><button class="sm" onclick="denOpen()">隠れ家に入る</button><button class="sm '+(on?'on':'ghost')+'" onclick="ambToggle(\'on\')">環境音 '+(on?'ON':'OFF')+'</button></div></div>'+
+'<div class="card"><h3>STUDY STREAK</h3><div class="row" style="flex-wrap:nowrap;gap:8px;text-align:center"><div style="flex:1"><div class="mut" style="font-size:12px">現在の連続学習日数</div><div style="font-size:26px;font-weight:700">'+st.cur+'日</div></div><div style="flex:1"><div class="mut" style="font-size:12px">最長</div><div style="font-size:26px;font-weight:700">'+st.best+'日</div></div><div style="flex:1"><div class="mut" style="font-size:12px">今月</div><div style="font-size:26px;font-weight:700">'+st.month+'日</div></div></div><p class="mut" style="font-size:12px;margin:6px 0 0">1日に1問以上解くと、学習した日として数えます（日本時間）。</p></div>'+
+'<div class="card"><h3>学習状況</h3><div class="row" style="gap:0">'+stat('今日解いた問題数',td.ids.length+'問')+stat('今日の学習時間',hm(studyTodaySec()))+stat('累計学習時間',hm(m*60))+stat('連続学習日数',st.cur+'日')+stat('最長連続学習日数',st.best+'日')+stat('暗記済みの単語',all.filter(c=>c.st==='known').length+'語')+stat('苦手な単語',all.filter(isWeak).length+'語')+stat('今月の学習日数',st.month+'日')+'</div></div>'+
+'<div class="card"><h3>部屋の飾り</h3><p class="mut" style="font-size:13px;margin:0 0 6px">記録をつけた日が増えるたび（または勉強時間がたまるたび）に、飾りが増えます。いまの記録：学習 <b>'+nd+'日</b>・累計 <b>'+hm(m*60)+'</b></p>'+DECOR.map((d,i)=>'<div style="padding:3px 0;opacity:'+(lv>=i?1:.45)+'">'+(lv>=i?'✓ ':'・ ')+d[2]+(i?'<span class="mut" style="font-size:12px">　'+d[0]+'日 または '+d[1]+'分</span>':'')+'</div>').join('')+'<p class="mut" style="font-size:13px;margin:6px 0 0">'+(nx?'次の飾りまで あと '+(nx.days?nx.days+'日の記録':'')+(nx.days&&nx.min?'（または ':'')+(nx.min?nx.min+'分':'')+(nx.days&&nx.min?'）':''):'すべての飾りが解放されています。')+'</p></div>'+
+'<div class="card"><h3>模様替え</h3><div class="mut" style="font-size:12px">背景</div><div class="row" style="margin-bottom:6px">'+roomChips('bg',BGS,o.bg)+'</div><div class="mut" style="font-size:12px">服装</div><div class="row" style="margin-bottom:6px">'+roomChips('outfit',OUTFITS,o.outfit)+'</div><div class="mut" style="font-size:12px">照明</div><div class="row">'+roomChips('light',LIGHTS,(S.room&&S.room.light)||'auto')+'</div></div>'}
+/* STUDY ROOMのジェイス（自分で動く・撫でられる）*/
+let RM={pose:'sit',eye:'open',nextAct:0,nextBlink:0,petAt:0,pet:0};
+function rmUpd(pose,eye){RM.pose=pose;RM.eye=eye;const g=document.getElementById('rwolf');if(g)g.innerHTML=wolfG(pose,eye,roomOpt().outfit)}
+function rmPet(){if(typeof DN2!=='undefined'&&DN2)return;RM.pet=Date.now()+2200;rmUpd(RM.pose==='lie'?'sit':RM.pose,'happy');if(Date.now()-RM.petAt>9000){RM.petAt=Date.now();stLine=pick('rmp',['…悪くない。','そこ、いい。','ふん。もう少し。'])}}
+function rmStroke(e){if(e&&(e.buttons>0||e.pointerType==='touch'))rmPet()}
+function rmTick(){if((typeof DN2!=='undefined'&&DN2)||view!=='study'||stTab!=='room')return;const g=document.getElementById('rwolf');if(!g)return;const n=Date.now();
+if(RM.pet&&n>RM.pet){RM.pet=0;rmUpd(RM.pose,'open')}if(RM.pet)return;
+if(n>RM.nextBlink&&(RM.eye==='open'||RM.eye==='half')){RM.nextBlink=n+3500+Math.random()*4500;const p=RM.pose,e=RM.eye;rmUpd(p,'closed');setTimeout(()=>{if(RM.eye==='closed'&&RM.pose===p)rmUpd(p,e)},170)}
+if(n>RM.nextAct){RM.nextAct=n+7000+Math.random()*8000;const o=['sit','sit','gaze','gaze','lie'];const p=o[Math.floor(Math.random()*o.length)];rmUpd(p,p==='lie'?'half':'open')}}
+setInterval(rmTick,1000);
+function stSet(t){vKeep();stTab=t;stLine=t==='room'?pick('vr',VL.room):t==='vocab'?pick('vo',VL.open):'';render();ambSync()}
+const _vStudyRec=vStudy;
+vStudy=function(){const tabs='<div class="row" style="margin-bottom:10px">'+[['rec','記録'],['vocab','単語帳'],['room','ROOM']].map(x=>'<button class="sm '+(stTab===x[0]?'on':'ghost')+'" onclick="stSet(\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div>';
+if(stTab==='vocab')return '<h1>STUDY</h1>'+tabs+(vSess?vSessHtml():vHomeHtml());if(stTab==='room')return '<h1>STUDY ROOM</h1>'+tabs+vRoomHtml();return _vStudyRec().replace('<h1>勉強</h1>','<h1>STUDY</h1>'+tabs)};
+const _sAdd=sAdd;sAdd=function(){const n=S.study.log.length;_sAdd();if(S.study.log.length>n){vRoomUnlock();save()}};
+
+const _goA=go;go=function(v){_goA(v);ambSync()};
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
