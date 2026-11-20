@@ -93,6 +93,9 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 .rm-chip.on{background:var(--pg);border-color:var(--pg);color:#fff}
 .dn2-sheet .rm-chip{border-color:rgba(200,204,212,.28);color:#c8ccd4}
 .dn2-sheet .rm-chip.on{background:rgba(224,160,80,.22);border-color:rgba(224,160,80,.55);color:#f3d9ac}
+
+@keyframes wSg{0%,100%{transform:rotate(-2.6deg) translateY(0)}50%{transform:rotate(2.6deg) translateY(-2px)}}
+.room.sing .w-hw{animation:wSg .62s ease-in-out infinite}
 /* ---- Music English（ダークアカデミア調）---- */
 .mu{background:linear-gradient(180deg,#17131c,#0e0c12);color:#e8e2ea;border:1px solid #2a2330;border-radius:16px;padding:12px;margin-bottom:12px;-webkit-user-select:text;user-select:text}
 .mu *{box-sizing:border-box}
@@ -161,6 +164,42 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 .mu .mwb{align-self:center;flex:none;margin-left:auto}
 .mu .mwx{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px;color:#cfc7d6;margin-top:3px;line-height:1.6}
 .mu .mi2 .mk{min-width:0;margin-right:5px;font-size:11px}
+
+/* ---- ジェイスと歌う ---- */
+.sg{position:fixed;left:0;top:0;right:0;bottom:0;z-index:50;background:radial-gradient(120% 70% at 50% 0%,#241822 0%,#120d16 62%,#0c0910 100%);color:#ece3e8;display:flex;flex-direction:column;-webkit-user-select:none;user-select:none;touch-action:manipulation;overflow:hidden}
+.sg *{box-sizing:border-box}
+.sg-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 6px}
+.sg-title{flex:1;min-width:0;text-align:center;font-size:13px;color:#b9a9b4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sg-stage{position:relative;flex:none;width:100%;max-width:520px;margin:0 auto;padding:0 10px;cursor:pointer}
+.sg-svg .room{max-height:36vh;width:auto;margin:0 auto}
+.sg-notes{position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;overflow:hidden}
+.sg-note{position:absolute;bottom:42%;color:#e0a0ae;opacity:0;text-shadow:0 0 8px rgba(224,160,174,.55);animation:sgUp 2.6s ease-out forwards}
+@keyframes sgUp{0%{opacity:0;transform:translateY(0) rotate(-8deg)}15%{opacity:.95}100%{opacity:0;transform:translateY(-120px) translateX(18px) rotate(14deg)}}
+.sg-say{min-height:1.6em;padding:4px 22px 0;text-align:center;font-size:14px;color:#c8b4bd}
+.sg-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 22px;text-align:center;cursor:pointer;min-height:0;overflow:auto}
+.sg-en{font-family:'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',Georgia,serif;font-size:clamp(22px,6.2vw,32px);line-height:1.55;word-break:break-word}
+.sg-w{color:#5d5566;transition:color .25s,text-shadow .25s}
+.sg-w.on{color:#f6ebef;text-shadow:0 0 12px rgba(224,160,174,.35)}
+.sg-ja{margin-top:12px;font-size:15px;line-height:1.7;color:#b5a8b2}
+.sg-intro{font-family:'Noto Serif JP','Hiragino Mincho ProN',Georgia,serif;font-size:24px;color:#f1dfe5}
+.sg-sub{margin-top:6px;font-size:14px;color:#9d8e99}
+.sg-bot{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 12px calc(env(safe-area-inset-bottom,0px) + 12px)}
+.sg-ct{font-size:13px;color:#9d8e99}
+
+/* ---- 曲の画面：コンパクトな上部 ---- */
+.mu .mhd{padding:8px 10px}
+.mu .mhr{display:flex;gap:10px;align-items:center}
+.mu .mhs{display:flex;flex-wrap:wrap;align-items:center;gap:3px 10px;font-size:12px;color:#c9bfd0;margin-top:6px}
+.mu .mhsing{margin-left:auto;min-height:32px}
+.mu .mops{margin-top:4px}
+.mu .mops summary{font-size:13px;color:#e0a0ae;padding:5px 0;cursor:pointer}
+.mu .mops-b{padding-top:2px}
+.mu .mops-t{font-size:11px;letter-spacing:.08em;color:#c58b99;margin:8px 0 4px}
+.mu .mtheme summary{cursor:pointer;font-size:14px;color:#e7d9de}
+.mu .mtheme[open] .mprev{display:none}
+.mu .mtheme .mk{min-width:0}
+.mu .mtabs{position:relative}
+.mu .muai{padding:8px 10px}
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -963,10 +1002,11 @@ function wolfFur(pose){return{back:tailG('M332 224 C326 254 258 260 196 260 C132
 function wolfFurSit(){const g=GE.sit,cx=180;let b='<g class="w-breathe"><path d="'+bodyP(cx,g.top,g.hem,g.wt,g.wb)+'" fill="'+FUR+'" stroke="'+FOL+'"/><path d="M'+(cx-16)+' '+(g.top+6)+' L'+cx+' '+(g.top+46)+' L'+(cx+16)+' '+(g.top+6)+'Z" fill="'+FURL+'" opacity=".7"/>';
 [g.armL,g.armR].forEach(a=>{b+='<path d="'+limb(a[0],a[1],a[2],a[3],g.aw[0],g.aw[1])+'" fill="'+FURA+'" stroke="'+FOL+'"/><ellipse cx="'+f1(a[2])+'" cy="'+f1(a[3]+11)+'" rx="15" ry="8" fill="'+FURL+'"/>'});b+='</g>';
 return{back:tailG('M232 238 C286 248 300 202 282 174 C284 208 262 228 230 224Z','M282 174 C284 192 278 206 268 214 C278 200 282 188 282 174Z'),body:b}}
-function wolfHead(pose,eye){const wh=wHead;if(pose==='sleep')return '<g transform="translate(128 214) rotate(-12) scale(2.05) translate(-32 -33.5)">'+wh('closed')+'</g><g class="w-z" fill="#b9c2d3" font-family="serif"><text x="196" y="140" font-size="22">z</text><text x="218" y="116" font-size="17">z</text><text x="238" y="94" font-size="13">z</text></g>';
-const hx=pose==='gaze'?-14:0,hr=pose==='gaze'?-8:0;return '<g class="w-hw"><g class="w-head" transform="translate('+(180+hx)+' 104) rotate('+hr+') scale(2.7) translate(-32 -33.5)">'+wh(eye)+'</g></g>'}
+function wMouth(m){if(m==='open')return '<ellipse cx="32" cy="52.6" rx="2.5" ry="2.4" fill="#14161d"/><ellipse cx="32" cy="53.7" rx="1.5" ry="0.9" fill="#8a3a4c"/>';if(m==='half')return '<ellipse cx="32" cy="52.4" rx="2.1" ry="1.2" fill="#14161d"/>';if(m==='smile')return '<path d="M29.4 51.4 Q32 53.6 34.6 51.4" stroke="#14161d" stroke-width=".75" fill="none" stroke-linecap="round"/>';return ''}
+function wolfHead(pose,eye,mouth){const wh=wHead;if(pose==='sleep')return '<g transform="translate(128 214) rotate(-12) scale(2.05) translate(-32 -33.5)">'+wh('closed')+'</g><g class="w-z" fill="#b9c2d3" font-family="serif"><text x="196" y="140" font-size="22">z</text><text x="218" y="116" font-size="17">z</text><text x="238" y="94" font-size="13">z</text></g>';
+const hx=pose==='gaze'?-14:0,hr=pose==='gaze'?-8:0;return '<g class="w-hw"><g class="w-head" transform="translate('+(180+hx)+' 104) rotate('+hr+') scale(2.7) translate(-32 -33.5)">'+wh(eye)+wMouth(mouth)+'</g></g>'}
 function wolfOutfit(k,pose){if(!GF[k])return '';return pose==='sleep'?gSide(k,'sleep'):GF[k](GE.sit)}
-function wolfG(pose,eye,outfit){const sl=pose==='sleep',F=sl?wolfFur('sleep'):wolfFurSit(),O=outfit?wolfOutfit(outfit,pose):'';return F.back+F.body+O+wolfHead(sl?'sleep':pose,eye)}
+function wolfG(pose,eye,outfit,mouth){const sl=pose==='sleep',F=sl?wolfFur('sleep'):wolfFurSit(),O=outfit?wolfOutfit(outfit,pose):'';return F.back+F.body+O+wolfHead(sl?'sleep':pose,eye,mouth)}
 
 /* ====== ジェイスの部屋：背景・服装・照明・装飾 ====== */
 const BGS=[['church','ゴシック教会'],['chapel','ステンドグラスの礼拝堂'],['library','古い図書館'],['study','蝋燭のある書斎'],['rain','雨の降る窓辺'],['stars','星空の見える部屋']];
@@ -1315,7 +1355,6 @@ function muDeckPick(id){MU.deck=id;render()}
 function muGo(v,id){MU.view=v;if(id!==undefined)MU.id=id;MU.err=null;render();scrollTo(0,0)}
 function muOpen(id){const s=muSong(id);if(!s)return muGo('home');MU.id=id;const cs=muCatsOf(s);if(!cs.some(c=>c[0]===MU.cat))MU.cat=cs[0]?cs[0][0]:'';MU.view='detail';render();scrollTo(0,0)}
 function muSearch(v){MU.q=v;const e=document.getElementById('mu-list');if(e)e.innerHTML=muListHtml()}
-function muTab(k){const s=muSong(MU.id);if(!s)return;MU.cat=k;s.last=jst();save();render()}
 function muToggleDone(k){const s=muSong(MU.id);if(!s)return;s.done=s.done||{};if(s.done[k])delete s.done[k];else s.done[k]=jst();s.last=jst();save();render();if(s.done[k])toast('学習済みにしました')}
 function muImportNew(){MU.target='';muGo('import')}
 function muImportTo(id){MU.target=id;MU.imp=null;muGo('import')}
@@ -1415,7 +1454,6 @@ const MU_SAMPLE='{\n  "schemaVersion": "1.0",\n  "song": { "title": "Song Title"
 const MU_RULES=['入力された英文を一切改変しない。','歌詞を記憶から補完しない。','入力されていない英文を追加しない。','歌詞の順番を変更しない。','入力された英文のスペルを修正しない。','英文の一部を省略しない。','各英文に対応する解説を作成する。','分からない情報は推測せず、省略する。','すべての英文を漏れなく扱う。','出力は有効なJSONのみとする（説明文やコードブロックの記号は付けない）。'];
 function muPrompt(s){const lines=(s.data.lyrics||[]).map(l=>({id:l.id,english:l.english}));
 return ['あなたは、日本人の英語学習者向けに教材を作るアシスタントです。','下の「英文」について、解説だけを作ってください。英文そのものを作ったり、直したりしてはいけません。','','# 曲の情報','曲名：'+s.title,'アーティスト：'+s.artist,'','# 守るべきルール（必ず守ること）'].concat(MU_RULES.map((r,i)=>(i+1)+'. '+r)).concat(['','# 各英文に作る解説（初学者にも分かる、標準的な詳しさで）','・自然な日本語訳（japanese）','・直訳（literalTranslation。可能な場合のみ）','・重要単語（vocabulary：単語・発音記号・品詞・意味・文脈での意味・例文）','・熟語・句動詞（phrases：expression・meaning・explanation）','・文法解説（grammar：title・explanation）','・文構造（sentenceAnalysis：主語 subject・動詞 verb・目的語 object など）','・表現のニュアンス（sentenceAnalysis.explanation に含める）','曲全体のテーマと、歌詞の表現・意味の解説は artisticContext に書く。','','# 出力するJSONの形式','下の形式に合わせてください。lyrics には、入力された英文と同じ数・同じ順番で、すべての行を入れてください。','',MU_SCHEMA,'','# 英文（'+lines.length+'行）','次のJSON配列の english が、入力された英文です。lyrics の各要素の english には、この文字列を一字一句そのまま入れてください。id も同じものを使ってください。','',JSON.stringify(lines,null,1)]).join('\n')}
-function muCopyText(t,okMsg){const fb=()=>{try{const e=document.createElement('textarea');e.value=t;e.setAttribute('readonly','');e.style.position='fixed';e.style.opacity='0';document.body.appendChild(e);e.select();e.setSelectionRange(0,t.length);const r=document.execCommand('copy');document.body.removeChild(e);toast(r?okMsg:'コピーできませんでした。下の文を長押しでコピーしてください')}catch(x){toast('コピーできませんでした。下の文を長押しでコピーしてください')}};try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast(okMsg),fb);else fb()}catch(x){fb()}}
 function muCopy(id){const e=document.getElementById(id);if(e)muCopyText(e.value,'コピーしました')}
 function muCopyPrompt(){const s=muSong(MU.id);if(!s||!(s.data.lyrics||[]).length)return toast('先に歌詞を確定してください');muCopyText(muPrompt(s),'AI教材作成用プロンプトをコピーしました')}
 /* ---- 英文の厳密な照合（スペル・句読点・大文字小文字・語順まで。AIの英文で元の歌詞を上書きしない）---- */
@@ -1505,26 +1543,15 @@ function muLineHtml(s,l,n,idx,decks){const hasDet=(l.vocabulary&&l.vocabulary.le
 let h='<div class="mc mline"><div class="mlh"><span class="mn2">'+n+'</span><div class="men">'+esc(l.english)+'</div></div>'+muKv('日本語訳',l.japanese)+muKv('直訳',l.literalTranslation)+muKv('意訳',l.naturalTranslation)+muKv('補足',l.notes);
 if(hasDet){let b='';if(l.vocabulary.length)b+='<div class="msec">重要単語</div>'+l.vocabulary.map(w=>muWordBlock(s,{w,line:''},idx.get(w),decks)).join('');if(l.phrases.length)b+='<div class="msec">熟語・表現</div>'+l.phrases.map(p=>muPhraseBlock(p,'')).join('');if(l.grammar.length)b+='<div class="msec">文法</div>'+l.grammar.map(g=>muGrammarBlock(g,'')).join('');if(l.sentenceAnalysis)b+='<div class="msec">文構造</div>'+muStructBlock(l.sentenceAnalysis,false);if(l.nuance)b+='<div class="msec">表現のニュアンス</div><div class="mkv"><span>'+esc(l.nuance)+'</span></div>';
 h+='<details class="mdt"'+(MU.open[l.id]?' open':'')+' ontoggle="muTg(\''+l.id+'\',this.open)"><summary>解説を見る</summary>'+b+'</details>'}
-return h+'</div>'}
+return h+'<div class="row" style="margin-top:6px"><button class="mb mb2 sm" onclick="muCopyAi(\'line\',\''+l.id+'\')">この行をAIで学ぶ</button></div></div>'}
 function muCatHtml(s,k){const d=s.data||{},decks=vS().decks;let h='';
-if(k==='lyrics'){const a=d.artisticContext;if(a&&a.theme)h+='<div class="mc mtheme"><div class="mk">歌詞全体のテーマ</div>'+esc(a.theme)+(a.interpretation?'<div style="margin-top:6px"><span class="mk">解釈</span> '+esc(a.interpretation)+'</div>':'')+'</div>';const all=muVocabAll(s),idx=new Map(all.map((x,i)=>[x.w,i]));if(!(d.lyrics||[]).some(muLineExp))h+='<div class="mc mut" style="font-size:13px">解説はまだありません。「AI教材作成用プロンプトをコピー」→AIでJSONを作成→「JSONを読み込む」で、各行に解説が付きます。</div>';h+=d.lyrics.map((l,i)=>muLineHtml(s,l,i+1,idx,decks)).join('')}
+if(k==='lyrics'){const a=d.artisticContext;if(a&&a.theme)h+='<details class="mc mtheme"'+(MU.open._theme?' open':'')+' ontoggle="muTg(\'_theme\',this.open)"><summary><span class="mk">歌詞全体のテーマ</span> <span class="mut mprev">'+esc(a.theme.length>20?a.theme.slice(0,20)+'…':a.theme)+'</span></summary><div style="margin-top:6px">'+esc(a.theme)+(a.interpretation?'<div style="margin-top:6px"><span class="mk">解釈</span> '+esc(a.interpretation)+'</div>':'')+'</div></details>';const all=muVocabAll(s),idx=new Map(all.map((x,i)=>[x.w,i]));if(!(d.lyrics||[]).some(muLineExp))h+='<div class="mc mut" style="font-size:13px">解説はまだありません。「AI教材作成用プロンプトをコピー」→AIでJSONを作成→「JSONを読み込む」で、各行に解説が付きます。</div>';h+=d.lyrics.map((l,i)=>muLineHtml(s,l,i+1,idx,decks)).join('')}
 else if(k==='vocabulary'){const dk=muDeckSel();h+=!decks.length?'<div class="mc mwarn">単語帳がまだありません。STUDYの「単語帳」で単語帳を作ると、ここから単語を追加できます。<div style="margin-top:6px"><button class="mb sm" onclick="stSet(\'vocab\')">単語帳を開く</button></div></div>':'<div class="mc"><div class="row sp" style="gap:8px"><span class="mut" style="font-size:13px">追加先の単語帳</span>'+(decks.length>1?'<select class="mi" style="width:auto;min-width:40%" onchange="muDeckPick(this.value)">'+decks.map(x=>'<option value="'+x.id+'"'+(dk&&dk.id===x.id?' selected':'')+'>'+esc(x.name)+'</option>').join('')+'</select>':'<b>'+esc(dk.name)+'</b>')+'</div><button class="mb sm" style="margin-top:8px" onclick="muAddAll(\''+s.id+'\')">未登録の単語をすべて追加</button></div>';h+='<div class="mc">'+muVocabAll(s).map((it,i)=>muWordBlock(s,it,i,decks)).join('')+'</div>'}
 else if(k==='phrases')h=muAgg(s,'phrases').map(e=>'<div class="mc">'+muPhraseBlock(e.x,e.line?muLineText(s,e.line):'')+'</div>').join('');
 else if(k==='grammar')h=muAgg(s,'grammar').map(e=>'<div class="mc">'+muGrammarBlock(e.x,e.line?muLineText(s,e.line):'')+'</div>').join('');
 else if(k==='sentenceAnalysis')h=muAgg(s,'sentenceAnalysis').map(e=>'<div class="mc">'+muStructBlock(e.x,true)+'</div>').join('');
 else if(k==='artisticContext'){const a=d.artisticContext;h='<div class="mc">'+(a.theme?'<div class="mkv"><span class="mk">曲のテーマ</span><span>'+esc(a.theme)+'</span></div>':'')+(a.metaphors.length?'<div class="mkv"><span class="mk">比喩表現</span>'+muTags(a.metaphors)+'</div>':'')+(a.symbols.length?'<div class="mkv"><span class="mk">象徴的な言葉</span>'+muTags(a.symbols)+'</div>':'')+(a.emotions.length?'<div class="mkv"><span class="mk">感情・心情</span>'+muTags(a.emotions)+'</div>':'')+(a.interpretation?'<div class="mkv"><span class="mk">表現の解釈</span><span>'+esc(a.interpretation)+'</span></div>':'')+'</div>'}
 return h}
-function muLyricCard(s){const L=s.data.lyrics||[];if(!L.length)return '<div class="mc"><b>歌詞</b><div class="mut" style="font-size:13px;margin:4px 0">歌詞を貼り付けて確定すると、AI用のプロンプトを作れます。</div><button class="mb sm" onclick="muEdit(\''+s.id+'\')">歌詞を入力する</button></div>';
-const ex=L.filter(muLineExp).length;
-return '<div class="mc"><div class="row sp"><b>歌詞 '+L.length+'行</b><span class="mchip'+(s.lyricsOk?' mok':'')+'">'+(s.lyricsOk?'確定済み':'未照合')+'</span></div><div class="mut" style="font-size:12px;margin:4px 0">解説あり '+ex+' / '+L.length+'行'+(s.lyricsOk?'':'　（歌詞はAIが出力した英文です。内容を確認して、「歌詞を編集」から確定してください）')+'</div><div class="row" style="gap:6px">'+(s.lyricsOk?'<button class="mb sm" onclick="muCopyPrompt()">AI教材作成用プロンプトをコピー</button>':'')+'<button class="mb mb2 sm" onclick="muImportTo(\''+s.id+'\')">JSONを読み込む</button><button class="mb mb2 sm" onclick="muLyrEdit(\''+s.id+'\')">歌詞を編集</button></div>'+(s.lyricsOk?'<details style="margin-top:6px"><summary class="mut" style="font-size:13px">プロンプトの内容を見る</summary><textarea id="mu-pm" class="mi" rows="8" readonly style="font-size:12px;font-family:ui-monospace,Menlo,monospace">'+esc(muPrompt(s))+'</textarea></details>':'')+'</div>'}
-function muDetailHtml(){const s=muSong(MU.id);if(!s){MU.view='home';return muHome()}const cs=muCatsOf(s),dn=muDone(s),k=cs.some(c=>c[0]===MU.cat)?MU.cat:(cs[0]?cs[0][0]:''),wc=vAll().filter(c=>c.srcId===s.id).length;
-let h='<div class="mu"><div class="row sp" style="margin-bottom:8px"><button class="mb mb2 sm" onclick="muGo(\'home\')">← 一覧</button><button class="mkb" onclick="muMenu(\''+s.id+'\')" aria-label="メニュー">⋯</button></div>'+
-'<div class="mc"><div class="row" style="gap:12px;flex-wrap:nowrap;align-items:flex-start">'+muCoverHtml(s,84)+'<div style="min-width:0;flex:1"><div class="mt1" style="font-size:18px">'+esc(s.title)+'</div><div class="mt2">'+esc(s.artist)+'</div>'+(s.album?'<div class="mut" style="font-size:13px">'+esc(s.album)+'</div>':'')+(s.musicUrl?'<a class="mlink" href="'+esc(s.musicUrl)+'" target="_blank" rel="noopener noreferrer">♪ 外部リンクを開く</a>':'')+'</div></div>'+
-'<div class="mut" style="font-size:12px;margin:8px 0 4px">学習状況：'+muStatus(s)+'　単語帳に追加：'+wc+'語　最終学習：'+muDate(s.last)+'</div><div class="bar"><i style="width:'+(cs.length?dn.length/cs.length*100:0)+'%"></i></div>'+
-'<div class="row" style="margin-top:8px;gap:6px"><button class="mb mb2 sm" onclick="muEdit(\''+s.id+'\')">編集</button><button class="mb mb2 sm" onclick="muExport(\''+s.id+'\')">書き出し</button></div></div>'+muLyricCard(s);
-if(!cs.length)return h+'<div class="mc mut" style="text-align:center;padding:16px 10px">まだ教材がありません。歌詞を確定し、AIで作ったJSONを読み込むと、6つのカテゴリーに振り分けられます。</div></div>';
-h+='<div class="mtabs">'+cs.map(c=>'<button class="mtab'+(c[0]===k?' on':'')+'" onclick="muTab(\''+c[0]+'\')"><span class="mn">'+c[1]+'</span>'+esc(c[2])+((s.done||{})[c[0]]?' ✓':'')+'</button>').join('')+'</div>'+muCatHtml(s,k)+
-'<div style="margin-top:10px"><button class="mb '+((s.done||{})[k]?'mb2':'')+'" style="width:100%" onclick="muToggleDone(\''+k+'\')">'+((s.done||{})[k]?'✓ 学習済み（タップで戻す）':'このカテゴリーを学習済みにする')+'</button></div></div>';return h}
 function muHtml(){switch(MU.view){case'add':return muAddHtml();case'lyr':return muLyrHtml();case'import':return muImportHtml();case'detail':return muDetailHtml();case'export':return muExportHtml();default:return muHome()}}
 
 function muWordBlock(s,it,i,decks){const w=it.w,f=muFind(w.word),ref=it.line?muLineText(s,it.line):'';
@@ -1532,6 +1559,87 @@ const inl=(k,v)=>v?'<span class="mi2"><span class="mk">'+k+'</span>'+esc(v)+'</s
 const btn=f?'<span class="mchip mok" title="'+esc(f.deck.name)+'">✓ 登録済み</span>':(w.meaning||w.contextMeaning)?'<button class="mb sm mwb" onclick="muAddWord(\''+s.id+'\','+i+')"'+(decks.length?'':' disabled')+'>単語帳に追加</button>':'<span class="mut" style="font-size:12px">意味なし</span>';
 return '<div class="mw"><div class="mwr"><span class="men">'+esc(w.word)+'</span>'+(w.pronunciation?'<span class="mut mpr">'+esc(w.pronunciation)+'</span>':'')+(w.partOfSpeech?'<span class="mchip">'+esc(w.partOfSpeech)+'</span>':'')+(w.meaning?'<span class="mmn">'+esc(w.meaning)+'</span>':'')+'<span class="msp"></span>'+btn+'</div>'+
 '<div class="mwx">'+inl('歌詞では',w.contextMeaning)+inl('例文',w.example)+tg('類義語',w.synonyms)+tg('対義語',w.antonyms)+(ref?'<span class="mi2"><span class="mk">歌詞</span>“'+esc(ref)+'”</span>':'')+(f&&f.deck?'<span class="mi2 mut"><span class="mk">単語帳</span>'+esc(f.deck.name)+'</span>':'')+'</div></div>'}
+
+/* ====== ジェイスと歌う（タップで次の歌詞へ）====== */
+let SNG=null;
+const SNG_SAY={start:['よし、歌うぞ。','聞いていろ。','タップで、次の歌詞へ進むぞ。'],end:['…悪くない歌だ。','ひと息ついたか。','もう一度、歌うか？']};
+function sgEl(id){return document.getElementById(id)}
+function sgLines(){const s=SNG&&muSong(SNG.sid);return s?(s.data.lyrics||[]):[]}
+function sgOpen(sid){const s=muSong(sid);if(!s||!(s.data.lyrics||[]).length)return toast('先に歌詞を入れてください');if(SNG)return;const r=document.createElement('div');r.id='sg';r.className='sg';document.body.appendChild(r);document.body.style.overflow='hidden';SNG={sid,i:-1,tr:true,tok:0,t:[],iv:0,last:0,eye:'happy',mouth:'smile'};sgBuild();sgShow(-1)}
+function sgBuild(){const r=sgEl('sg');if(!r||!SNG)return;const s=muSong(SNG.sid),o=roomOpt();let svg=roomSvg(o,{pose:'sit',eye:'happy'},decorLv(),'').replace('class="room ','id="sgsvg" class="room ');
+r.innerHTML='<div class="sg-top"><button class="dn2-b" onclick="sgClose()">← 戻る</button><span class="sg-title">♪ '+esc(s.title)+'</span><button class="dn2-b on" id="sgtr" onclick="sgTrans()">訳 ON</button></div><div class="sg-stage" onclick="sgNext()"><div class="sg-svg">'+svg+'</div><div class="sg-notes" id="sgn"></div></div><div class="sg-say" id="sgsay"></div><div class="sg-card" id="sgcard" onclick="sgNext()"><div class="sg-en" id="sgen"></div><div class="sg-ja" id="sgja"></div></div><div class="sg-bot"><button class="dn2-b" onclick="sgPrev()">◀ 前</button><span class="sg-ct" id="sgct"></span><button class="dn2-b on" onclick="sgNext()">次 ▶</button></div>'}
+function sgWolf(eye,mouth){if(!SNG)return;SNG.eye=eye;SNG.mouth=mouth;const g=sgEl('rwolf');if(g)g.innerHTML=wolfG('sit',eye,roomOpt().outfit,mouth)}
+function sgClear(){if(!SNG)return;SNG.tok++;SNG.t.forEach(clearTimeout);SNG.t=[];if(SNG.iv){clearInterval(SNG.iv);SNG.iv=0}const n=sgEl('sgn');if(n)n.innerHTML='';const v=sgEl('sgsvg');if(v)v.setAttribute('class','room')}
+function sgT(fn,ms,tok){const id=setTimeout(()=>{if(SNG&&SNG.tok===tok)fn()},ms);SNG.t.push(id);return id}
+function sgNote(){const n=sgEl('sgn');if(!n)return;const sp=document.createElement('span');sp.className='sg-note';sp.textContent=['♪','♫','♩','♬'][Math.floor(Math.random()*4)];sp.style.left=(46+Math.random()*30)+'%';sp.style.fontSize=(16+Math.random()*12)+'px';n.appendChild(sp);setTimeout(()=>{try{if(sp.parentNode)sp.parentNode.removeChild(sp);else if(sp.remove)sp.remove()}catch(e){}},2700)}
+function sgSay(t){const e=sgEl('sgsay');if(e)e.textContent=t||''}
+function sgShow(i){if(!SNG)return;const L=sgLines(),N=L.length,s=muSong(SNG.sid);sgClear();SNG.i=i;SNG.last=Date.now();const en=sgEl('sgen'),ja=sgEl('sgja'),ct=sgEl('sgct');if(!en)return;
+if(i<0){en.innerHTML='<div class="sg-intro">♪ '+esc(s.title)+'</div><div class="sg-sub">'+esc(s.artist)+'</div>';ja.textContent='';ct.textContent='タップで はじめる';sgSay(pick('sgs',SNG_SAY.start));sgWolf('happy','smile');return}
+if(i>=N){en.innerHTML='<div class="sg-intro">おしまい</div><div class="sg-sub">タップで、もう一度</div>';ja.textContent='';ct.textContent=N+' / '+N;sgSay(pick('sge',SNG_SAY.end));sgWolf('happy','smile');return}
+const l=L[i],tok=SNG.tok;sgSay('');ct.textContent=(i+1)+' / '+N;ja.textContent=SNG.tr?(l.japanese||l.naturalTranslation||l.literalTranslation||''):'';
+const parts=String(l.english).split(/(\s+)/),words=parts.filter(x=>x.trim()!=='').length;en.innerHTML=parts.map(x=>x.trim()===''?esc(x):'<span class="sg-w">'+esc(x)+'</span>').join('');
+const dur=Math.max(1800,Math.min(7000,1400+String(l.english).length*75)),spans=en.querySelectorAll?en.querySelectorAll('.sg-w'):[];
+const v=sgEl('sgsvg');if(v)v.setAttribute('class','room sing');const seq=['open','half','open','smile'];let k=0;const mouth=()=>{if(!SNG||SNG.tok!==tok)return;sgWolf('happy',seq[k++%seq.length]);if(Date.now()-t0<dur-150)sgT(mouth,230,tok);else sgWolf('happy','smile')};const t0=Date.now();mouth();
+for(let w=0;w<words;w++)sgT(()=>{const sp=spans[w];if(sp)sp.className='sg-w on'},Math.round(dur*w/Math.max(1,words)),tok);
+sgNote();SNG.iv=setInterval(()=>{if(!SNG||SNG.tok!==tok){return}sgNote()},520);sgT(()=>{if(SNG.iv){clearInterval(SNG.iv);SNG.iv=0}const vv=sgEl('sgsvg');if(vv)vv.setAttribute('class','room');sgWolf('happy','smile')},dur,tok)}
+function sgNext(){if(!SNG)return;const n=Date.now();if(n-SNG.last<120)return;const N=sgLines().length;if(SNG.i>=N){sgShow(-1);return}const j=SNG.i+1;if(j>=N){const s=muSong(SNG.sid);if(s){s.sung=(s.sung||0)+1;s.last=jst();save()}}sgShow(j)}
+function sgPrev(){if(!SNG)return;const N=sgLines().length;if(SNG.i<0)return;sgShow(SNG.i>=N?N-1:SNG.i-1)}
+function sgTrans(){if(!SNG)return;SNG.tr=!SNG.tr;const b=sgEl('sgtr');if(b){b.textContent='訳 '+(SNG.tr?'ON':'OFF');b.className='dn2-b'+(SNG.tr?' on':'')}const L=sgLines(),l=L[SNG.i],ja=sgEl('sgja');if(ja)ja.textContent=l&&SNG.tr?(l.japanese||l.naturalTranslation||l.literalTranslation||''):''}
+function sgClose(){if(!SNG)return;sgClear();const r=sgEl('sg');if(r){if(r.parentNode)r.parentNode.removeChild(r);else if(r.remove)r.remove()}document.body.style.overflow='';SNG=null;if(view==='study')render()}
+
+/* ====== AIで学ぶプロンプト（内容をコピーして、AIの先生と一緒に学習する）====== */
+function muCopyText(t,okMsg){const show=()=>{muShowText(t)};const fb=()=>{try{const e=document.createElement('textarea');e.value=t;e.setAttribute('readonly','');e.style.position='fixed';e.style.opacity='0';document.body.appendChild(e);e.select();e.setSelectionRange(0,t.length);const r=document.execCommand('copy');document.body.removeChild(e);if(r)toast(okMsg);else show()}catch(x){show()}};try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast(okMsg),fb);else fb()}catch(x){fb()}}
+function muShowText(t){modal('<h3>コピーできませんでした</h3><div class="mut" style="font-size:13px;margin-bottom:6px">下の文を長押しで「すべて選択」して、コピーしてください。</div><textarea id="mu-fb" class="mi" rows="10" readonly style="font-size:12px;width:100%;font-family:ui-monospace,Menlo,monospace">'+esc(t)+'</textarea><div style="margin-top:8px"><button onclick="closeM()">閉じる</button></div>');const e=document.getElementById('mu-fb');try{if(e&&e.select){e.focus();e.select()}}catch(x){}}
+const MU_STY=[['lesson','先生と一緒に学ぶ'],['quiz','クイズで学ぶ'],['review','暗記チェック']];
+const MU_STYT={
+lesson:['1項目ずつ、次の順番で教える。','　① 英文を示す','　② 意味（日本語訳）を伝える','　③ 大事な単語・熟語・文法のポイントを、やさしく解説する','　④ 理解を確かめる質問を1問だけ出して、私の答えを待つ','私が答えたら、正しいか、どこが違うかを説明する。私が「次へ」と言ったら、次の項目へ進む。','最後に、学んだことを短くまとめる。'],
+quiz:['最初は答えを見せない。1問ずつ出題して、私の答えを待つ。','問題の種類は、次を混ぜる：英文の和訳／日本語から英文の穴埋め／単語や熟語の意味／語順の並べ替え／文法の選択問題。','私が答えたら、○×と解説を返してから、次の問題へ進む。','全部が終わったら、正解数と、復習するとよい項目をまとめる。'],
+review:['暗記チェックをする。英語を見せて日本語を答えさせる問題と、日本語を見せて英語を答えさせる問題を、交互に出す。','1問ずつ出して、私の答えを待つ。間違えた項目は、あとでもう一度出す。','全部が終わったら、苦手だった項目の一覧を出す。']};
+const MU_STYGO={lesson:'最初の項目から、教え始めてください。',quiz:'最初の問題を出してください。',review:'最初の問題を出してください。'};
+function muSty(){const k=muS().style;return MU_STY.some(x=>x[0]===k)?k:'lesson'}
+function muSetSty(k){if(MU_STY.some(x=>x[0]===k)){muS().style=k;save();render()}}
+function muStyChips(){const c=muSty();return '<div class="row" style="gap:6px;margin:4px 0">'+MU_STY.map(x=>'<button class="mb sm '+(x[0]===c?'':'mb2')+'" onclick="muSetSty(\''+x[0]+'\')">'+(x[0]===c?'✓ ':'')+x[1]+'</button>').join('')+'</div>'}
+function muJoin(a,sep){return a.filter(x=>x).join(sep||'／')}
+function muTx(k,v){return v?k+'：'+v:''}
+function muWordTx(w){return muJoin([w.word+(w.pronunciation?' '+w.pronunciation:'')+(w.partOfSpeech?'（'+w.partOfSpeech+'）':''),muTx('意味',w.meaning),muTx('歌詞での意味',w.contextMeaning),muTx('例文',w.example),w.synonyms&&w.synonyms.length?'類義語：'+w.synonyms.join('、'):'',w.antonyms&&w.antonyms.length?'対義語：'+w.antonyms.join('、'):''])}
+function muPhraseTx(p){return muJoin([p.expression,muTx('意味',p.meaning),muTx('解説',p.explanation),muTx('使用例',p.example),muTx('注意',p.usageNote)])}
+function muGramTx(g){return muJoin([g.title,muTx('説明',g.explanation),muTx('例文',g.example)])}
+function muStructTx(a){return muJoin([muTx('文構造',a.structure),muTx('主語',a.subject),muTx('動詞',a.verb),muTx('目的語',a.object),muTx('補語',a.complement),muTx('修飾関係',a.modifiers),muTx('解説',a.explanation)])}
+function muLineTx(l,n,full){const o=['【'+n+'行目】'+l.english];if(l.japanese)o.push('　日本語訳：'+l.japanese);if(l.literalTranslation)o.push('　直訳：'+l.literalTranslation);if(l.naturalTranslation)o.push('　意訳：'+l.naturalTranslation);if(l.notes)o.push('　補足：'+l.notes);
+if(full){if(l.vocabulary&&l.vocabulary.length){o.push('　重要単語：');l.vocabulary.forEach(w=>o.push('　　・'+muWordTx(w)))}if(l.phrases&&l.phrases.length){o.push('　熟語・表現：');l.phrases.forEach(p=>o.push('　　・'+muPhraseTx(p)))}if(l.grammar&&l.grammar.length){o.push('　文法：');l.grammar.forEach(g=>o.push('　　・'+muGramTx(g)))}if(l.sentenceAnalysis)o.push('　文構造：'+muStructTx(l.sentenceAnalysis));if(l.nuance)o.push('　表現のニュアンス：'+l.nuance)}return o.join('\n')}
+function muArtTx(a){return [a.theme?'曲のテーマ：'+a.theme:'',a.metaphors&&a.metaphors.length?'比喩表現：'+a.metaphors.join('、'):'',a.symbols&&a.symbols.length?'象徴的な言葉：'+a.symbols.join('、'):'',a.emotions&&a.emotions.length?'感情・心情：'+a.emotions.join('、'):'',a.interpretation?'表現の解釈：'+a.interpretation:''].filter(x=>x).join('\n')}
+function muAiBody(s,scope,arg){const d=s.data||{},L=d.lyrics||[],ref=e=>e.line?muLineText(s,e.line):'';
+if(scope==='line'){const i=L.findIndex(l=>l.id===arg);if(i<0)return null;const l=L[i],a=d.artisticContext;return{label:'歌詞の'+(i+1)+'行目',text:muLineTx(l,i+1,true)+(a&&a.theme?'\n\n（参考）曲のテーマ：'+a.theme:'')}}
+if(scope==='lyrics'){return{label:'歌詞と日本語訳',text:L.map((l,i)=>muLineTx(l,i+1,false)).join('\n')}}
+if(scope==='vocabulary'){const v=muVocabAll(s);return{label:'重要単語（'+v.length+'語）',text:v.map((e,i)=>(i+1)+'. '+muWordTx(e.w)+(ref(e)?'／登場する行：'+ref(e):'')).join('\n')}}
+if(scope==='phrases'){const v=muAgg(s,'phrases');return{label:'熟語・表現（'+v.length+'件）',text:v.map((e,i)=>(i+1)+'. '+muPhraseTx(e.x)+(ref(e)?'／登場する行：'+ref(e):'')).join('\n')}}
+if(scope==='grammar'){const v=muAgg(s,'grammar');return{label:'文法（'+v.length+'件）',text:v.map((e,i)=>(i+1)+'. '+muGramTx(e.x)+(ref(e)?'／登場する行：'+ref(e):'')).join('\n')}}
+if(scope==='sentenceAnalysis'){const v=muAgg(s,'sentenceAnalysis');return{label:'文構造（'+v.length+'文）',text:v.map((e,i)=>(i+1)+'. '+e.x.english+(e.x.japanese?'／日本語訳：'+e.x.japanese:'')+'\n　'+muStructTx(e.x)).join('\n')}}
+if(scope==='artisticContext'){return{label:'曲の背景・表現（アーティスティック・コンテキスト）',text:muArtTx(d.artisticContext||{})}}
+let parts=[L.map((l,i)=>muLineTx(l,i+1,true)).join('\n\n')];const extra=[['重要単語（曲全体）',(d.vocabulary||[]).map(w=>'・'+muWordTx(w))],['熟語・表現（曲全体）',(d.phrases||[]).map(p=>'・'+muPhraseTx(p))],['文法（曲全体）',(d.grammar||[]).map(g=>'・'+muGramTx(g))],['文構造（曲全体）',(d.sentenceAnalysis||[]).map(a=>'・'+a.english+'／'+muStructTx(a))]];extra.forEach(x=>{if(x[1].length)parts.push('【'+x[0]+'】\n'+x[1].join('\n'))});if(d.artisticContext&&muArtTx(d.artisticContext))parts.push('【曲の背景・表現】\n'+muArtTx(d.artisticContext));
+return{label:'曲全体（'+L.length+'行）',text:parts.filter(x=>x).join('\n\n')}}
+function muAiPrompt(s,scope,arg){const b=muAiBody(s,scope,arg);if(!b)return null;const st=muSty();
+return ['あなたは、日本人の英語学習者に教える、やさしくて頼れる英語の先生です。','洋楽「'+s.title+'」（'+s.artist+'）の歌詞を使って、私が英語を学べるように手伝ってください。','','# 先生としてのルール','1. 下の「学習する内容」を使って教える。歌詞を記憶から補ったり、書かれていない英文を作ったりしない。','2. 英文は一字一句そのまま扱う（スペルや句読点を直さない）。','3. 日本語で説明する。初学者にも分かる、標準的な詳しさにする。','4. 一度にたくさん出さず、1項目ずつ進める。','5. 解説が付いていない英文は、あなたが解説してよい（ただし英文は変えない）。','6. 分からないことは推測せず、「分からない」と伝える。','7. 私の答えが間違っていても責めず、どこが違うかをやさしく説明する。','8. 歌詞を長く引用しない。学習に必要な1行ずつの範囲にとどめる。','','# 学習のしかた（'+MU_STY.find(x=>x[0]===st)[1]+'）'].concat(MU_STYT[st]).concat(['','# 学習する内容：'+b.label,'',b.text,'','# 最初にすること',MU_STYGO[st]]).join('\n')}
+function muCopyAi(scope,arg){const s=muSong(MU.id);if(!s)return;const t=muAiPrompt(s,scope,arg);if(!t)return toast('この内容が見つかりません');muCopyText(t,'AIで学ぶプロンプトをコピーしました（'+t.length+'文字）。AIに貼り付けてください')}
+function muAiBar(s,k){if(!muHas(s,k))return '';const b=muAiBody(s,k);return '<div class="mc muai"><div class="row sp" style="gap:8px;flex-wrap:wrap"><span class="mut" style="font-size:13px">この内容をAIで学ぶ（'+esc(MU_STY.find(x=>x[0]===muSty())[1])+'）</span><button class="mb sm" onclick="muCopyAi(\''+k+'\')">プロンプトをコピー</button></div>'+muStyChips()+'</div>'}
+
+/* ---- 曲の画面：上部をコンパクトに／タブの位置を保つ ---- */
+function muTab(k){const s=muSong(MU.id);if(!s)return;MU.cat=k;s.last=jst();save();const y=window.pageYOffset||0;render();scrollTo(0,y)}
+function muFixTabs(){const bar=document.getElementById('mu-tabs');if(!bar||!bar.querySelector)return;const on=bar.querySelector('.mtab.on');if(!on)return;bar.scrollLeft=Math.max(0,on.offsetLeft-(bar.clientWidth-on.offsetWidth)/2)}
+const _renderM=render;render=function(){_renderM.apply(this,arguments);try{if(view==='study'&&stTab==='music'&&MU.view==='detail')muFixTabs()}catch(e){}};
+function muOpsHtml(s){const L=s.data.lyrics||[],has=L.length>0,id=s.id;
+let h='<div class="mops-b"><div class="mops-t">曲</div><div class="row" style="gap:6px"><button class="mb mb2 sm" onclick="muEdit(\''+id+'\')">編集</button><button class="mb mb2 sm" onclick="muExport(\''+id+'\')">書き出し</button>'+(has?'<button class="mb mb2 sm" onclick="muLyrEdit(\''+id+'\')">歌詞を編集</button>':'<button class="mb sm" onclick="muEdit(\''+id+'\')">歌詞を入力する</button>')+'<button class="mb mb2 sm" onclick="muImportTo(\''+id+'\')">JSONを読み込む</button></div>';
+if(has){const t=muAiPrompt(s,'song');h+='<div class="mops-t">AI</div><div class="row" style="gap:6px">'+(s.lyricsOk?'<button class="mb sm" onclick="muCopyPrompt()">AI教材作成用プロンプトをコピー</button>':'')+'<button class="mb sm" onclick="muCopyAi(\'song\')">曲全体のAI学習プロンプトをコピー</button></div><div class="mut" style="font-size:12px;margin-top:6px">AIで学ぶときの学び方（約'+t.length+'文字）</div>'+muStyChips()+'<div class="mut" style="font-size:12px">各カテゴリーの上と、歌詞の各行にも「AIで学ぶ」ボタンがあります。</div>'+(s.lyricsOk?'<details class="mpv"><summary class="mut" style="font-size:12px">教材作成プロンプトの内容を見る</summary><textarea id="mu-pm" class="mi" rows="7" readonly style="font-size:12px;font-family:ui-monospace,Menlo,monospace">'+esc(muPrompt(s))+'</textarea></details>':'')+(s.lyricsOk?'':'<div class="mut" style="font-size:12px;margin-top:6px">歌詞はAIが出力した英文です。内容を確認して「歌詞を編集」から確定すると、教材作成プロンプトが使えます。</div>')}
+return h+'</div>'}
+function muDetailHtml(){const s=muSong(MU.id);if(!s){MU.view='home';return muHome()}const cs=muCatsOf(s),dn=muDone(s),k=cs.some(c=>c[0]===MU.cat)?MU.cat:(cs[0]?cs[0][0]:''),wc=vAll().filter(c=>c.srcId===s.id).length,L=s.data.lyrics||[],ex=L.filter(muLineExp).length;
+let h='<div class="mu"><div class="row sp" style="margin-bottom:6px"><button class="mb mb2 sm" onclick="muGo(\'home\')">← 一覧</button><button class="mkb" onclick="muMenu(\''+s.id+'\')" aria-label="メニュー">⋯</button></div><div class="mc mhd">'+
+'<div class="mhr">'+muCoverHtml(s,56)+'<div class="mtx"><div class="mt1" style="font-size:17px">'+esc(s.title)+'</div><div class="mt2">'+esc(s.artist)+(s.album?' ・ '+esc(s.album):'')+(s.musicUrl?'　<a class="mlink" style="margin:0" href="'+esc(s.musicUrl)+'" target="_blank" rel="noopener noreferrer">♪ リンク</a>':'')+'</div></div></div>'+
+'<div class="mhs">'+(L.length?'<span class="mchip'+(s.lyricsOk?' mok':'')+'">'+(s.lyricsOk?'確定済み':'未照合')+'</span><span>歌詞 '+L.length+'行</span><span>解説 '+ex+'/'+L.length+'</span>':'<span class="mut">歌詞なし</span>')+'<span>単語帳 '+wc+'語</span><span>'+muStatus(s)+'</span><span class="mut">最終 '+muDate(s.last)+'</span>'+(L.length?'<button class="mb sm mhsing" onclick="sgOpen(\''+s.id+'\')">♪ ジェイスと歌う</button>':'')+'</div>'+
+'<div class="bar" style="margin:6px 0 2px"><i style="width:'+(cs.length?dn.length/cs.length*100:0)+'%"></i></div>'+
+'<details class="mops"'+(MU.open._ops?' open':'')+' ontoggle="muTg(\'_ops\',this.open)"><summary>操作・AIで学習</summary>'+muOpsHtml(s)+'</details></div>';
+if(!cs.length)return h+'<div class="mc mut" style="text-align:center;padding:16px 10px">まだ教材がありません。歌詞を確定し、AIで作ったJSONを読み込むと、6つのカテゴリーに振り分けられます。</div></div>';
+h+='<div class="mtabs" id="mu-tabs">'+cs.map(c=>'<button class="mtab'+(c[0]===k?' on':'')+'" onclick="muTab(\''+c[0]+'\')"><span class="mn">'+c[1]+'</span>'+esc(c[2])+((s.done||{})[c[0]]?' ✓':'')+'</button>').join('')+'</div>'+muAiBar(s,k)+muCatHtml(s,k)+
+'<div style="margin-top:10px"><button class="mb '+((s.done||{})[k]?'mb2':'')+'" style="width:100%" onclick="muToggleDone(\''+k+'\')">'+((s.done||{})[k]?'✓ 学習済み（タップで戻す）':'このカテゴリーを学習済みにする')+'</button></div></div>';return h}
 
 const _goA=go;go=function(v){_goA(v);ambSync()};
 say('open');render();
