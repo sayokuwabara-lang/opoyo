@@ -367,6 +367,58 @@ body{font-weight:550;line-height:1.72}
 .gg-tool{min-width:0;min-height:100px;padding:11px 8px;border:1px solid var(--bd);border-radius:13px;background:var(--card);color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px}
 .gg-tool-icon{font-size:19px;line-height:1.1;color:var(--ac)}.gg-tool b{font-size:14px;font-weight:750}.gg-tool small{font-size:11px;line-height:1.35;color:var(--mut);overflow-wrap:anywhere}.gg-water-line{height:4px;width:100%;background:var(--sub);border-radius:8px;overflow:hidden;margin-top:3px}.gg-water-line i{display:block;height:100%;background:var(--ac);border-radius:8px}
 .gg-add-task{margin:0 0 14px}.gg-add-task button{width:100%;padding:12px;border:1px dashed var(--bd);border-radius:12px;background:transparent;color:var(--ink);font-weight:750}
+
+
+/* ===== Grimoire Garden v5: quiet gothic study ===== */
+:root{
+ --bg:#E9E3D8;--card:#F5F0E6;--sub:#DED6C8;--tx:#302A28;--tx2:#6D6258;
+ --ac:#526454;--ac2:#A18D72;--bd:#D0C5B5;--ink:#302A28;--pg:#526454;--inp:#FBF8F1;
+ --h1:#A18D72;--h2:#526454;--h3:#302A28;--ph1:#526454;--ph2:#A18D72;--ph3:#302A28;
+}
+:root[data-theme=dark]{
+ --bg:#191E1A;--card:#242B25;--sub:#303A31;--tx:#EAE4D8;--tx2:#B9B1A3;
+ --ac:#A9B69F;--ac2:#8C806D;--bd:#414B41;--ink:#EAE4D8;--pg:#A9B69F;--inp:#202720;
+ --h1:#8C806D;--h2:#A9B69F;--h3:#EAE4D8;--ph1:#A9B69F;--ph2:#8C806D;--ph3:#EAE4D8;
+}
+body{background:var(--bg);color:var(--tx)}
+#app{padding-top:20px;padding-bottom:calc(116px + env(safe-area-inset-bottom,0px))}
+#app h1{font-family:"Noto Sans JP","Hiragino Mincho ProN",serif;letter-spacing:.07em;color:var(--tx)}
+#app h2{letter-spacing:.055em;color:var(--tx)}
+#app .gg-head{padding:2px 2px 10px;border-bottom:1px solid var(--bd)}
+#app .gg-head .mut{letter-spacing:.08em}
+#app .gg-section{margin-bottom:24px}
+#app .sec-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 7px;border-bottom:1px solid var(--bd);margin-bottom:9px}
+#app .gg-list,#app .gg-more-list{background:var(--card);border:1px solid var(--bd);border-radius:11px;box-shadow:none}
+#app .gg-metric{background:var(--card);border:1px solid var(--bd);border-radius:10px}
+#app .gg-verse{background:var(--card);border:1px solid var(--bd);border-radius:10px}
+#app .gg-jace{align-items:center;margin:14px 0 22px}
+#app .gg-jace .jace{filter:drop-shadow(0 2px 2px rgba(30,25,20,.12))}
+#app .gg-jace .bub{background:var(--card);border-color:var(--bd);border-radius:10px;color:var(--tx)}
+#app .gg-jace .bub.t:before{border-right-color:var(--card)}
+#app .gg-section h2:before{content:"";display:inline-block;width:3px;height:1em;margin-right:9px;vertical-align:-.12em;background:var(--ac2);border-radius:2px}
+#app .card{background:var(--card);border-color:var(--bd);border-radius:11px;box-shadow:none}
+#app .card.deco{border-top:2px solid var(--ac2)}
+#app button{border-radius:9px}
+#app button:not(.ghost):not(.tiny):not(.chk):not(.jace):not(.gg-metric):not(.gg-more-row):not(.task-menu):not(.gg-link):not(.gg-list-menu){background:var(--ac);border-color:var(--ac);color:#FBF8F1}
+#app button.ghost,#app button.tiny,#app button.sm.ghost{background:transparent;color:var(--tx);border-color:var(--bd)}
+#app button.on{background:var(--ac)!important;border-color:var(--ac)!important;color:#FBF8F1!important}
+#app input,#app textarea,#app select{background:var(--inp);border-color:var(--bd);border-radius:9px;color:var(--tx)}
+#app .bar{background:var(--sub)}#app .bar i{background:var(--ac)}
+#app .gg-more-list{padding:2px 14px}
+#app .gg-more-row{border-color:var(--bd)}
+#nav{background:var(--card);border-color:var(--bd);box-shadow:0 -3px 14px rgba(35,29,23,.045)}
+#nav button{color:var(--tx2);font-size:11px;letter-spacing:.035em}
+#nav button.on{color:var(--ac)}
+#gg-fab{background:var(--ac);color:#FBF8F1;border:1px solid var(--ac);box-shadow:0 3px 12px rgba(25,30,25,.18)}
+#toast{background:var(--tx);color:var(--card)}
+.tag{background:var(--sub);color:var(--tx2)}
+/* Jace remains the original wolf illustration and original dialogue. */
+.gg-companion{position:fixed;z-index:14;left:max(10px,calc(50% - 260px + 10px));bottom:calc(68px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:7px;max-width:min(205px,52vw);padding:5px 10px 5px 5px;border:1px solid var(--bd);border-radius:999px;background:var(--card);color:var(--tx);box-shadow:0 3px 12px rgba(20,20,18,.12);font-size:11px;line-height:1.35;text-align:left}
+.gg-companion svg{display:block;width:38px;height:38px;flex:none}
+.gg-companion span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-weight:600}
+@media(max-width:360px){.gg-companion{max-width:48vw;gap:5px;padding-right:7px}.gg-companion svg{width:34px;height:34px}.gg-companion span{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.room *{animation:none!important;transition:none!important}}
+
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -1922,6 +1974,13 @@ render=function(){_ggRender.apply(this,arguments);ggEnsureControls();ggEnhanceLi
  const nav=document.getElementById('nav');
  if(nav){const tabs=[['home','☾','ホーム'],['cal','▦','カレンダー'],['study','▤','勉強'],['set','•••','その他']];
  nav.innerHTML=tabs.map(n=>'<button class="'+((view===n[0]||(n[0]==='set'&&['set','settings','water','med','verse','ref','hab'].includes(view)))?'on':'')+'" onclick="go(\''+n[0]+'\')"><div>'+n[1]+'</div>'+n[2]+'</button>').join('')}
+ let companion=document.getElementById('gg-companion');
+ const hasJace=!!document.querySelector('#app svg[viewBox="0 0 64 64"]');
+ if(view!=='home'&&!hasJace){
+  if(!companion){companion=document.createElement('button');companion.id='gg-companion';companion.className='gg-companion';companion.type='button';companion.setAttribute('aria-label','ジェイス');companion.onclick=()=>jTap();document.body.appendChild(companion)}
+  companion.innerHTML=jIcon()+'<span>'+esc(saying||say('open'))+'</span>';
+  companion.style.display='flex';
+ }else if(companion){companion.style.display='none'}
 };
 
 function navCard(){return '<div class="card"><h3>下部ナビゲーション</h3><p class="mut" style="margin:0">ホーム・カレンダー・勉強・その他の4項目で固定しています。</p></div>'}
