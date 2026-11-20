@@ -200,6 +200,137 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 .mu .mtheme .mk{min-width:0}
 .mu .mtabs{position:relative}
 .mu .muai{padding:8px 10px}
+
+/* ===== Grimoire Garden / unified redesign ===== */
+:root{
+ --bg:#ECECEC;--card:#F7F7F7;--sub:#E3E3E3;--tx:#2B2B2D;--tx2:#6A6B6D;
+ --ac:#3A3A3C;--ac2:#B8B8BA;--bd:#D2D2D3;--ink:#2B2B2D;--pg:#3A3A3C;--inp:#FFFFFF;
+ --danger:#B5474E;--radius:16px;color-scheme:light;
+}
+:root[data-theme=dark]{
+ --bg:#1B1B1D;--card:#262629;--sub:#35353A;--tx:#E9E9EC;--tx2:#A2A2AA;
+ --ac:#E9E9EC;--ac2:#6B6B74;--bd:#3F3F45;--ink:#E9E9EC;--pg:#E9E9EC;--inp:#1F1F22;color-scheme:dark;
+}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 "Noto Sans JP","BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",sans-serif;font-weight:400;background:var(--bg);color:var(--tx)}
+#app{max-width:520px;padding:16px 16px calc(112px + env(safe-area-inset-bottom,0px))}
+h1{font-size:20px;line-height:1.4;text-align:left;margin:0 0 14px;letter-spacing:.02em}
+h2{font-size:16px;line-height:1.45;margin:0;font-weight:700}
+h3{font-size:15px;line-height:1.5;margin:0 0 8px}
+.mut{font-size:13px;color:var(--tx2);line-height:1.55}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:0 0 12px;box-shadow:none}
+.card.deco{border-top:1px solid var(--bd)}
+.row{gap:8px}
+button{font:inherit;font-size:14px;min-height:40px;padding:7px 13px;border-radius:11px;border:1px solid var(--ac);background:var(--ac);color:var(--bg);font-weight:600}
+:root[data-theme=dark] button{background:var(--ac);color:#1B1B1D;border-color:var(--ac)}
+button.ghost,button.tiny,button.sm.ghost{background:transparent;color:var(--tx);border-color:var(--bd)}
+button.sm{font-size:13px;min-height:34px;padding:5px 11px}
+button.tiny{font-size:12px;min-height:30px;padding:3px 9px}
+button.on{background:var(--ac);border-color:var(--ac);color:var(--bg)}
+button:disabled{opacity:.35}
+input,textarea,select{font:inherit;font-size:15px;line-height:1.5;min-height:44px;padding:8px 12px;border:1px solid var(--bd);border-radius:11px;background:var(--inp);color:var(--tx)}
+input::placeholder,textarea::placeholder{color:var(--tx2);opacity:.8}
+.bar{height:6px;background:var(--sub);border-radius:99px;overflow:hidden}
+.bar i{background:var(--ac);border-radius:99px}
+.tag{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--sub);color:var(--tx2)}
+.bub{background:var(--sub);border-radius:14px;padding:10px 13px}
+.bub.t:before{border-right-color:var(--sub)}
+.bub.red,.bub.t.red{background:#B5474E;color:#fff}
+.bub.t.red:before{border-right-color:#B5474E}
+.jace{width:64px;height:64px;min-width:64px;padding:0;border:0;background:transparent;color:inherit}
+.jace svg{display:block;width:64px;height:64px}
+.task{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--bd)}
+.task:first-child{border-top:0}
+.chk{width:25px;height:25px;min-width:25px;min-height:25px;padding:0;margin-top:1px;border-radius:50%;border:1.5px solid var(--tx2);background:transparent;color:#fff;font-size:13px}
+.chk.d{background:#4C7A5B;border-color:#4C7A5B}
+.done .tt{text-decoration:line-through;color:var(--tx2)}
+.sw{border-top:1px solid var(--bd);overflow:visible}
+.sw:first-child{border-top:0}
+.swi{background:transparent;transition:none;touch-action:auto;user-select:auto}
+.sw .acts{display:none!important}
+.task-row,.assign-row{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--bd)}
+.task-row:first-child,.assign-row:first-child{border-top:0}
+.task-main{flex:1;min-width:0;word-break:break-word}
+.task-main .mut{margin-top:2px}
+.task-menu{flex:none;width:34px;min-width:34px;min-height:34px;padding:3px;border:0;background:transparent;color:var(--tx2);font-size:20px}
+.verse{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;text-align:left;padding:10px 12px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:13px;font-weight:400}
+nav{left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:4px 0 env(safe-area-inset-bottom,0px);z-index:15}
+nav button{flex:1;min-height:58px;padding:5px 0;background:transparent!important;color:var(--tx2)!important;border:0!important;border-radius:0!important;font-size:12px;font-weight:500}
+nav button.on{color:var(--tx)!important;font-weight:700}
+nav button div{font-size:20px!important;line-height:1.35}
+#toast{bottom:calc(78px + env(safe-area-inset-bottom,0px));font-size:13px;z-index:45}
+#fab{position:fixed;right:max(16px,calc(50% - 260px + 16px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:16;width:54px;height:54px;min-height:54px;padding:0;border-radius:50%;font-size:28px;line-height:1;background:var(--ac);color:var(--bg);border:0;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+#gg-add-overlay{position:fixed;inset:0;background:rgba(18,18,22,.45);z-index:39;opacity:0;pointer-events:none;transition:opacity .2s}
+#gg-add-overlay.open{opacity:1;pointer-events:auto}
+#gg-add-sheet{position:fixed;z-index:40;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));background:var(--card);border:1px solid var(--bd);border-bottom:0;border-radius:20px 20px 0 0;transform:translateY(105%);transition:transform .24s;max-height:86vh;overflow:auto}
+#gg-add-sheet.open{transform:translateY(0)}
+#gg-add-sheet h3{font-size:17px;margin:0 0 12px}
+#gg-add-sheet .gg-fields{display:grid;gap:8px}
+#gg-add-sheet .gg-submit{width:100%;min-height:48px;margin-top:12px}
+#gg-add-sheet .gg-cancel{width:100%;margin-top:4px;background:transparent;color:var(--tx);border-color:transparent}
+#gg-add-sheet .gg-tabs{display:flex;gap:6px;padding:3px;background:var(--sub);border-radius:999px;margin-bottom:12px}
+#gg-add-sheet .gg-tabs button{flex:1;background:transparent;color:var(--tx2);border:0;border-radius:999px}
+#gg-add-sheet .gg-tabs button.on{background:var(--card);color:var(--tx)}
+/* Calendar */
+#app .card:has(> .row.sp button[onclick^="cNav"]),#app .card:has(> .row.sp button[onclick^="calNav"]){padding:12px}
+#app button[onclick^="cPick"],#app button[onclick^="calPick"]{min-height:46px!important;border-radius:10px!important;font-size:14px!important}
+#app .card:has(> h2){margin-top:10px}
+/* compact type in all feature screens */
+#app .mut[style*="font-size:11px"],#app .mut[style*="font-size:12px"]{font-size:12px!important}
+#app .big{font-size:38px;line-height:1.25;letter-spacing:.01em}
+#app .mu{font-family:Georgia,"Times New Roman",serif;border-radius:16px}
+#app .mu button{font-family:inherit}
+#app .mu .mtabs{scrollbar-width:none}
+#app .mu .mtab{font-size:13px}
+#app .mu .mhd .mt1{font-size:16px!important}
+#app .mu .mc{line-height:1.65}
+#app .dn2{font-family:"Noto Sans JP",sans-serif}
+#app .dn2-b{font-size:13px}
+#app .sg{font-family:"Noto Sans JP",sans-serif}
+#app details{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;background:var(--card)}
+#app summary{cursor:pointer;font-size:14px;font-weight:600}
+@media(max-width:360px){#app{padding-left:12px;padding-right:12px}.jace,.jace svg{width:56px;height:56px;min-width:56px}.task-row,.assign-row{gap:8px}}
+
+
+#gg-fab{position:fixed;right:max(16px,calc(50% - 260px + 16px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:16;width:54px;height:54px;min-height:54px;padding:0;border-radius:50%;font-size:28px;line-height:1;background:var(--ac);color:var(--bg);border:0;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+.gg-head{margin-bottom:12px}.gg-head h1{margin:0}
+.gg-jace{display:flex;gap:10px;align-items:flex-start;margin:0 0 18px}
+.gg-jace .bub{flex:1;min-width:0;font-size:14px;line-height:1.65}
+.gg-jacts{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.gg-jacts button{min-height:30px;font-size:12px;padding:3px 9px}
+.gg-section{margin:0 0 22px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.gg-filters{display:flex;gap:6px;margin:8px 0}
+.gg-list{background:var(--card);border:1px solid var(--bd);border-radius:15px;padding:3px 12px}
+.gg-link{display:block;width:100%;margin-top:8px;background:transparent;color:var(--tx);border:0;text-align:right;font-size:13px;min-height:34px;padding:3px 2px}
+.gg-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gg-metric{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;padding:10px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:13px;text-align:left}
+.gg-metric b{font-size:17px;line-height:1.35;white-space:nowrap}
+.gg-metric small{font-size:10px;color:var(--tx2);font-weight:400}
+.gg-metric .mut{font-size:11px}
+.gg-verse{margin:0 0 8px;font-size:13px}
+.gg-verse-detail{margin:6px 0}
+.gg-verse-detail summary{list-style:none;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.gg-verse-detail summary::-webkit-details-marker{display:none}
+.gg-verse-body{padding-top:10px;font-size:14px}
+.gg-verse-body p{margin:0 0 8px}
+@media(max-width:360px){.gg-metrics{gap:6px}.gg-metric{padding:8px}.gg-metric b{font-size:15px}}
+
+
+.gg-more-list{background:var(--card);border:1px solid var(--bd);border-radius:15px;padding:2px 13px}
+.gg-more-row{display:flex;align-items:center;gap:12px;width:100%;min-height:68px;padding:10px 0;border:0;border-radius:0;border-top:1px solid var(--bd);background:transparent;color:var(--tx);text-align:left}
+.gg-more-row:first-child{border-top:0}
+.gg-more-ic{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--sub);font-size:19px;flex:none}
+.gg-more-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.gg-more-txt b{font-size:14px}.gg-more-txt small{font-size:12px;color:var(--tx2)}
+
+
+.sw{position:relative;padding-right:0}
+.sw .gg-list-menu{position:absolute;right:0;top:3px;z-index:3;width:32px;min-width:32px;min-height:32px;padding:0;border:0;background:var(--card);color:var(--tx2);font-size:20px;line-height:1}
+.sw.gg-actions-open .acts{display:flex!important;position:static;height:34px;justify-content:flex-end;gap:6px;margin:0 34px 3px 0}
+.sw.gg-actions-open .acts button{width:auto;height:30px;min-height:30px;padding:2px 9px;border-radius:8px;font-size:12px}
+.sw.gg-actions-open .swi{transform:none!important}
+
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -346,7 +477,7 @@ function saveAssign(id){const a=S.assign.find(x=>x.id===id),n=$('en2').value.tri
 function aRow(a){const n=dleft(a.due),late=n<0&&!a.done,chip=a.done?'':'<span class="tag" style="background:'+(late?'#B5474E':n<=3?'#E3B7B9':'var(--sub)')+';color:'+(late?'#fff':'var(--tx)')+'">'+(late?'期限切れ':n===0?'今日':'あと'+n+'日')+'</span>';
 return '<div class="sw"><div class="acts"><button class="ghost" onclick="editAssign(\''+a.id+'\')">編集</button><button class="del" onclick="delAssign(\''+a.id+'\')">削除</button></div><div class="swi task '+(a.done?'done':'')+'"><button class="chk'+(a.done?' d':'')+'" onclick="togA(\''+a.id+'\')" aria-label="提出">'+(a.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(a.name)+'</div><div class="mut">期限 '+a.due.slice(5).replace('-','/')+' '+chip+'</div></div></div></div>'}
 function aCard(){const u=S.assign.filter(a=>!a.done).sort((a,b)=>a.due.localeCompare(b.due)),d=S.assign.filter(a=>a.done).sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')).slice(0,3),l=u.concat(d);
-return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>':'<p class="mut">課題はありません。</p>')+'<h3 style="margin-top:12px">課題を追加</h3><input id="an" placeholder="課題名" style="margin-bottom:6px"><p class="mut" style="margin:0 0 2px">期限の日付</p><input id="ad" type="date" value="'+jst()+'" style="margin-bottom:8px"><button onclick="addAssign()">追加する</button></div>'}
+return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>':'<p class="mut">課題はありません。</p>')+'<h3 style="margin-top:12px">課題を追加</h3><input id="an" placeholder="課題名" style="margin-bottom:6px"><p class="mut" style="margin:0 0 2px">期限の日付</p><input id="ad" type="date" value="'+jst()+'" style="margin-bottom:8px"><button onclick="addAssign()">追加する</button></div>'}
 function vToday(){const d=jst();if(S.vhist[d]==null||!VERSES[S.vhist[d]]){S.vhist[d]=hash(d)%VERSES.length;save()}return S.vhist[d]}
 function readVerse(i){const v=VERSES[i];saying=v.r+'。'+(v.text?v.text+(v.tr?'（'+v.tr+'）':'')+(v.s?'　'+v.s:''):(v.s||''));render()}
 function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+CATS[v.c]+'</span><h3 style="margin-top:6px">'+esc(v.r)+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</h3>'+(v.text?'<p style="margin:0 0 6px">'+esc(v.text)+'</p>':'<p class="mut" style="margin:0 0 6px">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut" style="margin:0 0 8px">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="sm" onclick="readVerse('+i+');go(\'home\')">話してもらう</button><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div>'}
@@ -485,7 +616,7 @@ let ts=S.tasks.filter(t=>filter==='all'?(t.date===td&&!t.done):filter==='done'?(
 ts.sort((a,b)=>a.done-b.done||a.date.localeCompare(b.date));
 const left=S.tasks.filter(t=>!t.done&&t.date===td).length,rec=recMed(),vi=vToday();
 return '<div style="text-align:right"><button class="ghost sm" onclick="go(\'set\')">⚙ 設定</button></div><h1>☾ Grimoire Garden</h1><div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg></button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+'<div class="row"><button class="sm" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
-'<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(filter==='cal'?calHtml():ts.length?ts.map(t=>taskRow(t)).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>':'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+'</div>'+
+'<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(filter==='cal'?calHtml():ts.length?ts.map(t=>taskRow(t)).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>':'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+'</div>'+
 aCard()+'<div class="card"><h3>タスクを追加</h3><input id="tn" placeholder="タスク名" style="margin-bottom:6px"><input id="tm" placeholder="詳細メモ（任意）" style="margin-bottom:6px"><input id="td" type="date" value="'+td+'" style="margin-bottom:6px"><select id="tr" style="margin-bottom:8px"><option value="none">くりかえしなし</option><option value="daily">毎日くりかえす</option><option value="weekdays">平日（月〜金）にくりかえす</option><option value="weekly">毎週（予定日の曜日）にくりかえす</option></select><button onclick="addTask()">追加する</button>'+(S.recur.length?'<h3 style="margin:14px 0 4px">くりかえし中</h3>'+S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>↻ '+esc(r.name)+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="ghost sm" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">開いた日にその日の分が自動で追加されます。休んだ日の分は追加されず、たまりません。</p>':'')+'</div>'+
 
 
@@ -518,7 +649,7 @@ const vh=Object.keys(S.vhist).sort().reverse().slice(0,7);
 return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:6px" onclick="vForm(-1)">＋ 聖句を追加</button><div style="text-align:right;margin-bottom:8px"><button class="tiny" onclick="catForm()">カテゴリー設定</button></div><div class="card deco"><h3>今日の聖句</h3>'+vCard(vToday())+'</div><div class="card"><input placeholder="キーワード検索" value="'+esc(vq)+'" onchange="vq=this.value;render()"><div class="row" style="margin-top:8px"><button class="sm '+(vcat===-1?'on':'ghost')+'" onclick="vcat=-1;render()">すべて</button><button class="sm '+(vcat===-2?'on':'ghost')+'" onclick="vcat=-2;render()">★お気に入り</button>'+CATS.map((c,i)=>'<button class="sm '+(vcat===i?'on':'ghost')+'" onclick="vcat='+i+';render()">'+c+'</button>').join('')+'</div></div>'+
 (ix.length?ix.map(vCard).join(''):'<p class="mut">該当なし</p>')+'<div class="card"><h3>過去に表示した聖句</h3>'+vh.map(d=>'<p class="mut" style="margin:0">'+d+'　'+VERSES[S.vhist[d]].r+'</p>').join('')+'</div>'}
 
-function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vSet,cal:vCal,hab:vHab};$('app').innerHTML=V[view]();
+function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vMore,settings:vSet,cal:vCal,hab:vHab};$('app').innerHTML=V[view]();
 $('nav').innerHTML=S.nav.map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
 let ordMode=false,tOpt=false,showRec=false,sayMode='word',dr={tn:'',td:'',tt:'',tmm:'',tr:'none'},alm=null;
 function talk(){sref='';sayMode='word';saying=pick('w',WORDS);render()}
@@ -562,7 +693,7 @@ function vHome(){const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter
 let ts=S.tasks.filter(t=>filter==='all'?(t.date===td&&!t.done):filter==='done'?(t.done&&t.doneDate===td):(t.date===td||(t.done&&t.doneDate===td)));
 ts.sort((a,b)=>a.done-b.done||(filter==='all'?a.date.localeCompare(b.date):0)||(a.o||a.created)-(b.o||b.created));
 const left=S.tasks.filter(t=>!t.done&&t.date===td).length,vi=vToday(),vm=sayMode==='verse';
-const list=ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):undefined)).join('')+(ordMode?'':'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>'):'<p class="mut">タスクはありません。</p>';
+const list=ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):undefined)).join('')+(ordMode?'':'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>'):'<p class="mut">タスクはありません。</p>';
 return '<div style="text-align:right"><button class="ghost sm" onclick="go(\'set\')">⚙ 設定</button></div><h1>☾ Grimoire Garden</h1>'+
 '<div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="jTap()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+
 '<div class="row"><button class="sm '+(vm?'ghost':'on')+'" onclick="talk()">今日の一言</button><button class="sm '+(vm?'on':'ghost')+'" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
@@ -577,7 +708,7 @@ function saveAssign(id){const a=S.assign.find(x=>x.id===id),n=$('en2').value.tri
 function aRow(a){const n=dleft(a.due),late=n<0&&!a.done,chip=a.done?'':'<span class="tag" style="background:'+(late?'#B5474E':n<=3?'#E3B7B9':'var(--sub)')+';color:'+(late?'#fff':'var(--tx)')+'">'+(late?'期限切れ':n===0?'今日':'あと'+n+'日')+'</span>';
 return '<div class="sw"><div class="acts"><button class="ghost" onclick="editAssign(\''+a.id+'\')">編集</button><button class="del" onclick="delAssign(\''+a.id+'\')">削除</button></div><div class="swi task '+(a.done?'done':'')+'"><button class="chk'+(a.done?' d':'')+'" onclick="togA(\''+a.id+'\')" aria-label="提出">'+(a.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(a.name)+'</div><div class="mut">期限 '+md(a.due)+(a.at?' '+esc(a.at):'')+' '+chip+'</div>'+(a.memo?'<div class="mut">'+esc(a.memo)+'</div>':'')+'</div></div></div>'}
 function aCard(){const key=a=>a.due+(a.at||''),u=S.assign.filter(a=>!a.done).sort((a,b)=>key(a).localeCompare(key(b))),d=S.assign.filter(a=>a.done).sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')).slice(0,3),l=u.concat(d);
-return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>':'<p class="mut">課題はありません。</p>')+
+return '<div class="card"><h2>課題</h2>'+(l.length?l.map(aRow).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>':'<p class="mut">課題はありません。</p>')+
 '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)"><div class="row" style="flex-wrap:nowrap"><input id="an" class="cp" placeholder="課題を追加"><button class="sm" style="flex:none" onclick="addAssign()">追加</button></div>'+
 '<div class="row" style="flex-wrap:nowrap;margin-top:4px;gap:6px"><span class="mut" style="font-size:11px;flex:none">期限</span><input id="ad" class="cp" type="date" value="'+jst()+'" style="flex:1"><span class="mut" style="font-size:11px;flex:none">時間</span><input id="at" class="cp" type="time" style="flex:1"></div>'+
 '<input id="am" class="cp" placeholder="メモ（任意）" style="margin-top:4px"></div></div>'}
@@ -673,7 +804,7 @@ g+='<button onclick="cPick(\''+ds+'\')" style="min-height:50px;padding:2px;borde
 g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲ 課題の期限　◆ 予定</p>';
 const ts=S.tasks.filter(t=>t.date===cD),as=S.assign.filter(a=>a.due===cD),es=ev.filter(x=>evOn(x,cD)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));
 const none=!ts.length&&!as.length&&!es.length;
-return '<h1>カレンダー</h1><div class="card">'+g+'</div><div class="card"><h2>'+md(cD)+' の予定</h2>'+(none?'<p class="mut">予定はありません。</p>':'')+(es.length?es.map(evRow).join(''):'')+(ts.length?'<h3 style="font-size:15px;margin:8px 0 0">タスク</h3>'+ts.map(t=>taskRow(t)).join(''):'')+(as.length?'<h3 style="font-size:15px;margin:8px 0 0">課題の期限</h3>'+as.map(aRow).join(''):'')+(none?'':'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>')+
+return '<h1>カレンダー</h1><div class="card">'+g+'</div><div class="card"><h2>'+md(cD)+' の予定</h2>'+(none?'<p class="mut">予定はありません。</p>':'')+(es.length?es.map(evRow).join(''):'')+(ts.length?'<h3 style="font-size:15px;margin:8px 0 0">タスク</h3>'+ts.map(t=>taskRow(t)).join(''):'')+(as.length?'<h3 style="font-size:15px;margin:8px 0 0">課題の期限</h3>'+as.map(aRow).join(''):'')+(none?'':'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>')+
 calForm()}
 function evOn(e,ds){return ds>=e.date&&ds<=(e.end&&e.end>e.date?e.end:e.date)}
 function applyTheme(){try{const t=S.theme||'light',dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',dark?'dark':'light');const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',dark?'#1b1b1d':'#E2E2E3')}catch(e){}}
@@ -852,7 +983,7 @@ const bars='<div style="display:flex;gap:6px;align-items:flex-end;height:96px">'
 const dots='<div>'+[0,1,2,3,4,5,6].map(i=>'<span style="font-size:24px;color:'+(i<Math.min(c,7)?'var(--pg)':'var(--ac2)')+'">'+(i<Math.min(c,7)?'●':'○')+'</span>').join(' ')+' <b>'+c+'日連続</b></div>';
 const tot=S.meds.reduce((a,x)=>a+(x.min||0),0),rec=S.meds.map((x,i)=>({x,i})).sort((a,b)=>b.x.d.localeCompare(a.x.d)||(b.x.t||0)-(a.x.t||0)).slice(0,8);
 const row=r=>{const x=r.x;return '<div class="sw"><div class="acts"><button class="ghost" onclick="mEdit('+r.i+')">編集</button><button class="del" onclick="mDel('+r.i+')">削除</button></div><div class="swi task"><div style="flex:1;min-width:0"><div class="tt">'+md(x.d)+'　'+(x.min||'?')+'分 <span class="mut">'+esc(mName(x))+'</span></div>'+(x.after?'<div class="mut">気分 '+esc(x.after)+'</div>':'')+(x.note&&x.id!=='br'?'<div class="mut">'+esc(x.note)+'</div>':'')+(x.id==='br'&&x.note?'<div class="mut">'+esc(x.note)+'</div>':'')+'</div></div></div>'};
-return '<div class="card"><h3>瞑想の記録</h3><p style="margin:0 0 6px">今日 <b>'+(by[td]||0)+'</b>分 ／ 累計 <b>'+hm(tot*60)+'</b></p>'+dots+'<p class="mut" style="margin:2px 0 10px;font-size:13px">休んだ日があっても記録は消えません。</p><h3 style="font-size:15px">直近7日（分）</h3>'+bars+'<h3 style="font-size:15px;margin-top:14px">カレンダー</h3>'+g+(rec.length?'<h3 style="font-size:15px;margin-top:14px">最近の記録</h3>'+rec.map(row).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p>':'')+'</div>'}
+return '<div class="card"><h3>瞑想の記録</h3><p style="margin:0 0 6px">今日 <b>'+(by[td]||0)+'</b>分 ／ 累計 <b>'+hm(tot*60)+'</b></p>'+dots+'<p class="mut" style="margin:2px 0 10px;font-size:13px">休んだ日があっても記録は消えません。</p><h3 style="font-size:15px">直近7日（分）</h3>'+bars+'<h3 style="font-size:15px;margin-top:14px">カレンダー</h3>'+g+(rec.length?'<h3 style="font-size:15px;margin-top:14px">最近の記録</h3>'+rec.map(row).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>':'')+'</div>'}
 function vMed(){
 if(bs){const b=BREATH.find(x=>x.k===bs.k),c=bCalc();return '<h1>'+b.n+'</h1><div class="card" style="text-align:center">'+lungSvg(c.sc.toFixed(3))+'<div id="bph" style="font-size:24px;font-weight:700;margin-top:4px">'+c.ph+'</div><div class="big" id="bnum">'+c.rem+'</div><div class="mut" id="bcyc">'+c.cyc+' 回</div>'+bTimeline(b)+'<button class="ghost" style="margin-top:12px" onclick="bEnd()">終了</button></div>'}
 const tab=mTab==='br'?'br':'rec',td=jst();
@@ -878,7 +1009,7 @@ return '<h1>勉強</h1><div class="card deco"><div class="row" style="gap:10px;f
 st.subs.map(s=>{const a=sumSec(x=>x.sub===s&&x.d===td),b=sumSec(x=>x.sub===s);return '<div style="margin-top:8px"><div class="row sp"><span>'+esc(s)+'</span><span class="mut">今日 '+hm(a)+' ／ 累計 '+hm(b)+'</span></div><div class="bar"><i style="width:'+b/mx*100+'%"></i></div></div>'}).join('')+'</div>'+
 '<div class="card"><h3>やった時間を入れる</h3><div class="row" style="margin-bottom:6px">'+(st.subs.length?st.subs.map((s,i)=>'<button class="sm '+(subSel===s?'on':'ghost')+'" onclick="sfSub('+i+')">'+esc(s)+'</button>').join(''):'<span class="mut">先に、下で科目を追加してください</span>')+'</div><div class="row" style="flex-wrap:nowrap;gap:6px;margin-bottom:6px"><div style="flex:1;min-width:0"><div class="mut" style="font-size:11px">日付</div><input id="sdd" class="cp" type="date" max="'+td+'" value="'+(sf.d||td)+'"></div><div style="flex:1;min-width:0"><div class="mut" style="font-size:11px">時間（分）</div><input id="smin" class="cp" type="number" inputmode="numeric" value="'+sf.m+'"></div></div><div class="row" style="margin-bottom:6px">'+[15,30,45,60,90,120].map(m=>'<button class="sm '+(sf.m===m?'on':'ghost')+'" style="min-height:32px" onclick="sfSet('+m+')">'+m+'</button>').join('')+'</div><input id="snt" class="cp" placeholder="メモ（任意）" value="'+esc(sf.note)+'"><button style="width:100%;margin-top:8px" onclick="sAdd()">記録する</button></div>'+
 '<div class="card"><h3>科目</h3><div class="row" style="margin-bottom:8px">'+st.subs.map((s,i)=>'<span class="tag" style="font-size:15px;padding:2px 10px">'+esc(s)+' <a onclick="delSub('+i+')" style="padding:0 4px">✕</a></span>').join('')+'</div><div class="row" style="flex-wrap:nowrap"><input id="sn" class="cp" placeholder="科目名"><button class="sm" onclick="addSub()" style="flex:none">追加</button></div></div>'+
-studyLog()+(rec.length?'<div class="card"><h3>最近の記録</h3>'+rec.map(row).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">← 左にスライドで編集・削除</p></div>':'')}
+studyLog()+(rec.length?'<div class="card"><h3>最近の記録</h3>'+rec.map(row).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p></div>':'')}
 function tJc(){keep();dr.j=!dr.j;render()}
 function calJ(){evKeep();eDr.j=!eDr.j;render()}
 /* ---- 予告の時間：複数選択（5/10/15/30分前・1時間前・2時間前・前日）---- */
@@ -923,50 +1054,50 @@ const xl=cx-(G.wt+2)/2,xlb=cx-(G.wb+2)/2,vy=t+36;
 s+='<path d="M'+xl+' '+(t+4)+' L'+(cx-16)+' '+(t+8)+' L'+cx+' '+vy+' L'+cx+' '+(h-2)+' L'+xlb+' '+(h-2)+' C'+(xlb-4)+' '+(h-30)+' '+(xl-7)+' '+(t+34)+' '+xl+' '+(t+4)+'Z" fill="'+V+'" stroke="'+V2+'" stroke-width="1.4"/><path d="M'+(360-xl)+' '+(t+4)+' L'+(cx+16)+' '+(t+8)+' L'+cx+' '+vy+' L'+cx+' '+(h-2)+' L'+(360-xlb)+' '+(h-2)+' C'+(360-xlb+4)+' '+(h-30)+' '+(360-xl+7)+' '+(t+34)+' '+(360-xl)+' '+(t+4)+'Z" fill="'+V+'" stroke="'+V2+'" stroke-width="1.4"/>';
 s+=ln('M'+(cx-16)+' '+(t+8)+' L'+cx+' '+vy,AU,1.4,.9)+ln('M'+(cx+16)+' '+(t+8)+' L'+cx+' '+vy,AU,1.4,.9)+ln('M'+cx+' '+vy+' V'+(h-2),V2,1.2)+ln('M'+(xlb+6)+' '+(h-8)+' H'+(cx-6),AU,1,.6)+ln('M'+(cx+6)+' '+(h-8)+' H'+(360-xlb-6),AU,1,.6);
 s+=btns(vline(G,vy+8,h-12,5),AU,2.3);
-[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+7,G.aw[1]+5)+'" fill="'+W+'" stroke="'+WS+'" stroke-width="1.2"/>';const p=along(a,.83);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+7,G.aw[1]+7)+'" fill="#dcd9cf" stroke="'+WS+'" stroke-width="1.2"/><circle cx="'+f1(a[2])+'" cy="'+f1(a[3]-4)+'" r="2" fill="'+AU+'"/>'});
+[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+4,G.aw[1]+2)+'" fill="'+W+'" stroke="'+WS+'" stroke-width="1.2"/>';const p=along(a,.83);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+4,G.aw[1]+4)+'" fill="#dcd9cf" stroke="'+WS+'" stroke-width="1.2"/><circle cx="'+f1(a[2])+'" cy="'+f1(a[3]-4)+'" r="2" fill="'+AU+'"/>'});
 s+='<path d="M'+(cx-27)+' '+(t+2)+' Q'+cx+' '+(t+12)+' '+(cx+27)+' '+(t+2)+' L'+(cx+25)+' '+(t+17)+' Q'+cx+' '+(t+27)+' '+(cx-25)+' '+(t+17)+'Z" fill="'+W+'" stroke="'+WS+'" stroke-width="1.2"/>'+ln('M'+(cx-22)+' '+(t+10)+' Q'+cx+' '+(t+20)+' '+(cx+22)+' '+(t+10),WS,1,.8)+'<circle cx="'+cx+'" cy="'+(t+22)+'" r="3.4" fill="'+AU+'" stroke="#7a5f26" stroke-width=".8"/><circle cx="'+cx+'" cy="'+(t+22)+'" r="1.3" fill="#8a2a3a"/>';
 return s}
 function gCardigan(G){const cx=G.cx,t=G.top,h=G.hem+(G.legs?10:4),C='#3d404b',C2='#272a33',R='#2d3039',IN='#c4c7d1',WD='#8a6a46';let s='';
 if(G.legs)s+=pants(G,'#2a2c35','#1b1d24');
-s+='<path d="'+bodyP(cx,t,h,G.wt+22,G.wb+30)+'" fill="'+C+'" stroke="'+C2+'" stroke-width="1.4"/><path d="M'+(cx-17)+' '+(t+4)+' L'+(cx+17)+' '+(t+4)+' L'+(cx+13)+' '+(h-4)+' L'+(cx-13)+' '+(h-4)+'Z" fill="'+IN+'" stroke="#9a9eab" stroke-width="1"/>';
-for(let x=-46;x<=46;x+=9)if(Math.abs(x)>16)s+=ln('M'+(cx+x)+' '+(t+14)+' V'+(h-10),C2,1,.45);
-s+='<path d="M'+(cx-60)+' '+(h-9)+' H'+(cx+60)+' V'+h+' H'+(cx-60)+'Z" fill="'+R+'" stroke="'+C2+'" stroke-width="1"/>';for(let x=-56;x<=56;x+=7)s+=ln('M'+(cx+x)+' '+(h-9)+' V'+h,C2,.9,.6);
-s+=ln('M'+(cx-14)+' '+(t+4)+' L'+(cx-11)+' '+(h-4),C2,2)+ln('M'+(cx+14)+' '+(t+4)+' L'+(cx+11)+' '+(h-4),C2,2)+btns(vline({cx:cx-13},t+30,h-18,4),WD,3);
-[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+18,G.aw[1]+24)+'" fill="'+C+'" stroke="'+C2+'" stroke-width="1.4"/>';const p=along(a,.82);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+26,G.aw[1]+26)+'" fill="'+R+'" stroke="'+C2+'" stroke-width="1.2"/>';for(let k=0;k<5;k++){const q=along([p[0],p[1],a[2],a[3]],k/4);s+=ln('M'+f1(q[0]-12)+' '+f1(q[1])+' H'+f1(q[0]+12),C2,.8,.5)}});
-s+='<path d="M'+(cx-27)+' '+(t+1)+' Q'+cx+' '+(t+12)+' '+(cx+27)+' '+(t+1)+' L'+(cx+23)+' '+(t+14)+' Q'+cx+' '+(t+24)+' '+(cx-23)+' '+(t+14)+'Z" fill="'+R+'" stroke="'+C2+'" stroke-width="1.2"/>';return s}
+s+='<path d="'+bodyP(cx,t,h,G.wt+18,G.wb+24)+'" fill="'+C+'" stroke="'+C2+'" stroke-width="1.4"/><path d="M'+(cx-15)+' '+(t+4)+' L'+(cx+15)+' '+(t+4)+' L'+(cx+11)+' '+(h-4)+' L'+(cx-11)+' '+(h-4)+'Z" fill="'+IN+'" stroke="#9a9eab" stroke-width="1"/>';
+for(let x=-44;x<=44;x+=9)if(Math.abs(x)>15)s+=ln('M'+(cx+x)+' '+(t+14)+' V'+(h-10),C2,1,.45);
+s+=ln('M'+(cx-57)+' '+(h-3)+' H'+(cx+57)+'',C2,1.2,.7);
+s+=ln('M'+(cx-13)+' '+(t+4)+' L'+(cx-10)+' '+(h-4),C2,2)+ln('M'+(cx+13)+' '+(t+4)+' L'+(cx+10)+' '+(h-4),C2,2)+btns(vline({cx:cx-12},t+30,h-18,4),WD,3);
+[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+15,G.aw[1]+21)+'" fill="'+C+'" stroke="'+C2+'" stroke-width="1.4"/>';const p=along(a,.84);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+22,G.aw[1]+22)+'" fill="'+C+'" stroke="'+C2+'" stroke-width="1.2"/>'});
+s+='<path d="M'+(cx-25)+' '+(t+1)+' Q'+cx+' '+(t+12)+' '+(cx+25)+' '+(t+1)+' L'+(cx+22)+' '+(t+13)+' Q'+cx+' '+(t+22)+' '+(cx-22)+' '+(t+13)+'Z" fill="'+R+'" stroke="'+C2+'" stroke-width="1.2"/>';return s}
 function gRobe(G){const cx=G.cx,t=G.top,h=G.legs?258:258,W='#5a1f2e',W2='#2c0d16',B='#14101a';let s='';
 s+='<path d="M'+(cx-48)+' '+t+' C'+(cx-70)+' '+(t+40)+' '+(cx-84)+' '+(h-30)+' '+(cx-86)+' '+h+' L'+(cx+86)+' '+h+' C'+(cx+84)+' '+(h-30)+' '+(cx+70)+' '+(t+40)+' '+(cx+48)+' '+t+'Z" fill="'+W+'" stroke="'+W2+'" stroke-width="1.4"/>';
 s+='<path d="M'+(cx-9)+' '+(t+4)+' L'+(cx+9)+' '+(t+4)+' L'+(cx+13)+' '+h+' L'+(cx-13)+' '+h+'Z" fill="'+B+'"/>'+ln('M'+(cx-5)+' '+(t+10)+' L'+(cx-8)+' '+(h-3),AU,1,.8)+ln('M'+(cx+5)+' '+(t+10)+' L'+(cx+8)+' '+(h-3),AU,1,.8);
 for(let y=t+22;y<h-10;y+=16)s+='<circle cx="'+cx+'" cy="'+y+'" r="1.8" fill="'+AU+'"/>';
 s+='<path d="M'+(cx-86)+' '+(h-12)+' H'+(cx+86)+' V'+h+' H'+(cx-86)+'Z" fill="'+B+'"/>'+ln('M'+(cx-80)+' '+(h-6)+' Q'+(cx-62)+' '+(h-12)+' '+(cx-44)+' '+(h-6)+' T'+(cx-8)+' '+(h-6),AU,1.2,.9)+ln('M'+(cx+80)+' '+(h-6)+' Q'+(cx+62)+' '+(h-12)+' '+(cx+44)+' '+(h-6)+' T'+(cx+8)+' '+(h-6),AU,1.2,.9);
-const wolfarm=(a,sg)=>{const ex=a[2]+sg*(G.legs?-2:4);s+='<path d="'+limb(a[0],a[1],ex,a[3]+6,G.aw[0]+16,G.aw[1]+34)+'" fill="'+W+'" stroke="'+W2+'" stroke-width="1.4"/>';const p=along([a[0],a[1],ex,a[3]+6],.8);s+='<path d="'+limb(p[0],p[1],ex,a[3]+6,G.aw[1]+36,G.aw[1]+36)+'" fill="'+B+'"/>'+ln('M'+f1(ex-16)+' '+f1(a[3]-2)+' q8 -6 16 0 t16 0',AU,1.1,.9)};wolfarm(G.armL,-1);wolfarm(G.armR,1);
+const wolfarm=(a,sg)=>{const ex=a[2]+sg*(G.legs?-2:4);s+='<path d="'+limb(a[0],a[1],ex,a[3]+6,G.aw[0]+13,G.aw[1]+31)+'" fill="'+W+'" stroke="'+W2+'" stroke-width="1.4"/>';const p=along([a[0],a[1],ex,a[3]+6],.8);s+='<path d="'+limb(p[0],p[1],ex,a[3]+6,G.aw[1]+33,G.aw[1]+33)+'" fill="'+B+'"/>'+ln('M'+f1(ex-16)+' '+f1(a[3]-2)+' q8 -6 16 0 t16 0',AU,1.1,.9)};wolfarm(G.armL,-1);wolfarm(G.armR,1);
 s+='<path d="M'+(cx-30)+' '+(t-2)+' Q'+cx+' '+(t+14)+' '+(cx+30)+' '+(t-2)+' L'+(cx+27)+' '+(t+16)+' Q'+cx+' '+(t+30)+' '+(cx-27)+' '+(t+16)+'Z" fill="'+B+'" stroke="'+AU+'" stroke-width="1"/>';
 s+='<path d="M'+(cx-26)+' '+(t+34)+' h16 v14 c0 8 -8 12 -8 12 c0 0 -8 -4 -8 -12Z" fill="'+B+'" stroke="'+AU+'" stroke-width="1.2"/><path d="M'+(cx-20)+' '+(t+41)+' a5 5 0 1 0 4 8 a4 4 0 1 1 -4 -8Z" fill="'+AU+'"/>';return s}
 function gTurtle(G){const cx=G.cx,t=G.top,h=G.hem,K='#15171e',K2='#0a0b0e',SP='#3a3f4a',BL='#5a3d28';let s='';
 if(G.legs)s+=pants(G,'#1d2027','#0a0b0e');
 s+='<path d="'+bodyP(cx,t,h,G.wt+6,G.wb+6)+'" fill="'+K+'" stroke="'+K2+'" stroke-width="1.2"/>';
-[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+4,G.aw[1]+3)+'" fill="'+K+'" stroke="'+K2+'" stroke-width="1.2"/>'+ln('M'+f1(a[2]-9)+' '+f1(a[3]-4)+' H'+f1(a[2]+9),'#2a2d36',1.2,.8)});
-const by=G.legs?G.hem-8:G.hem-20,tx=(cx-G.wt/2+10);
+[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+1,G.aw[1])+'" fill="'+K+'" stroke="'+K2+'" stroke-width="1.2"/>'+ln('M'+f1(a[2]-8)+' '+f1(a[3]-4)+' H'+f1(a[2]+8),'#2a2d36',1,.8)});
+const by=G.hem-9;
 s+='<path d="M'+(cx-G.wt/2-1)+' '+by+' H'+(cx+G.wt/2+1)+' V'+(by+9)+' H'+(cx-G.wt/2-1)+'Z" fill="'+BL+'" stroke="#2f1f13" stroke-width="1"/><rect x="'+(cx-8)+'" y="'+(by-1)+'" width="16" height="11" rx="1.5" fill="none" stroke="#b9c2d3" stroke-width="2"/><rect x="'+(cx-1.5)+'" y="'+(by+2)+'" width="3" height="5" fill="#b9c2d3"/>';
-[-1,1].forEach(sg=>{const x0=cx+sg*20,x1=cx+sg*21;s+='<path d="'+limb(x0,t+8,x1,by+2,8,8)+'" fill="'+SP+'" stroke="#23262d" stroke-width="1"/>'+btns([[x1,by-3]],'#b9c2d3',2)});
-s+='<path d="M'+(cx-27)+' '+(t-2)+' Q'+cx+' '+(t+10)+' '+(cx+27)+' '+(t-2)+' L'+(cx+27)+' '+(t+16)+' Q'+cx+' '+(t+28)+' '+(cx-27)+' '+(t+16)+'Z" fill="'+K+'" stroke="'+K2+'" stroke-width="1.2"/>'+ln('M'+(cx-24)+' '+(t+8)+' Q'+cx+' '+(t+20)+' '+(cx+24)+' '+(t+8),'#2a2d36',1.2);return s}
+[-1,1].forEach(sg=>{const x0=cx+sg*20,x1=cx+sg*21;s+='<path d="'+limb(x0,t+8,x1,by+2,8,8)+'" fill="'+SP+'" stroke="#23262d" stroke-width="1"/>'+btns([[x1,by-3]],'#b9c2d3',2)}); 
+s+='<path d="M'+(cx-24)+' '+(t-1)+' Q'+cx+' '+(t+10)+' '+(cx+24)+' '+(t-1)+' L'+(cx+24)+' '+(t+14)+' Q'+cx+' '+(t+24)+' '+(cx-24)+' '+(t+14)+'Z" fill="'+K+'" stroke="'+K2+'" stroke-width="1.2"/>'+ln('M'+(cx-21)+' '+(t+7)+' Q'+cx+' '+(t+17)+' '+(cx+21)+' '+(t+7),'#2a2d36',1.2);return s}
 function gNight(G){const cx=G.cx,t=G.top,h=G.hem+(G.legs?4:0),N='#1b2750',N2='#0d1430',P='#f0f0f5',MN='#e8d9a0';let s='';
-if(G.legs)s+=pants(G,N,N2,true)+[G.legL,G.legR].map(a=>{const p=along(a,.94);return '<path d="'+limb(p[0],p[1],a[2],a[3]+3,G.lw[1]+14,G.lw[1]+14)+'" fill="none" stroke="'+P+'" stroke-width="2.2"/>'}).join('');
-else s+='<path d="M'+(cx-70)+' '+(h-12)+' C'+(cx-80)+' '+(h-4)+' '+(cx-80)+' '+(h+6)+' '+(cx-76)+' '+(h+8)+' L'+(cx-40)+' '+(h+8)+' L'+(cx-36)+' '+(h-12)+'Z" fill="'+N+'" stroke="'+P+'" stroke-width="2"/><path d="M'+(cx+70)+' '+(h-12)+' C'+(cx+80)+' '+(h-4)+' '+(cx+80)+' '+(h+6)+' '+(cx+76)+' '+(h+8)+' L'+(cx+40)+' '+(h+8)+' L'+(cx+36)+' '+(h-12)+'Z" fill="'+N+'" stroke="'+P+'" stroke-width="2"/>';
-s+='<path d="'+bodyP(cx,t,G.legs?G.hem+2:h-2,G.wt+10,G.wb+8)+'" fill="'+N+'" stroke="'+N2+'" stroke-width="1.2"/>'+ln('M'+cx+' '+(t+14)+' V'+(h-4),P,1.4,.85)+btns(vline(G,t+26,h-16,5),P,2.3)+'<path d="M'+(cx-36)+' '+(h-6)+' H'+(cx+36)+'" stroke="'+P+'" stroke-width="2" fill="none"/>';
-s+='<path d="M'+(cx-24)+' '+(t+24)+' h14 v16 h-14Z" fill="none" stroke="'+P+'" stroke-width="1.2"/><path d="M'+(cx-14)+' '+(t+27)+' a5 5 0 1 0 3 9 a4 4 0 1 1 -3 -9Z" fill="'+MN+'"/>';
-[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+9,G.aw[1]+9)+'" fill="'+N+'" stroke="'+N2+'" stroke-width="1.2"/>';const p=along(a,.86);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+11,G.aw[1]+11)+'" fill="'+N+'" stroke="'+P+'" stroke-width="2.2"/>'});
-s+='<path d="M'+(cx-26)+' '+(t-1)+' L'+(cx-14)+' '+(t+20)+' L'+cx+' '+(t+8)+' L'+(cx+14)+' '+(t+20)+' L'+(cx+26)+' '+(t-1)+' L'+(cx+16)+' '+(t-2)+' L'+cx+' '+(t+2)+' L'+(cx-16)+' '+(t-2)+'Z" fill="'+N+'" stroke="'+P+'" stroke-width="2.2" stroke-linejoin="round"/>';return s}
+if(G.legs)s+=pants(G,N,N2,true)+[G.legL,G.legR].map(a=>{const p=along(a,.94);return '<path d="'+limb(p[0],p[1],a[2],a[3]+3,G.lw[1]+12,G.lw[1]+12)+'" fill="none" stroke="'+P+'" stroke-width="2"/>'}).join('');
+s+='<path d="'+bodyP(cx,t,G.legs?G.hem+2:h-2,G.wt+10,G.wb+8)+'" fill="'+N+'" stroke="'+N2+'" stroke-width="1.2"/>'+ln('M'+cx+' '+(t+14)+' V'+(h-4),P,1.4,.85)+btns(vline(G,t+26,h-16,5),P,2.3);
+s+='<path d="M'+(cx-22)+' '+(t+22)+' L'+(cx-10)+' '+(t+35)+' L'+cx+' '+(t+27)+' L'+(cx+10)+' '+(t+35)+' L'+(cx+22)+' '+(t+22)+'" fill="none" stroke="'+P+'" stroke-width="2" stroke-linejoin="round"/><path d="M'+(cx-17)+' '+(t+25)+' h10 v12 h-10Z" fill="none" stroke="'+P+'" stroke-width="1.1"/><path d="M'+(cx-10)+' '+(t+27)+' a4 4 0 1 0 2 8 a3 3 0 1 1 -2 -8Z" fill="'+MN+'"/>';
+[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+6,G.aw[1]+6)+'" fill="'+N+'" stroke="'+N2+'" stroke-width="1.2"/>';const p=along(a,.88);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+7,G.aw[1]+7)+'" fill="'+N+'" stroke="'+P+'" stroke-width="1.8"/>'});
+s+='<ellipse cx="'+(G.armL[2])+'" cy="'+(G.armL[3]+12)+'" rx="14" ry="6" fill="'+N+'" stroke="'+P+'" stroke-width="1.8"/><ellipse cx="'+(G.armR[2])+'" cy="'+(G.armR[3]+12)+'" rx="14" ry="6" fill="'+N+'" stroke="'+P+'" stroke-width="1.8"/>';
+s+='<path d="M'+(cx-23)+' '+(t-1)+' L'+(cx-13)+' '+(t+15)+' L'+cx+' '+(t+7)+' L'+(cx+13)+' '+(t+15)+' L'+(cx+23)+' '+(t-1)+'" fill="'+N+'" stroke="'+P+'" stroke-width="1.8" stroke-linejoin="round"/>';return s}
 function gSuit(G){const cx=G.cx,t=G.top,h=G.hem,J='#15171f',J2='#2c3040',SH='#d8dbe3';let s='';
 if(G.legs)s+=pants(G,'#12141b','#2c3040');
-s+='<path d="'+bodyP(cx,t,h,G.wt+6,G.wb+4)+'" fill="'+J+'" stroke="'+J2+'" stroke-width="1.2"/><path d="M'+(cx-17)+' '+(t+2)+' L'+cx+' '+(t+40)+' L'+(cx+17)+' '+(t+2)+'Z" fill="'+SH+'"/><path d="M'+(cx-4)+' '+(t+10)+' H'+(cx+4)+' L'+(cx+7)+' '+(t+44)+' L'+cx+' '+(t+56)+' L'+(cx-7)+' '+(t+44)+'Z" fill="#6a2434"/>';
-s+='<path d="M'+(cx-24)+' '+(t+1)+' L'+(cx-3)+' '+(t+46)+' L'+(cx-18)+' '+(t+60)+' L'+(cx-34)+' '+(t+22)+'Z" fill="'+J+'" stroke="'+J2+'" stroke-width="1.4"/><path d="M'+(cx+24)+' '+(t+1)+' L'+(cx+3)+' '+(t+46)+' L'+(cx+18)+' '+(t+60)+' L'+(cx+34)+' '+(t+22)+'Z" fill="'+J+'" stroke="'+J2+'" stroke-width="1.4"/>'+ln('M'+cx+' '+(t+60)+' V'+(h-2),J2,1.4)+btns([[cx-6,t+66],[cx-6,t+82]],'#6a7088',2.4);
-[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+5,G.aw[1]+4)+'" fill="'+J+'" stroke="'+J2+'" stroke-width="1.2"/>';const p=along(a,.88);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+3,G.aw[1]+3)+'" fill="'+SH+'"/>'});return s}
+s+='<path d="'+bodyP(cx,t,h,G.wt+6,G.wb+4)+'" fill="'+J+'" stroke="'+J2+'" stroke-width="1.2"/><path d="M'+(cx-13)+' '+(t+2)+' L'+cx+' '+(t+29)+' L'+(cx+13)+' '+(t+2)+'Z" fill="'+SH+'"/><path d="M'+(cx-3)+' '+(t+15)+' H'+(cx+3)+' L'+(cx+6)+' '+(t+43)+' L'+cx+' '+(t+76)+' L'+(cx-6)+' '+(t+43)+'Z" fill="#6a2434"/>';
+s+='<path d="M'+(cx-23)+' '+(t+1)+' L'+(cx-4)+' '+(t+48)+' L'+(cx-16)+' '+(t+62)+' L'+(cx-29)+' '+(t+21)+'Z" fill="'+J+'" stroke="'+J2+'" stroke-width="1.3"/><path d="M'+(cx+23)+' '+(t+1)+' L'+(cx+4)+' '+(t+48)+' L'+(cx+16)+' '+(t+62)+' L'+(cx+29)+' '+(t+21)+'Z" fill="'+J+'" stroke="'+J2+'" stroke-width="1.3"/>'+ln('M'+cx+' '+(t+62)+' V'+(h-2),J2,1.3)+btns([[cx,t+82],[cx,t+98]],'#6a7088',2.3);
+[G.armL,G.armR].forEach(a=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3],G.aw[0]+2,G.aw[1]+1)+'" fill="'+J+'" stroke="'+J2+'" stroke-width="1.2"/>';const p=along(a,.9);s+='<path d="'+limb(p[0],p[1],a[2],a[3],G.aw[1]+1,G.aw[1]+1)+'" fill="'+SH+'" stroke="'+J2+'" stroke-width=".7"/>'});return s}
 function gCoat(G){const cx=G.cx,t=G.top,h=258,C='#202433',C2='#101319',T='#4a5370',B='#b9c2d3';let s='';
 s+='<path d="M'+(cx-50)+' '+t+' C'+(cx-70)+' '+(t+40)+' '+(cx-82)+' '+(h-30)+' '+(cx-82)+' '+h+' L'+(cx+82)+' '+h+' C'+(cx+82)+' '+(h-30)+' '+(cx+70)+' '+(t+40)+' '+(cx+50)+' '+t+'Z" fill="'+C+'" stroke="'+T+'" stroke-width="1.4"/>'+ln('M'+cx+' '+(t+14)+' V'+h,C2,1.6)+ln('M'+(cx-82)+' '+(h-14)+' H'+(cx+82),C2,1.2,.8);
 for(let y=t+26;y<h-14;y+=18)s+=btns([[cx-9,y],[cx+9,y]],B,2.5);
-[G.armL,G.armR].forEach((a,i)=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3]+4,G.aw[0]+12,G.aw[1]+14)+'" fill="'+C+'" stroke="'+T+'" stroke-width="1.4"/>';const p=along([a[0],a[1],a[2],a[3]+4],.84);s+='<path d="'+limb(p[0],p[1],a[2],a[3]+4,G.aw[1]+16,G.aw[1]+16)+'" fill="#2a3044" stroke="'+T+'" stroke-width="1.2"/>'+btns([[a[2]+(i?-4:4),a[3]-2]],B,2)});
-s+='<path d="M'+(cx-34)+' '+(t-8)+' L'+(cx-22)+' '+(t+24)+' L'+cx+' '+(t+8)+' L'+(cx+22)+' '+(t+24)+' L'+(cx+34)+' '+(t-8)+' L'+(cx+20)+' '+(t-14)+' L'+cx+' '+(t-4)+' L'+(cx-20)+' '+(t-14)+'Z" fill="#2a3044" stroke="'+T+'" stroke-width="1.4" stroke-linejoin="round"/>';return s}
+[G.armL,G.armR].forEach((a,i)=>{s+='<path d="'+limb(a[0],a[1],a[2],a[3]+4,G.aw[0]+9,G.aw[1]+11)+'" fill="'+C+'" stroke="'+T+'" stroke-width="1.4"/>';const p=along([a[0],a[1],a[2],a[3]+4],.84);s+='<path d="'+limb(p[0],p[1],a[2],a[3]+4,G.aw[1]+13,G.aw[1]+13)+'" fill="#2a3044" stroke="'+T+'" stroke-width="1.2"/>'+btns([[a[2]+(i?-4:4),a[3]-2]],B,2)});
+s+='<path d="M'+(cx-34)+' '+(t-5)+' L'+(cx-22)+' '+(t+24)+' L'+cx+' '+(t+8)+' L'+(cx+22)+' '+(t+24)+' L'+(cx+34)+' '+(t-5)+' L'+(cx+20)+' '+(t-10)+' L'+cx+' '+(t-4)+' L'+(cx-20)+' '+(t-10)+'Z" fill="#2a3044" stroke="'+T+'" stroke-width="1.4" stroke-linejoin="round"/>';return s}
 const GF={victorian:gVictorian,cardigan:gCardigan,robe:gRobe,turtle:gTurtle,night:gNight,suit:gSuit,coat:gCoat};
 
 /* --- 横向き（立つ・寝転ぶ・丸まる）の衣装：犬・狼用の着せ方（背中・首・前脚の袖・裾）--- */
@@ -1294,7 +1425,7 @@ h+='<div class="card"><h3>出題する</h3><div class="mut" style="font-size:12p
 '<div class="row" style="margin-bottom:6px">'+vChips([['random','ランダム'],['seq','順番どおり']],cfg.order,'vSetO')+'<span style="width:6px"></span>'+vChips([['q','問題から'],['a','答えから']],cfg.side,'vSetS')+'</div><div class="row" style="margin-bottom:8px"><span class="mut" style="font-size:12px">テスト形式</span>'+vChips([['type','入力'],['choice','4択']],cfg.tmode,'vSetT')+'</div><div class="row"><button style="flex:1" onclick="vStart(\'card\')">カードで覚える</button><button style="flex:1" onclick="vStart(\'test\')">テスト</button></div></div>';
 h+='<div class="card"><h3>カードを追加</h3><input id="vq" class="cp" placeholder="問題（単語）" value="'+esc(vDr.q)+'" style="margin-bottom:4px"><input id="va" class="cp" placeholder="答え（意味）。複数ある答えは「／」で区切る" value="'+esc(vDr.a)+'" style="margin-bottom:4px"><div class="row" style="flex-wrap:nowrap"><input id="vc" class="cp" list="vcl" placeholder="カテゴリー（任意）" value="'+esc(vDr.c)+'"><datalist id="vcl">'+cats.map(c=>'<option value="'+esc(c)+'"></option>').join('')+'</datalist><button class="sm" style="flex:none" onclick="vAddCard()">追加</button></div><h3 style="font-size:14px;margin-top:12px">まとめて追加</h3><textarea id="vbulk" rows="3" placeholder="1行に1枚。「問題,答え」または「問題,答え,カテゴリー」" style="min-height:0">'+esc(vDr.bulk)+'</textarea><button class="ghost sm" style="margin-top:6px" onclick="vBulk()">まとめて追加</button></div>';
 const list=d.cards.filter(c=>!cfg.cat||c.cat===cfg.cat);
-h+='<div class="card"><h3>カード一覧</h3>'+(list.length?list.slice(0,60).map(c=>{const a=c.ok+c.ng?Math.round(c.ok/(c.ok+c.ng)*100)+'%':'—';return '<div class="sw"><div class="acts"><button class="ghost" onclick="vEditCard(\''+c.id+'\')">編集</button><button class="del" onclick="vDelCard(\''+c.id+'\')">削除</button></div><div class="swi task"><span style="flex:none;width:18px;color:var(--pg)">'+(c.st==='known'?'●':c.st==='unknown'?'○':'·')+'</span><div style="flex:1;min-width:0"><div class="tt">'+esc(c.q)+' <span class="mut">→ '+esc(c.a)+'</span></div><div class="mut" style="font-size:12px">'+(c.cat?esc(c.cat)+'　':'')+'正答率 '+a+(isWeak(c)?'　苦手':'')+'</div></div></div></div>'}).join('')+(list.length>60?'<p class="mut" style="font-size:12px">ほか '+(list.length-60)+'枚</p>':'')+'<p class="mut" style="font-size:12px;margin:4px 0 0">● 覚えた　○ まだ　· 未挑戦　／ ← 左にスライドで編集・削除</p>':'<p class="mut">カードがありません。</p>')+'</div>';
+h+='<div class="card"><h3>カード一覧</h3>'+(list.length?list.slice(0,60).map(c=>{const a=c.ok+c.ng?Math.round(c.ok/(c.ok+c.ng)*100)+'%':'—';return '<div class="sw"><div class="acts"><button class="ghost" onclick="vEditCard(\''+c.id+'\')">編集</button><button class="del" onclick="vDelCard(\''+c.id+'\')">削除</button></div><div class="swi task"><span style="flex:none;width:18px;color:var(--pg)">'+(c.st==='known'?'●':c.st==='unknown'?'○':'·')+'</span><div style="flex:1;min-width:0"><div class="tt">'+esc(c.q)+' <span class="mut">→ '+esc(c.a)+'</span></div><div class="mut" style="font-size:12px">'+(c.cat?esc(c.cat)+'　':'')+'正答率 '+a+(isWeak(c)?'　苦手':'')+'</div></div></div></div>'}).join('')+(list.length>60?'<p class="mut" style="font-size:12px">ほか '+(list.length-60)+'枚</p>':'')+'<p class="mut" style="font-size:12px;margin:4px 0 0">● 覚えた　○ まだ　· 未挑戦　／ </p>':'<p class="mut">カードがありません。</p>')+'</div>';
 return h}
 let rmMonth='';
 function rmMonthGo(d){const ml=monthsList(),i=ml.indexOf(rmMonth),j=i+d;if(j>=0&&j<ml.length){rmMonth=ml[j];render()}}
@@ -1642,6 +1773,120 @@ h+='<div class="mtabs" id="mu-tabs">'+cs.map(c=>'<button class="mtab'+(c[0]===k?
 '<div style="margin-top:10px"><button class="mb '+((s.done||{})[k]?'mb2':'')+'" style="width:100%" onclick="muToggleDone(\''+k+'\')">'+((s.done||{})[k]?'✓ 学習済み（タップで戻す）':'このカテゴリーを学習済みにする')+'</button></div></div>';return h}
 
 const _goA=go;go=function(v){_goA(v);ambSync()};
+
+/* ===== unified interaction layer ===== */
+function ggTaskMenu(id){
+ const t=S.tasks.find(x=>x.id===id);if(!t)return;
+ modal('<h3>タスクの操作</h3><p style="margin:0 0 12px">'+esc(t.name)+'</p><div class="row"><button onclick="closeM();editTask(\''+id+'\')">編集</button><button class="ghost" onclick="closeM();moveTask(\''+id+'\')">翌日へ</button><button class="ghost" onclick="closeM();delTask(\''+id+'\')">削除</button></div><div style="margin-top:8px"><button class="ghost" style="width:100%" onclick="closeM()">閉じる</button></div>');
+}
+function ggAssignMenu(id){
+ const a=S.assign.find(x=>x.id===id);if(!a)return;
+ modal('<h3>課題の操作</h3><p style="margin:0 0 12px">'+esc(a.name)+'</p><div class="row"><button onclick="closeM();editAssign(\''+id+'\')">編集</button><button class="ghost" onclick="closeM();delAssign(\''+id+'\')">削除</button></div><div style="margin-top:8px"><button class="ghost" style="width:100%" onclick="closeM()">閉じる</button></div>');
+}
+function taskRow(t,ctl){
+ const sd=!ctl&&view==='home'&&filter==='all';
+ return '<div class="task-row '+(t.done?'done':'')+'"><button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div class="task-main"><div class="tt">'+(t.rid?'<span class="mut">↻ </span>':'')+esc(t.name)+(t.tm?' <span class="mut">'+esc(t.tm)+'</span>':'')+(t.jc?' <span class="tag">話す</span>':'')+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>'+(ctl?'':'<button class="task-menu" onclick="ggTaskMenu(\''+t.id+'\')" aria-label="タスクの操作">⋯</button>')+'</div>';
+}
+function aRow(a){
+ const n=dleft(a.due),late=n<0&&!a.done;
+ const chip=a.done?'':'<span class="tag" style="background:'+(late?'#B5474E':n<=3?'#F3E2C7':'var(--sub)')+';color:'+(late?'#fff':n<=3?'#7A5510':'var(--tx2)')+'">'+(late?'期限切れ':n===0?'今日が期限':n+'日後')+'</span>';
+ return '<div class="assign-row '+(a.done?'done':'')+'"><button class="chk'+(a.done?' d':'')+'" onclick="togA(\''+a.id+'\')" aria-label="提出">'+(a.done?'✓':'')+'</button><div class="task-main"><div class="tt">'+esc(a.name)+'</div><div class="mut">期限 '+md(a.due)+(a.at?' '+esc(a.at):'')+' '+chip+'</div>'+(a.memo?'<div class="mut">'+esc(a.memo)+'</div>':'')+'</div><button class="task-menu" onclick="ggAssignMenu(\''+a.id+'\')" aria-label="課題の操作">⋯</button></div>';
+}
+function vHome(){
+ const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter(t=>t.done).length,left=S.tasks.filter(t=>!t.done&&t.date===td).length;
+ let ts=S.tasks.filter(t=>filter==='all'?(!t.done||t.doneDate===td):filter==='done'?(t.done&&t.doneDate===td):(t.date===td||(t.done&&t.doneDate===td)));
+ ts.sort((a,b)=>a.done-b.done||(filter==='all'?a.date.localeCompare(b.date):0)||(a.o||a.created)-(b.o||b.created));
+ const assignOpen=S.assign.filter(a=>!a.done).slice().sort((a,b)=>a.due.localeCompare(b.due));
+ const assignDone=S.assign.filter(a=>a.done).slice().sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')).slice(0,3);
+ const water=wMl(),goal=S.water.goal,study=Math.floor(studyTodaySec()/60),vi=vToday();
+ const day=new Date(td+'T00:00:00Z'),date=(day.getUTCMonth()+1)+'月'+day.getUTCDate()+'日（'+'日月火水木金土'[day.getUTCDay()]+'）';
+ return '<div class="gg-head"><div class="mut">'+date+'</div><h1>☾ Grimoire Garden</h1></div>'+
+ '<div class="gg-jace"><button class="jace" onclick="jTap()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t">'+esc(saying||say('open'))+(sref?'<div class="mut" style="text-align:right;margin-top:3px">'+esc(sref)+'</div>':'')+'<div class="gg-jacts"><button class="sm ghost" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">聖句を聞く</button></div></div></div>'+urgHtml()+
+ '<section class="gg-section"><div class="sec-head"><h2>今日のタスク</h2><div class="row" style="gap:6px;align-items:center"><span class="mut">未完了 '+left+' 件</span><button class="tiny" onclick="ordMode=!ordMode;render()">'+(ordMode?'並び替え終了':'並び替え')+'</button></div></div>'+
+ evToday()+'<div class="gg-filters">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+
+ '<div class="gg-list">'+(ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):'')).join(''):'<div class="empty">タスクはありません。＋ から追加できます。</div>')+'</div>'+
+ (all.length?'<div class="mut" style="margin-top:8px">今日の進捗 '+dn+' / '+all.length+'</div><div class="bar" style="margin-top:4px"><i style="width:'+(dn/all.length*100)+'%"></i></div>':'')+overdueHint()+'</section>'+
+ '<section class="gg-section"><div class="sec-head"><h2>課題</h2><span class="mut">未提出 '+assignOpen.length+' 件</span></div><div class="gg-list">'+(assignOpen.length?assignOpen.map(a=>aRow(a)).join(''):'<div class="empty">未提出の課題はありません。</div>')+(assignDone.length?assignDone.map(a=>aRow(a)).join(''):'')+'</div><button class="gg-link" onclick="go(\'cal\')">カレンダーで予定を確認　›</button></section>'+
+ '<section class="gg-section"><div class="sec-head"><h2>今日の記録</h2></div><div class="gg-metrics">'+
+ '<button class="gg-metric" onclick="go(\'water\')"><span class="mut">水分</span><b>'+water+'<small> / '+goal+' ml</small></b><span class="mut">記録する ›</span></button>'+
+ '<button class="gg-metric" onclick="go(\'study\')"><span class="mut">勉強</span><b>'+study+'<small> 分</small></b><span class="mut">記録する ›</span></button>'+
+ '<button class="gg-metric" onclick="go(\'med\')"><span class="mut">瞑想</span><b>'+S.meds.filter(x=>x.d===td).length+'<small> 回</small></b><span class="mut">記録する ›</span></button></div></section>'+
+ '<button class="verse gg-verse" onclick="readVerse('+vi+')"><span>✦</span><span><b>今日の聖句</b><span class="mut">　'+esc(VERSES[vi].r)+'</span></span><span class="mut">›</span></button>';
+}
+function vCard(i){
+ const v=VERSES[i],f=S.favs.includes(i);
+ return '<details class="gg-verse-detail"><summary><span class="tag">'+esc(CATS[v.c]||'')+'</span>　<b>'+esc(v.r)+'</b>'+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</summary><div class="gg-verse-body">'+(v.text?'<p>'+esc(v.text)+'</p>':'<p class="mut">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div></details>';
+}
+function vMore(){
+ return '<h1>その他</h1><div class="gg-more-list">'+
+ [['water','◇','水分','水分量と直近7日の記録'],['med','◌','瞑想','記録・呼吸法・継続状況'],['hab','◐','ルーティン','毎日の習慣とルール'],['verse','✦','聖句の書庫','聖句の検索・お気に入り・編集'],['ref','▧','一日の振り返り','日ごとのタスクとメモ'],['settings','⚙','設定','テーマ・データ管理・通知']].map(x=>'<button class="gg-more-row" onclick="go(\''+x[0]+'\')"><span class="gg-more-ic">'+x[1]+'</span><span class="gg-more-txt"><b>'+x[2]+'</b><small>'+x[3]+'</small></span><span class="mut">›</span></button>').join('')+
+ '</div>';
+}
+function ggOpenAdd(kind){
+ const ov=document.getElementById('gg-add-overlay'),sh=document.getElementById('gg-add-sheet');
+ if(!ov||!sh)return;
+ ggAddKind=kind||'task';ggRenderAdd();ov.classList.add('open');sh.classList.add('open');document.body.style.overflow='hidden';
+}
+function ggCloseAdd(){
+ const ov=document.getElementById('gg-add-overlay'),sh=document.getElementById('gg-add-sheet');
+ if(ov)ov.classList.remove('open');if(sh)sh.classList.remove('open');document.body.style.overflow='';
+}
+let ggAddKind='task';
+function ggRenderAdd(){
+ const sh=document.getElementById('gg-add-sheet');if(!sh)return;
+ const k=ggAddKind,tab=(v,l)=>'<button class="'+(k===v?'on':'')+'" onclick="ggAddKind=\''+v+'\';ggRenderAdd()">'+l+'</button>';
+ const date=(view==='cal'&&cD)?cD:jst();
+ let fields='';
+ if(k==='task')fields='<input id="gg-name" placeholder="タスク名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-memo" placeholder="メモ（任意）"><select id="gg-repeat"><option value="none">くりかえしなし</option><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">毎週</option></select>';
+ if(k==='assign')fields='<input id="gg-name" placeholder="課題名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-memo" placeholder="メモ（任意）">';
+ if(k==='event')fields='<input id="gg-name" placeholder="予定名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-end" type="date" aria-label="終了日（任意）"><input id="gg-memo" placeholder="メモ（任意）">';
+ sh.innerHTML='<h3>追加する</h3><div class="gg-tabs">'+tab('task','タスク')+tab('assign','課題')+tab('event','予定')+'</div><div class="gg-fields">'+fields+'</div><button class="gg-submit" onclick="ggSubmitAdd()">追加する</button><button class="gg-cancel" onclick="ggCloseAdd()">キャンセル</button>';
+ const e=document.getElementById('gg-name');if(e)e.focus({preventScroll:true});
+}
+function ggSubmitAdd(){
+ const val=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+ const n=val('gg-name'),d=val('gg-date')||jst(),tm=val('gg-time'),memo=val('gg-memo');
+ if(!n)return toast('名前を入力してください');
+ if(ggAddKind==='task'){
+  const rep=val('gg-repeat')||'none';
+  if(rep!=='none'){const wd=new Date(d+'T00:00:00Z').getUTCDay();S.recur.push({id:'r'+Date.now(),name:n,memo,tm,rep,jc:false,wd,start:d,last:''})}
+  else S.tasks.push({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),name:n,memo,tm,jc:false,date:d,created:Date.now(),done:false,doneAt:null,doneDate:null});
+ }else if(ggAddKind==='assign'){
+  S.assign.push({id:'a'+Date.now()+Math.random().toString(36).slice(2,5),name:n,due:d,at:tm,memo,done:false,doneDate:null,created:Date.now()});
+ }else{
+  const end=val('gg-end');if(end&&end<d)return toast('終了日は開始日より後にしてください');
+  (S.events=S.events||[]).push({id:'e'+Date.now()+Math.random().toString(36).slice(2,4),date:d,tm,te:'',jc:false,end:end&&end>d?end:'',name:n,memo});
+ }
+ save();ggCloseAdd();render();toast('追加しました');
+}
+function ggEnhanceListMenus(){
+ document.querySelectorAll('#app .sw').forEach(row=>{
+  if(row.querySelector('.gg-list-menu'))return;
+  const actions=row.querySelector('.acts');if(!actions)return;
+  const b=document.createElement('button');b.type='button';b.className='gg-list-menu';b.textContent='⋯';b.setAttribute('aria-label','項目の操作');
+  b.onclick=()=>row.classList.toggle('gg-actions-open');
+  row.appendChild(b);
+ });
+}
+function ggEnsureControls(){
+ let fab=document.getElementById('gg-fab');
+ if(!fab){fab=document.createElement('button');fab.id='gg-fab';fab.type='button';fab.setAttribute('aria-label','追加');fab.textContent='＋';fab.onclick=()=>ggOpenAdd('task');document.body.appendChild(fab)}
+ let ov=document.getElementById('gg-add-overlay');
+ if(!ov){ov=document.createElement('div');ov.id='gg-add-overlay';ov.onclick=ggCloseAdd;document.body.appendChild(ov)}
+ let sh=document.getElementById('gg-add-sheet');
+ if(!sh){sh=document.createElement('div');sh.id='gg-add-sheet';sh.setAttribute('role','dialog');sh.setAttribute('aria-label','追加');document.body.appendChild(sh)}
+ const active=['home','cal'].includes(view);
+ fab.style.display=active?'block':'none';
+}
+const _ggRender=render;
+render=function(){_ggRender.apply(this,arguments);ggEnsureControls();ggEnhanceListMenus();
+ const nav=document.getElementById('nav');
+ if(nav){const tabs=[['home','☾','ホーム'],['cal','▦','カレンダー'],['study','▤','勉強'],['set','•••','その他']];
+ nav.innerHTML=tabs.map(n=>'<button class="'+((view===n[0]||(n[0]==='set'&&['set','settings','water','med','verse','ref','hab'].includes(view)))?'on':'')+'" onclick="go(\''+n[0]+'\')"><div>'+n[1]+'</div>'+n[2]+'</button>').join('')}
+};
+
+function navCard(){return '<div class="card"><h3>下部ナビゲーション</h3><p class="mut" style="margin:0">ホーム・カレンダー・勉強・その他の4項目で固定しています。</p></div>'}
+const _ggCal=vCal;vCal=function(){const f=calForm();return _ggCal().replace(f,'')};
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
