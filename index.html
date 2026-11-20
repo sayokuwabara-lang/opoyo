@@ -331,6 +331,22 @@ nav button div{font-size:20px!important;line-height:1.35}
 .sw.gg-actions-open .acts button{width:auto;height:30px;min-height:30px;padding:2px 9px;border-radius:8px;font-size:12px}
 .sw.gg-actions-open .swi{transform:none!important}
 
+
+/* ===== readability + prototype alignment ===== */
+:root{--bg:#ECECEC;--card:#F7F7F7;--sub:#E3E3E3;--tx:#252527;--tx2:#55565A;--ac:#3A3A3C;--ac2:#B8B8BA;--bd:#D0D0D2;--pg:#3A3A3C;--inp:#FFFFFF}
+:root[data-theme=dark]{--bg:#1B1B1D;--card:#262629;--sub:#35353A;--tx:#F0F0F2;--tx2:#B8B8C0;--ac:#E9E9EC;--ac2:#777780;--bd:#44444B;--pg:#E9E9EC;--inp:#1F1F22}
+body{font-size:16px;line-height:1.6;font-weight:400}
+#app{padding:16px 16px calc(112px + env(safe-area-inset-bottom,0px))}
+.mut{font-size:13px;line-height:1.55;color:var(--tx2)}
+.gg-head{margin-bottom:12px}.gg-head h1{font-size:20px;font-weight:700;letter-spacing:.02em}
+.gg-jace{gap:12px;margin-bottom:14px}.gg-jace .bub{font-size:15px;line-height:1.65;background:var(--card);border:1px solid var(--bd);color:var(--tx)}.gg-jace .bub.t:before{border-right-color:var(--card)}
+.gg-section{margin:0 0 20px}.sec-head{margin-bottom:6px}.sec-head h2{font-size:16px}
+.gg-list,.gg-more-list{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:3px 14px}
+.task-row,.assign-row{gap:12px;padding:12px 0}.task-main .tt{font-size:15px;line-height:1.55;color:var(--tx)}.task-main .mut{font-size:13px}
+.gg-metrics{gap:8px}.gg-metric{min-height:82px;gap:4px;padding:10px 11px;background:var(--card);border:1px solid var(--bd);border-radius:13px;color:var(--tx)}.gg-metric b{font-size:18px;line-height:1.35;font-weight:700}.gg-metric small{font-size:12px;color:var(--tx2)}.gg-metric .mut{font-size:12px}
+.gg-record-section{margin-bottom:20px}.gg-verse{background:var(--card);border-color:var(--bd);font-size:14px}
+button.ghost,button.tiny,button.sm.ghost{color:var(--tx);border-color:var(--bd)}button{font-weight:600}#app .card{border-radius:14px;box-shadow:none}
+@media(max-width:360px){.gg-metrics{gap:6px}.gg-metric{padding:8px}.gg-metric b{font-size:16px}}
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -1801,16 +1817,17 @@ function vHome(){
  const water=wMl(),goal=S.water.goal,study=Math.floor(studyTodaySec()/60),vi=vToday();
  const day=new Date(td+'T00:00:00Z'),date=(day.getUTCMonth()+1)+'月'+day.getUTCDate()+'日（'+'日月火水木金土'[day.getUTCDay()]+'）';
  return '<div class="gg-head"><div class="mut">'+date+'</div><h1>☾ Grimoire Garden</h1></div>'+
- '<div class="gg-jace"><button class="jace" onclick="jTap()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t">'+esc(saying||say('open'))+(sref?'<div class="mut" style="text-align:right;margin-top:3px">'+esc(sref)+'</div>':'')+'<div class="gg-jacts"><button class="sm ghost" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">聖句を聞く</button></div></div></div>'+urgHtml()+
+ '<div class="gg-jace"><button class="jace" onclick="jTap()" aria-label="ジェイス">'+jIcon()+'</button><div class="bub t">'+esc(saying||say('open'))+(sref?'<div class="mut" style="text-align:right;margin-top:3px">'+esc(sref)+'</div>':'')+'<div class="gg-jacts"><button class="sm ghost" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">聖句を聞く</button></div></div></div>'+
+ '<section class="gg-section gg-record-section"><div class="sec-head"><h2>今日の記録</h2></div><div class="gg-metrics">'+
+ '<button class="gg-metric" onclick="go(\'water\')"><span class="mut">水分</span><b>'+water+'<small> / '+goal+' ml</small></b><span class="mut">記録する ›</span></button>'+
+ '<button class="gg-metric" onclick="go(\'study\')"><span class="mut">勉強</span><b>'+study+'<small> 分</small></b><span class="mut">記録する ›</span></button>'+
+ '<button class="gg-metric" onclick="go(\'med\')"><span class="mut">瞑想</span><b>'+S.meds.filter(x=>x.d===td).length+'<small> 回</small></b><span class="mut">記録する ›</span></button></div></section>'+urgHtml()+
  '<section class="gg-section"><div class="sec-head"><h2>今日のタスク</h2><div class="row" style="gap:6px;align-items:center"><span class="mut">未完了 '+left+' 件</span><button class="tiny" onclick="ordMode=!ordMode;render()">'+(ordMode?'並び替え終了':'並び替え')+'</button></div></div>'+
  evToday()+'<div class="gg-filters">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+
  '<div class="gg-list">'+(ts.length?ts.map((t,i)=>taskRow(t,ordMode?ordCtl(t,ts[i-1],ts[i+1]):'')).join(''):'<div class="empty">タスクはありません。＋ から追加できます。</div>')+'</div>'+
  (all.length?'<div class="mut" style="margin-top:8px">今日の進捗 '+dn+' / '+all.length+'</div><div class="bar" style="margin-top:4px"><i style="width:'+(dn/all.length*100)+'%"></i></div>':'')+overdueHint()+'</section>'+
  '<section class="gg-section"><div class="sec-head"><h2>課題</h2><span class="mut">未提出 '+assignOpen.length+' 件</span></div><div class="gg-list">'+(assignOpen.length?assignOpen.map(a=>aRow(a)).join(''):'<div class="empty">未提出の課題はありません。</div>')+(assignDone.length?assignDone.map(a=>aRow(a)).join(''):'')+'</div><button class="gg-link" onclick="go(\'cal\')">カレンダーで予定を確認　›</button></section>'+
- '<section class="gg-section"><div class="sec-head"><h2>今日の記録</h2></div><div class="gg-metrics">'+
- '<button class="gg-metric" onclick="go(\'water\')"><span class="mut">水分</span><b>'+water+'<small> / '+goal+' ml</small></b><span class="mut">記録する ›</span></button>'+
- '<button class="gg-metric" onclick="go(\'study\')"><span class="mut">勉強</span><b>'+study+'<small> 分</small></b><span class="mut">記録する ›</span></button>'+
- '<button class="gg-metric" onclick="go(\'med\')"><span class="mut">瞑想</span><b>'+S.meds.filter(x=>x.d===td).length+'<small> 回</small></b><span class="mut">記録する ›</span></button></div></section>'+
+ 
  '<button class="verse gg-verse" onclick="readVerse('+vi+')"><span>✦</span><span><b>今日の聖句</b><span class="mut">　'+esc(VERSES[vi].r)+'</span></span><span class="mut">›</span></button>';
 }
 function vCard(i){
