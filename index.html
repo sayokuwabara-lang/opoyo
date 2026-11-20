@@ -361,6 +361,12 @@ body{font-weight:550;line-height:1.72}
 #app nav button{font-weight:650!important}
 .mu .mut{font-weight:500!important}
 .mu .mt2,.mu .mt3,.mu .ml,.mu .mkv,.mu .mq{font-weight:500!important}
+
+.gg-home-head{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px}.gg-home-head h1{margin:0}
+.gg-daily-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.gg-tool{min-width:0;min-height:100px;padding:11px 8px;border:1px solid var(--bd);border-radius:13px;background:var(--card);color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px}
+.gg-tool-icon{font-size:19px;line-height:1.1;color:var(--ac)}.gg-tool b{font-size:14px;font-weight:750}.gg-tool small{font-size:11px;line-height:1.35;color:var(--mut);overflow-wrap:anywhere}.gg-water-line{height:4px;width:100%;background:var(--sub);border-radius:8px;overflow:hidden;margin-top:3px}.gg-water-line i{display:block;height:100%;background:var(--ac);border-radius:8px}
+.gg-add-task{margin:0 0 14px}.gg-add-task button{width:100%;padding:12px;border:1px dashed var(--bd);border-radius:12px;background:transparent;color:var(--ink);font-weight:750}
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -567,7 +573,7 @@ st.subs.map(s=>{const a=sumSec(x=>x.sub===s&&x.d===td),b=sumSec(x=>x.sub===s);re
 (sel.mode==='pomo'?adj('作業','pw',5,5,60,'分')+adj('休憩','pb',1,1,30,'分'):sel.mode==='timer'?adj('時間','tm',5,5,180,'分'):'<p class="mut" style="margin:0">止めるまで時間を数えます。</p>')+'<button style="width:100%;margin-top:10px" onclick="sStart()">スタート</button></div>'+
 '<div class="card"><h3>科目</h3><div class="row" style="margin-bottom:8px">'+st.subs.map((s,i)=>'<span class="tag" style="font-size:15px;padding:2px 10px">'+esc(s)+' <a onclick="delSub('+i+')" style="padding:0 4px">✕</a></span>').join('')+'</div><div class="row" style="flex-wrap:nowrap"><input id="sn" placeholder="科目名"><button onclick="addSub()" style="flex:none">追加</button></div></div>'+
 studyLog()+(st.log.length?'<div class="card"><h3>最近の記録</h3>'+st.log.slice(-5).reverse().map(x=>'<p class="mut" style="margin:0">'+md(x.d)+'　'+esc(x.sub)+'　'+hm(x.sec)+'　'+MODE[x.mode]+'</p>').join('')+'</div>':'')}
-const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','STUDY'],['hab','◐','習慣'],['cal','▦','カレンダー']];
+const TABS=[['home','☾','ホーム'],['med','◌','瞑想'],['verse','✦','聖句'],['water','◇','水分'],['study','▤','STUDY'],['hab','◐','習慣'],['cal','▦','カレンダー'],['set','⋯','その他']];
 function moveTab(k,d){const a=S.nav,i=a.indexOf(k),j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();render()}
 function navCard(){return '<div class="card"><h3>タブの並び替え</h3>'+S.nav.map((k,i)=>{const t=TABS.find(x=>x[0]===k);return '<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>'+t[1]+' '+t[2]+'</span><span class="row"><button class="ghost sm" onclick="moveTab(\''+k+'\',-1)"'+(i===0?' disabled':'')+'>◀ 左へ</button><button class="ghost sm" onclick="moveTab(\''+k+'\',1)"'+(i===S.nav.length-1?' disabled':'')+'>右へ ▶</button></span></div>'}).join('')+'</div>'}
 function medForm(id){const m=id?S.medC.find(x=>x.id===id):{n:'',min:5,g:'',d:''};modal('<h3>'+(id?'瞑想を編集':'瞑想を追加')+'</h3><input id="mn1" placeholder="名前" value="'+esc(m.n)+'" style="margin-bottom:6px"><input id="mn2" type="number" min="1" max="60" value="'+m.min+'" style="margin-bottom:6px"><p class="mut" style="margin:-2px 0 6px">↑ 時間（分）</p><input id="mn3" placeholder="目的（例：気持ちを落ち着ける）" value="'+esc(m.g)+'" style="margin-bottom:6px"><textarea id="mn4" rows="3" placeholder="内容・やり方" style="margin-bottom:10px">'+esc(m.d)+'</textarea><div class="row"><button onclick="medSave(\''+(id||'')+'\')">保存</button><button class="ghost" onclick="closeM()">キャンセル</button></div>')}
@@ -641,17 +647,19 @@ for(let d=1;d<=nd;d++){const ds=rcM+'-'+String(d).padStart(2,'0'),sel=ds===rd;g+
 return g+'</div><p class="mut" style="font-size:12px;margin:6px 0">● 記録がある日</p><button class="ghost sm" onclick="rcToggle()">閉じる</button></div>'}
 function go(v){view=v;render();scrollTo(0,0)}
 
-function vHome(){const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter(t=>t.done).length;
+function vHome(){
+const td=jst(),all=S.tasks.filter(t=>t.date===td),dn=all.filter(t=>t.done).length;
 let ts=S.tasks.filter(t=>filter==='all'?(t.date===td&&!t.done):filter==='done'?(t.done&&t.doneDate===td):(t.date===td||(t.done&&t.doneDate===td)));
 ts.sort((a,b)=>a.done-b.done||a.date.localeCompare(b.date));
-const left=S.tasks.filter(t=>!t.done&&t.date===td).length,rec=recMed(),vi=vToday();
-return '<div style="text-align:right"><button class="ghost sm" onclick="go(\'set\')">⚙ 設定</button></div><h1>☾ Grimoire Garden</h1><div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg></button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+'<div class="row"><button class="sm" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
-'<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(filter==='cal'?calHtml():ts.length?ts.map(t=>taskRow(t)).join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>':'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+'</div>'+
-aCard()+'<div class="card"><h3>タスクを追加</h3><input id="tn" placeholder="タスク名" style="margin-bottom:6px"><input id="tm" placeholder="詳細メモ（任意）" style="margin-bottom:6px"><input id="td" type="date" value="'+td+'" style="margin-bottom:6px"><select id="tr" style="margin-bottom:8px"><option value="none">くりかえしなし</option><option value="daily">毎日くりかえす</option><option value="weekdays">平日（月〜金）にくりかえす</option><option value="weekly">毎週（予定日の曜日）にくりかえす</option></select><button onclick="addTask()">追加する</button>'+(S.recur.length?'<h3 style="margin:14px 0 4px">くりかえし中</h3>'+S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:4px 0"><span>↻ '+esc(r.name)+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="ghost sm" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'<p class="mut" style="margin:4px 0 0;font-size:12px">開いた日にその日の分が自動で追加されます。休んだ日の分は追加されず、たまりません。</p>':'')+'</div>'+
-
-
-
-''}
+const left=S.tasks.filter(t=>!t.done&&t.date===td).length,vi=vToday(),vv=VERSES[vi],wm=wMl(),wg=S.water.goal||2000;
+const weekM=S.meds.filter(x=>x.d>=addDay(td,-6)).length;
+return '<div class="gg-home-head"><h1>☾ Grimoire Garden</h1><button class="ghost sm" onclick="go(\'settings\')" aria-label="設定">⚙</button></div>'+
+'<div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg></button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+'<div class="row"><button class="sm" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
+'<section class="gg-daily-tools" aria-label="今日のケア"><button class="gg-tool" onclick="go(\'verse\')"><span class="gg-tool-icon">✦</span><b>聖句</b><small>'+esc(vv.r)+'</small></button><button class="gg-tool" onclick="go(\'med\')"><span class="gg-tool-icon">◌</span><b>瞑想</b><small>今週 '+weekM+' 回</small></button><button class="gg-tool" onclick="go(\'water\')"><span class="gg-tool-icon">◇</span><b>水分</b><small>'+wm+' / '+wg+' ml</small><span class="gg-water-line"><i style="width:'+Math.min(100,wm/wg*100)+'%"></i></span></button></section>'+
+'<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(filter==='cal'?calHtml():ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+'</div>'+
+ aCard()+'<div class="gg-add-task"><button onclick="ggOpenAdd(\'task\')">＋ タスクを追加</button></div>'+
+(S.recur.length?'<div class="card"><h3>くりかえし中</h3>'+S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:6px 0"><span>↻ '+esc(r.name)+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="ghost sm" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'</div>':'');
+}
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='grimoire-garden-'+jst()+'.json';a.click()}
 function imp(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.tasks))throw 0;if(!confirm('現在のデータを置き換えますか？'))return;S=Object.assign(fresh(),d,{v:2});save();toast('読み込みました');render()}catch(e){toast('読み込めないファイルです')}};r.readAsText(f)}
 function wipe(){if(confirm('すべてのデータを消去します。元に戻せません。よろしいですか？')&&confirm('本当に消去しますか？')){S=fresh();save();render()}}
@@ -680,7 +688,7 @@ return '<h1>聖句の書庫</h1><button style="width:100%;margin-bottom:6px" onc
 (ix.length?ix.map(vCard).join(''):'<p class="mut">該当なし</p>')+'<div class="card"><h3>過去に表示した聖句</h3>'+vh.map(d=>'<p class="mut" style="margin:0">'+d+'　'+VERSES[S.vhist[d]].r+'</p>').join('')+'</div>'}
 
 function render(){syncV();genRecur();applyTheme();const V={home:vHome,ref:vRef,med:vMed,verse:vVerse,water:vWater,study:vStudy,set:vMore,settings:vSet,cal:vCal,hab:vHab};$('app').innerHTML=V[view]();
-$('nav').innerHTML=S.nav.map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
+$('nav').innerHTML=['home','study','cal','set'].map(k=>TABS.find(t=>t[0]===k)).map(n=>'<button class="'+(view===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><div style="font-size:18px">'+n[1]+'</div>'+n[2]+'</button>').join('')}
 let ordMode=false,tOpt=false,showRec=false,sayMode='word',dr={tn:'',td:'',tt:'',tmm:'',tr:'none'},alm=null;
 function talk(){sref='';sayMode='word';saying=pick('w',WORDS);render()}
 function readVerse(i){const v=VERSES[i];saying=(v.text||'')+(v.text&&v.s?'　':'')+(v.s||'')||'ゆっくり読んでみよう。';sref=v.r+(v.tr?'（'+v.tr+'）':'');sayMode='verse';render()}
@@ -1850,7 +1858,7 @@ function vCard(i){
 }
 function vMore(){
  return '<h1>その他</h1><div class="gg-more-list">'+
- [['water','◇','水分','水分量と直近7日の記録'],['med','◌','瞑想','記録・呼吸法・継続状況'],['hab','◐','ルーティン','毎日の習慣とルール'],['verse','✦','聖句の書庫','聖句の検索・お気に入り・編集'],['ref','▧','一日の振り返り','日ごとのタスクとメモ'],['settings','⚙','設定','テーマ・データ管理・通知']].map(x=>'<button class="gg-more-row" onclick="go(\''+x[0]+'\')"><span class="gg-more-ic">'+x[1]+'</span><span class="gg-more-txt"><b>'+x[2]+'</b><small>'+x[3]+'</small></span><span class="mut">›</span></button>').join('')+
+ [['hab','◐','ルーティン','毎日の習慣とルール'],['ref','▧','一日の振り返り','日ごとのタスクとメモ'],['settings','⚙','設定','テーマ・データ管理・通知']].map(x=>'<button class="gg-more-row" onclick="go(\''+x[0]+'\')"><span class="gg-more-ic">'+x[1]+'</span><span class="gg-more-txt"><b>'+x[2]+'</b><small>'+x[3]+'</small></span><span class="mut">›</span></button>').join('')+
  '</div>';
 }
 function ggOpenAdd(kind){
