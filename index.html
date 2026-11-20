@@ -347,6 +347,20 @@ body{font-size:16px;line-height:1.6;font-weight:400}
 .gg-record-section{margin-bottom:20px}.gg-verse{background:var(--card);border-color:var(--bd);font-size:14px}
 button.ghost,button.tiny,button.sm.ghost{color:var(--tx);border-color:var(--bd)}button{font-weight:600}#app .card{border-radius:14px;box-shadow:none}
 @media(max-width:360px){.gg-metrics{gap:6px}.gg-metric{padding:8px}.gg-metric b{font-size:16px}}
+
+/* ===== v3: stronger typography + no in-app sound/ambient audio ===== */
+body{font-weight:550;line-height:1.72}
+#app{font-weight:550}
+#app :is(p,span,small,label,li,.mut,.tt,.mt2,.mt3,.gg-verse,.gg-bub){font-weight:550!important}
+#app :is(h1,h2,h3,h4,b,strong,.tt,.gg-metric b){font-weight:750!important}
+#app .mut{font-size:14px!important;line-height:1.65!important;color:var(--tx2)!important}
+#app button{font-weight:700!important}
+#app input,#app textarea,#app select{font-weight:550}
+#app .gg-jace .bub{font-weight:550!important}
+#app .gg-metric small{font-size:12px!important;font-weight:600!important}
+#app nav button{font-weight:650!important}
+.mu .mut{font-weight:500!important}
+.mu .mt2,.mu .mt3,.mu .ml,.mu .mkv,.mu .mq{font-weight:500!important}
 </style></head><body>
 <div id="app"></div><div id="toast"></div><nav id="nav"></nav>
 <script>
@@ -595,7 +609,7 @@ g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲
 const ts=S.tasks.filter(t=>t.date===calD),as=S.assign.filter(a=>a.due===calD);
 return g+'<h3 style="margin-top:8px">'+md(calD)+' の予定</h3>'+(ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(as.length?'<h3 style="font-size:15px;margin-top:8px">課題の期限</h3>'+as.map(aRow).join(''):'')}
 function dataCard(){return '<div class="card"><h3>データ管理</h3><p class="mut">データはこの端末のこのブラウザ内にのみ保存されます。端末変更やブラウザのデータ削除で消えるため、書き出しをおすすめします。</p><div class="row"><button class="ghost sm" onclick="exp()">書き出し</button><button class="ghost sm" onclick="$(\'imp\').click()">読み込み</button><button class="ghost sm" onclick="wipe()">全消去</button></div><input type="file" id="imp" accept=".json" style="display:none" onchange="imp(this)"></div>'}
-function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+denCard()+themeCard()+ambCard()+leadCard()+navCard()+dataCard()}
+function vSet(){return '<h1>設定</h1><button class="ghost sm" style="margin-bottom:10px" onclick="go(\'home\')">◀ ホームへ戻る</button>'+denCard()+themeCard()+leadCard()+navCard()+dataCard()}
 function drinkCustom(){const v=Math.round(+$('wml').value);if(!(v>0&&v<=3000))return toast('1〜3000の数字を入れてください');drinkMl(v)}
 function vCard(i){const v=VERSES[i],f=S.favs.includes(i);return '<div class="card"><span class="tag">'+esc(CATS[v.c]||'')+'</span><h3 style="margin-top:6px">'+esc(v.r)+(v.tr?' <span class="mut">（'+esc(v.tr)+'）</span>':'')+'</h3>'+(v.text?'<p style="margin:0 0 6px">'+esc(v.text)+'</p>':'<p class="mut" style="margin:0 0 6px">本文は未登録です。「編集」から、お手持ちの聖書の本文を入れられます。</p>')+(v.s?'<p class="mut" style="margin:0 0 8px">'+esc(v.s)+'</p>':'')+'<div class="row"><button class="'+(f?'on':'ghost')+' sm" onclick="fav('+i+')">'+(f?'★':'☆')+' お気に入り</button><button class="ghost sm" onclick="vForm('+i+')">編集</button><button class="ghost sm" onclick="vDel('+i+')">削除</button></div></div>'}
 function taskRow(t,ctl){const sd=!ctl&&view==='home'&&filter==='all',body='<button class="chk'+(t.done?' d':'')+'" onclick="toggle(\''+t.id+'\')" aria-label="完了">'+(t.done?'✓':'')+'</button><div style="flex:1;min-width:0"><div class="tt">'+esc(t.name)+'</div>'+(sd?'<div class="mut">予定 '+md(t.date)+(t.done&&t.doneDate?' ／ 完了 '+md(t.doneDate):'')+'</div>':'')+(t.memo?'<div class="mut">'+esc(t.memo)+'</div>':'')+(ctl||'')+'</div>';
@@ -1329,7 +1343,7 @@ function dnPose(pose,eye){DN2.pose=pose;DN2.eye=eye||dnEye();dnWolf()}
 function dnListen(on){const s=dnEl('dsvg');if(s)s.setAttribute('class','room'+(on?' listen':''))}
 function dnStage(){const o=roomOpt();let svg=roomSvg(o,{pose:DN2.pose,eye:DN2.eye},decorLv(),'');svg=svg.replace('class="room ','id="dsvg" class="room ').replace('</svg>','<rect x="60" y="30" width="240" height="262" fill="transparent" style="touch-action:none;cursor:pointer" onpointerdown="denPet(event)" onpointermove="denStroke(event)"/></svg>');return svg}
 function dnSheetHtml(){const o=roomOpt(),lv=decorLv(),nx=decorNext(),m=todayMin();return '<h4>背景</h4><div class="dn2-row">'+roomChips('bg',BGS,o.bg)+'</div><h4>服装</h4><div class="dn2-row">'+roomChips('outfit',OUTFITS,o.outfit)+'</div><h4>照明</h4><div class="dn2-row">'+roomChips('light',LIGHTS,(S.room&&S.room.light)||'auto')+'</div><h4>今日の部屋の飾り（今日の学習 '+m+'分）</h4><div style="font-size:13px;line-height:1.8;color:#c8ccd4">'+DECOR.map((x,i)=>'<div style="opacity:'+(lv>=i?1:.4)+'">'+(lv>=i?'✓ ':'・ ')+x[1]+(i?'（'+x[0]+'分）':'')+'</div>').join('')+(nx?'<div style="margin-top:4px;color:#e8c98f">次の飾りまで あと '+nx.min+'分</div>':'<div style="margin-top:4px;color:#e8c98f">今日の飾りは、すべて解放済み</div>')+'<div style="margin-top:4px;color:#8f96a8;font-size:12px">日付が変わると、飾りは最初の状態に戻ります。</div></div><div class="dn2-row" style="margin-top:12px"><button class="dn2-b" onclick="denSheet()">閉じる</button></div>'}
-function denRender(){const r=dnEl('den');if(!r||!DN2)return;const on=ambS().on&&!ambS().mute;r.innerHTML='<div class="dn2-top"><button class="dn2-b" onclick="denClose()">← 戻る</button><span class="dn2-row"><button class="dn2-b" onclick="denSheet()">模様替え</button><button class="dn2-b'+(on?' on':'')+'" id="dsnd" onclick="denSound()">音 '+(on?'ON':'OFF')+'</button></span></div><div class="dn2-stage" id="dstage">'+dnStage()+'</div><div class="dn2-text" id="dtext"></div><div class="dn2-sub" id="dsub"></div><div class="dn2-bot"><div id="dbr" style="text-align:center"></div><div class="dn2-in"><input id="dmi" type="text" maxlength="80" placeholder="いまの気分を、ひとこと" autocomplete="off" enterkeyhint="send" onkeydown="if(event.key===\'Enter\')denFree()"><button class="dn2-b" onclick="denFree()">送る</button></div></div><div class="dn2-sheet" id="dsheet"></div><div class="dn2-breath" id="dbreath"><div class="dn2-bl" id="dbl"></div><div class="dn2-bc" id="dbc"></div><button class="dn2-b" onclick="denBreathEnd(false)">やめる</button></div>';dnSay(DN2.line||'',DN2.sub||'');dnOffer()}
+function denRender(){const r=dnEl('den');if(!r||!DN2)return;r.innerHTML='<div class="dn2-top"><button class="dn2-b" onclick="denClose()">← 戻る</button><span class="dn2-row"><button class="dn2-b" onclick="denSheet()">模様替え</button></span></div><div class="dn2-stage" id="dstage">'+dnStage()+'</div><div class="dn2-text" id="dtext"></div><div class="dn2-sub" id="dsub"></div><div class="dn2-bot"><div id="dbr" style="text-align:center"></div><div class="dn2-in"><input id="dmi" type="text" maxlength="80" placeholder="いまの気分を、ひとこと" autocomplete="off" enterkeyhint="send" onkeydown="if(event.key===\'Enter\')denFree()"><button class="dn2-b" onclick="denFree()">送る</button></div></div><div class="dn2-sheet" id="dsheet"></div><div class="dn2-breath" id="dbreath"><div class="dn2-bl" id="dbl"></div><div class="dn2-bc" id="dbc"></div><button class="dn2-b" onclick="denBreathEnd(false)">やめる</button></div>';dnSay(DN2.line||'',DN2.sub||'');dnOffer()}
 function dnOffer(){const b=dnEl('dbr');if(!b)return;const pt=DN2.pat;b.innerHTML=pt?'<button class="dn2-b on" onclick="denBreath()">深呼吸を一緒にする（約'+Math.round(pt[3]*(pt[0]+pt[1]+pt[2])/10)*10+'秒）</button>':''}
 function openDen(){denOpen()}
 function denOpen(){if(DN2)return;const r=document.createElement('div');r.id='den';r.className='dn2';r.setAttribute('onpointerdown','denTouch(event)');document.body.appendChild(r);DN2={open:true,pose:'sit',eye:'half',last:Date.now(),petAt:0,line:'',sub:'',pat:null,breath:0,bk:0,sheet:false,hid:0,nextWord:Date.now()+70000,nextAct:Date.now()+9000,nextBlink:Date.now()+4000};document.body.style.overflow='hidden';denRender();DN2.iv=setInterval(denTick,1000);
@@ -1446,10 +1460,10 @@ return h}
 let rmMonth='';
 function rmMonthGo(d){const ml=monthsList(),i=ml.indexOf(rmMonth),j=i+d;if(j>=0&&j<ml.length){rmMonth=ml[j];render()}}
 function ymLabel(ym){return ym.slice(0,4)+'年'+Number(ym.slice(5))+'月'}
-function vRoomHtml(){const td=jst(),m=todayMin(),st=vStreak(),vt=vTdy(),all=vAll(),lv=decorLv(),nx=decorNext(),o=roomOpt(),on=ambS().on&&!ambS().mute,cm=td.slice(0,7),ml=monthsList();if(!rmMonth||ml.indexOf(rmMonth)<0)rmMonth=cm;const mi=ml.indexOf(rmMonth),days=monthDays(rmMonth),mx=Math.max(60,...days.map(x=>x[1]));
+function vRoomHtml(){const td=jst(),m=todayMin(),st=vStreak(),vt=vTdy(),all=vAll(),lv=decorLv(),nx=decorNext(),o=roomOpt(),cm=td.slice(0,7),ml=monthsList();if(!rmMonth||ml.indexOf(rmMonth)<0)rmMonth=cm;const mi=ml.indexOf(rmMonth),days=monthDays(rmMonth),mx=Math.max(60,...days.map(x=>x[1]));
 const stat=(k,x)=>'<div style="flex:1;min-width:46%;padding:6px 4px;border-top:1px solid var(--bd)"><div class="mut" style="font-size:12px">'+k+'</div><div style="font-size:19px;font-weight:700">'+x+'</div></div>';
 let svg=roomSvg(o,{pose:RM.pose,eye:RM.eye},lv,'').replace('</svg>','<rect x="60" y="30" width="240" height="262" fill="transparent" style="touch-action:pan-y;cursor:pointer" onpointerdown="rmPet()" onpointermove="rmStroke(event)"/></svg>');
-return vBub(stLine||pick('vr',VL.room))+'<div class="card" style="padding:8px">'+svg+'<div class="row" style="margin-top:8px"><button class="sm" onclick="denOpen()">隠れ家に入る</button><button class="sm '+(on?'on':'ghost')+'" onclick="ambToggle(\'on\')">環境音 '+(on?'ON':'OFF')+'</button></div></div>'+
+return vBub(stLine||pick('vr',VL.room))+'<div class="card" style="padding:8px">'+svg+'<div class="row" style="margin-top:8px"><button class="sm" onclick="denOpen()">隠れ家に入る</button></div></div>'+
 '<div class="card"><h3>今日の部屋の飾り</h3><p class="mut" style="font-size:13px;margin:0 0 6px">今日の学習時間：<b>'+m+'分</b>。勉強するほど、部屋の飾りが増えます。日付が変わると、飾りは最初の状態に戻ります（前の日の記録は消えません）。</p>'+DECOR.map((d,i)=>'<div style="padding:3px 0;opacity:'+(lv>=i?1:.45)+'">'+(lv>=i?'✓ ':'・ ')+d[1]+(i?'<span class="mut" style="font-size:12px">　今日 '+d[0]+'分</span>':'')+'</div>').join('')+'<p class="mut" style="font-size:13px;margin:6px 0 0">'+(nx?'次の飾りまで あと '+nx.min+'分':'今日の飾りは、すべて解放されています。')+'</p></div>'+
 '<div class="card"><h3>STUDY STREAK</h3><div class="row" style="flex-wrap:nowrap;gap:8px;text-align:center"><div style="flex:1"><div class="mut" style="font-size:12px">現在の連続学習日数</div><div style="font-size:26px;font-weight:700">'+st.cur+'日</div></div><div style="flex:1"><div class="mut" style="font-size:12px">最長</div><div style="font-size:26px;font-weight:700">'+st.best+'日</div></div><div style="flex:1"><div class="mut" style="font-size:12px">今月</div><div style="font-size:26px;font-weight:700">'+st.month+'日</div></div></div><p class="mut" style="font-size:12px;margin:6px 0 0">1日に1問以上解くと、学習した日として数えます（日本時間）。</p></div>'+
 '<div class="card"><h3>学習状況</h3><div class="row" style="gap:0">'+stat('今日解いた問題数',vt.ids.length+'問')+stat('今日の学習時間',hm(daySec(td)))+stat('今月の総学習時間',hm(monthSec(cm)))+stat('累計学習時間',hm(totalMin()*60))+stat('連続学習日数',st.cur+'日')+stat('最長連続学習日数',st.best+'日')+stat('暗記済みの単語',all.filter(c=>c.st==='known').length+'語')+stat('苦手な単語',all.filter(isWeak).length+'語')+'</div></div>'+
@@ -1906,4 +1920,18 @@ function navCard(){return '<div class="card"><h3>下部ナビゲーション</h3
 const _ggCal=vCal;vCal=function(){const f=calForm();return _ggCal().replace(f,'')};
 say('open');render();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script></body></html>
+</script>
+<script>
+// Ambient audio and generated sound effects are disabled in this version.
+try{if(typeof S==='object'&&S){S.amb=S.amb||{};S.amb.on=false;S.amb.mute=true;if(typeof save==='function')save()}}catch(e){}
+if(typeof ambSync==='function')ambSync=function(){try{if(typeof ambStop==='function')ambStop(0)}catch(e){}};
+if(typeof ambToggle==='function')ambToggle=function(){toast('環境音機能はオフにしました')};
+if(typeof ambPreview==='function')ambPreview=function(){toast('環境音機能はオフにしました')};
+if(typeof denSound==='function')denSound=function(){};
+if(typeof unlockAudio==='function')unlockAudio=function(){};
+if(typeof chimeWeb==='function')chimeWeb=function(){};
+if(typeof almBuild==='function')almBuild=function(){try{if(typeof almStop==='function')almStop()}catch(e){}};
+if(typeof almStart==='function')almStart=function(){};
+if(typeof endSound==='function')endSound=function(t,b){try{if(typeof notifyMsg==='function')notifyMsg(t,b)}catch(e){}};
+</script>
+</body></html>
