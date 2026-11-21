@@ -664,8 +664,8 @@ function calPick(d){calD=d;render()}
 function calHtml(){const y=+calM.slice(0,4),m=+calM.slice(5),off=new Date(Date.UTC(y,m-1,1)).getUTCDay(),nd=new Date(Date.UTC(y,m,0)).getUTCDate(),td=jst();
 let g='<div class="row sp" style="margin-bottom:6px"><button class="ghost sm" onclick="calNav(-1)">◀</button><b>'+y+'年'+m+'月</b><button class="ghost sm" onclick="calNav(1)">▶</button></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">'+'日月火水木金土'.split('').map(w=>'<div class="mut" style="text-align:center;font-size:13px">'+w+'</div>').join('');
 for(let i=0;i<off;i++)g+='<div></div>';
-for(let d=1;d<=nd;d++){const ds=calM+'-'+String(d).padStart(2,'0'),n=S.tasks.filter(t=>t.date===ds).length,a=S.assign.filter(x=>x.due===ds).length,sel=ds===calD;g+='<button onclick="calPick(\''+ds+'\')" style="min-height:48px;padding:2px;border-radius:10px;background:'+(sel?'var(--pg)':'var(--card)')+';color:'+(sel?'#fff':'var(--tx)')+';border:'+(ds===td?'2px solid var(--ink)':'1px solid var(--bd)')+';font-size:14px;line-height:1.3">'+d+'<div style="font-size:11px;min-height:14px">'+(n?'●':'')+(a?'<span style="color:'+(sel?'#fff':'#B5474E')+'">▲</span>':'')+'</div></button>'}
-g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲ 課題の期限</p>';
+for(let d=1;d<=nd;d++){const ds=calM+'-'+String(d).padStart(2,'0'),n=(S.week&&S.week.blocks?S.week.blocks.filter(b=>b.date===ds).length:0),a=S.assign.filter(x=>x.due===ds).length,sel=ds===calD;g+='<button onclick="calPick(\''+ds+'\')" style="min-height:48px;padding:2px;border-radius:10px;background:'+(sel?'var(--pg)':'var(--card)')+';color:'+(sel?'#fff':'var(--tx)')+';border:'+(ds===td?'2px solid var(--ink)':'1px solid var(--bd)')+';font-size:14px;line-height:1.3">'+d+'<div style="font-size:11px;min-height:14px">'+(n?'●':'')+(a?'<span style="color:'+(sel?'#fff':'#B5474E')+'">▲</span>':'')+'</div></button>'}
+g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● やること　▲ 課題の期限</p>';
 const ts=S.tasks.filter(t=>t.date===calD),as=S.assign.filter(a=>a.due===calD);
 return g+'<h3 style="margin-top:8px">'+md(calD)+' の予定</h3>'+(ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(as.length?'<h3 style="font-size:15px;margin-top:8px">課題の期限</h3>'+as.map(aRow).join(''):'')}
 function dataCard(){return '<div class="card"><h3>データ管理</h3><p class="mut">データはこの端末のこのブラウザ内にのみ保存されます。端末変更やブラウザのデータ削除で消えるため、書き出しをおすすめします。</p><div class="row"><button class="ghost sm" onclick="exp()">書き出し</button><button class="ghost sm" onclick="$(\'imp\').click()">読み込み</button><button class="ghost sm" onclick="wipe()">全消去</button></div><input type="file" id="imp" accept=".json" style="display:none" onchange="imp(this)"></div>'}
@@ -711,7 +711,7 @@ return '<div class="gg-home-head"><h1>☾ Grimoire Garden</h1><button class="gho
 '<div class="card deco"><div class="row" style="flex-wrap:nowrap;align-items:flex-start;margin-bottom:10px;gap:14px"><button class="jace" style="flex:none;margin:0" onclick="talk()" aria-label="ジェイス"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#D3D3D3" stroke="#AAAAAB" stroke-width="2"/><path d="M14 28 L17 8 L29 20Z M50 28 L47 8 L35 20Z" fill="#3a3840"/><path d="M32 59 L26 53 L20 54 L22 47 L12 44 L17 38 L13 30 L24 24 Q32 21 40 24 L51 30 L47 38 L52 44 L42 47 L44 54 L38 53Z" fill="#3a3840"/><path d="M32 57 L26 48 Q32 42 38 48Z" fill="#8a8790"/><ellipse cx="32" cy="47" rx="3" ry="2" fill="#1d1b21"/><path d="M19 35 L28 38 L27 41 L20 39Z M45 35 L36 38 L37 41 L44 39Z" fill="#E2E2E3"/></svg></button><div class="bub t" style="min-height:64px">'+esc(saying||say('open'))+(sref?'<div class="mut" style="font-size:12px;text-align:right;margin-top:4px">'+esc(sref)+'</div>':'')+'</div></div>'+urgHtml()+'<div class="row"><button class="sm" onclick="talk()">今日の一言</button><button class="sm ghost" onclick="readVerse('+vi+')">今日の聖句を聞く</button></div></div>'+
 '<section class="gg-daily-tools" aria-label="今日のケア"><button class="gg-tool" onclick="go(\'verse\')"><span class="gg-tool-icon">✦</span><b>聖句</b><small>'+esc(vv.r)+'</small></button><button class="gg-tool" onclick="go(\'med\')"><span class="gg-tool-icon">◌</span><b>瞑想</b><small>今週 '+weekM+' 回</small></button><button class="gg-tool" onclick="go(\'water\')"><span class="gg-tool-icon">◇</span><b>水分</b><small>'+wm+' / '+wg+' ml</small><span class="gg-water-line"><i style="width:'+Math.min(100,wm/wg*100)+'%"></i></span></button></section>'+
 '<div class="card"><h2>今日のタスク</h2>'+(all.length?'<div class="row sp mut"><span>今日の予定 '+dn+' / '+all.length+'</span></div><div class="bar" style="margin-bottom:6px"><i style="width:'+dn/all.length*100+'%"></i></div>':'')+'<div class="row" style="margin-bottom:6px">'+[['today','今日'],['all','すべて'],['done','完了済み']].map(x=>'<button class="sm '+(filter===x[0]?'on':'ghost')+'" onclick="filter=\''+x[0]+'\';render()">'+x[1]+'</button>').join('')+'</div>'+(filter==='cal'?calHtml():ts.length?ts.map(t=>taskRow(t)).join(''):'<p class="mut">タスクはありません。</p>')+(left?'<p class="mut">未完了 '+left+' 件</p>':'')+'</div>'+
- aCard()+'<div class="gg-add-task"><button onclick="ggOpenAdd(\'task\')">＋ タスクを追加</button></div>'+
+ aCard()+'<div class="gg-add-task"><button onclick="wkAddForm()">＋ 今日やることを追加</button></div>'+
 (S.recur.length?'<div class="card"><h3>くりかえし中</h3>'+S.recur.map(r=>'<div class="row sp" style="border-top:1px solid var(--bd);padding:6px 0"><span>↻ '+esc(r.name)+' <span class="mut">'+{daily:'毎日',weekdays:'平日',weekly:'毎週'}[r.rep]+(r.rep==='weekly'?'日月火水木金土'[r.wd]+'曜':'')+'</span></span><button class="ghost sm" onclick="stopRecur(\''+r.id+'\')">止める</button></div>').join('')+'</div>':'');
 }
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='grimoire-garden-'+jst()+'.json';a.click()}
@@ -882,12 +882,12 @@ function evRow(e){return '<div class="sw"><div class="acts"><button class="ghost
 function vCal(){const y=+cM.slice(0,4),m=+cM.slice(5),off=new Date(Date.UTC(y,m-1,1)).getUTCDay(),nd=new Date(Date.UTC(y,m,0)).getUTCDate(),td=jst(),ev=S.events||[];
 let g='<div class="row sp" style="margin-bottom:6px"><button class="ghost sm" onclick="cNav(-1)">◀</button><b>'+y+'年'+m+'月</b><button class="ghost sm" onclick="cNav(1)">▶</button></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">'+'日月火水木金土'.split('').map(w=>'<div class="mut" style="text-align:center;font-size:13px">'+w+'</div>').join('');
 for(let i=0;i<off;i++)g+='<div></div>';
-for(let d=1;d<=nd;d++){const ds=cM+'-'+String(d).padStart(2,'0'),n=S.tasks.filter(t=>t.date===ds).length,a=S.assign.filter(x=>x.due===ds).length,e=ev.filter(x=>evOn(x,ds)).length,sel=ds===cD,c=sel?'#fff':'';
+for(let d=1;d<=nd;d++){const ds=cM+'-'+String(d).padStart(2,'0'),n=(S.week&&S.week.blocks?S.week.blocks.filter(b=>b.date===ds).length:0),a=S.assign.filter(x=>x.due===ds).length,e=ev.filter(x=>evOn(x,ds)).length,sel=ds===cD,c=sel?'#fff':'';
 g+='<button onclick="cPick(\''+ds+'\')" style="min-height:50px;padding:2px;border-radius:10px;background:'+(sel?'var(--pg)':'var(--card)')+';color:'+(sel?'#fff':'var(--tx)')+';border:'+(ds===td?'2px solid var(--ink)':'1px solid var(--bd)')+';font-size:14px;line-height:1.3">'+d+'<div style="font-size:10px;min-height:13px;letter-spacing:1px">'+(n?'●':'')+(a?'<span style="color:'+(sel?'#fff':'#B5474E')+'">▲</span>':'')+(e?'<span style="color:'+(sel?'#fff':'#5b7a99')+'">◆</span>':'')+'</div></button>'}
-g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● タスク　▲ 課題の期限　◆ 予定</p>';
-const ts=S.tasks.filter(t=>t.date===cD),as=S.assign.filter(a=>a.due===cD),es=ev.filter(x=>evOn(x,cD)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));
+g+='</div><p class="mut" style="font-size:12px;margin:6px 0">● やること　▲ 課題の期限　◆ 予定</p>';
+const ts=(S.week&&S.week.blocks?S.week.blocks.filter(b=>b.date===cD):[]),as=S.assign.filter(a=>a.due===cD),es=ev.filter(x=>evOn(x,cD)).sort((a,b)=>(a.tm||'').localeCompare(b.tm||''));
 const none=!ts.length&&!as.length&&!es.length;
-return '<h1>カレンダー</h1><div class="card">'+g+'</div><div class="card"><h2>'+md(cD)+' の予定</h2>'+(none?'<p class="mut">予定はありません。</p>':'')+(es.length?es.map(evRow).join(''):'')+(ts.length?'<h3 style="font-size:15px;margin:8px 0 0">タスク</h3>'+ts.map(t=>taskRow(t)).join(''):'')+(as.length?'<h3 style="font-size:15px;margin:8px 0 0">課題の期限</h3>'+as.map(aRow).join(''):'')+(none?'':'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>')+
+return '<h1>カレンダー</h1><div class="card">'+g+'</div><div class="card"><h2>'+md(cD)+' の予定</h2>'+(none?'<p class="mut">予定はありません。</p>':'')+(es.length?es.map(evRow).join(''):'')+(ts.length?'<h3 style="font-size:15px;margin:8px 0 0">やること</h3>'+ts.map(b=>'<div class="task-row '+(b.done?'done':'')+'"><button class="chk'+(b.done?' d':'')+'" onclick="wkTogItem(\'b\',\''+b.id+'\')">'+(b.done?'✓':'')+'</button><div class="task-main"><div class="tt">'+(b.time?esc(b.time)+'　':'')+esc(b.title)+'</div><div class="mut">'+esc(b.kind||'その他')+'</div></div></div>').join(''):'')+(as.length?'<h3 style="font-size:15px;margin:8px 0 0">課題の期限</h3>'+as.map(aRow).join(''):'')+(none?'':'<p class="mut" style="margin:4px 0 0;font-size:12px"></p>')+
 calForm()}
 function evOn(e,ds){return ds>=e.date&&ds<=(e.end&&e.end>e.date?e.end:e.date)}
 function applyTheme(){try{const t=S.theme||'light',dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',dark?'dark':'light');document.documentElement.setAttribute('data-pal',S.pal||'char');const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',dark?({'char':'#484848','forest':'#111A14','navy':'#0F1522'})[S.pal||'char']:'#DDDDDD')}catch(e){}}
@@ -1181,7 +1181,7 @@ function ggCloseAdd(){
  const ov=document.getElementById('gg-add-overlay'),sh=document.getElementById('gg-add-sheet');
  if(ov)ov.classList.remove('open');if(sh)sh.classList.remove('open');document.body.style.overflow='';
 }
-let ggAddKind='task';
+let ggAddKind='assign';
 function ggRenderAdd(){
  const sh=document.getElementById('gg-add-sheet');if(!sh)return;
  const k=ggAddKind,tab=(v,l)=>'<button class="'+(k===v?'on':'')+'" onclick="ggAddKind=\''+v+'\';ggRenderAdd()">'+l+'</button>';
@@ -1190,7 +1190,7 @@ function ggRenderAdd(){
  if(k==='task')fields='<input id="gg-name" placeholder="タスク名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-memo" placeholder="メモ（任意）"><select id="gg-repeat"><option value="none">くりかえしなし</option><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">毎週</option></select>';
  if(k==='assign')fields='<input id="gg-name" placeholder="課題名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-memo" placeholder="メモ（任意）">';
  if(k==='event')fields='<input id="gg-name" placeholder="予定名" maxlength="120"><input id="gg-date" type="date" value="'+date+'"><input id="gg-time" type="time"><input id="gg-end" type="date" aria-label="終了日（任意）"><input id="gg-memo" placeholder="メモ（任意）">';
- sh.innerHTML='<h3>追加する</h3><div class="gg-tabs">'+tab('task','タスク')+tab('assign','課題')+tab('event','予定')+'</div><div class="gg-fields">'+fields+'</div><button class="gg-submit" onclick="ggSubmitAdd()">追加する</button><button class="gg-cancel" onclick="ggCloseAdd()">キャンセル</button>';
+ sh.innerHTML='<h3>追加する</h3><div class="gg-tabs">'+tab('assign','課題')+tab('event','予定')+'</div><div class="gg-fields">'+fields+'</div><button class="gg-submit" onclick="ggSubmitAdd()">追加する</button><button class="gg-cancel" onclick="ggCloseAdd()">キャンセル</button>';
  const e=document.getElementById('gg-name');if(e)e.focus({preventScroll:true});
 }
 function ggSubmitAdd(){
@@ -1220,7 +1220,7 @@ function ggEnhanceListMenus(){
 }
 function ggEnsureControls(){
  let fab=document.getElementById('gg-fab');
- if(!fab){fab=document.createElement('button');fab.id='gg-fab';fab.type='button';fab.setAttribute('aria-label','追加');fab.textContent='＋';fab.onclick=()=>ggOpenAdd('task');document.body.appendChild(fab)}
+ if(!fab){fab=document.createElement('button');fab.id='gg-fab';fab.type='button';fab.setAttribute('aria-label','追加');fab.textContent='＋';fab.onclick=()=>wkAddForm();document.body.appendChild(fab)}
  let ov=document.getElementById('gg-add-overlay');
  if(!ov){ov=document.createElement('div');ov.id='gg-add-overlay';ov.onclick=ggCloseAdd;document.body.appendChild(ov)}
  let sh=document.getElementById('gg-add-sheet');
@@ -1296,7 +1296,7 @@ const row=i=>'<div class="row" style="gap:10px;padding:7px 0;border-top:1px soli
 const show=list.slice(0,8),rest=list.length-show.length;
 return '<section class="gg-section"><div class="sec-head"><h2>☀ 今日やること</h2><span class="mut">'+(tot?dn+' / '+tot+' 完了':'')+'</span></div><div class="card" style="margin-top:0">'+
 (tot?'<div class="bar" style="margin-bottom:4px"><i style="width:'+Math.round(dn/tot*100)+'%"></i></div>'+show.map(row).join('')+(rest>0?'<p class="mut" style="margin:6px 0 0">…ほか '+rest+' 件あります（下のタスク一覧と作戦室で見られます）</p>':'')+(list.some(i=>i.pick)?'<p class="mut" style="font-size:12px;margin:8px 0 0">★ は作戦室で選んだ「今日の3つ」です。</p>':'')
-:'<p style="margin:4px 0 8px">今日やることは、まだ登録されていません。</p><div class="row"><button class="sm" onclick="ggOpenAdd(\'task\')">＋ タスクを追加</button><button class="sm ghost" onclick="go(\'week\')">作戦室で予定を入れる</button></div>')+
+:'<p style="margin:4px 0 8px">今日やることは、まだ登録されていません。</p><div class="row"><button class="sm" onclick="wkAddForm()">＋ 今日やることを追加</button><button class="sm ghost" onclick="go(\'week\')">作戦室で予定を入れる</button></div>')+
 '</div><button class="gg-link" onclick="go(\'week\')">今週の作戦室を開く　›</button></section>'}
 function wkTogItem(k,id){if(k==='b'){const b=wkEnsure().blocks.find(x=>x.id===id);if(b){b.done=!b.done;save();render()}}else if(k==='t'){toggle(id)}else if(k==='a'){togA(id)}}
 function wkPickToggle(key){const W=wkEnsure(),i=W.picks.indexOf(key);if(i>=0)W.picks.splice(i,1);else{if(W.picks.length>=3)return toast('今日の作戦は3つまでです');W.picks.push(key)}save();render()}
@@ -1341,7 +1341,7 @@ return '<div class="task-row '+(i.done?'done':'')+'"><button class="chk'+(i.done
 return '<section class="gg-section"><div class="sec-head"><h2>☀ 今日やること</h2><span class="mut">未完了 '+left+' 件</span></div>'+
 (pr.tot?'<div class="mut" style="margin-top:2px">今日の進捗 '+pr.dn+' / '+pr.tot+'</div><div class="bar" style="margin:4px 0 8px"><i style="width:'+pr.pct+'%"></i></div>':'')+
 '<div class="gg-list">'+(all.length?all.map(rowFor).join(''):'<div class="empty">今日やることはありません。＋ から追加できます。</div>')+'</div>'+
-'<div class="row" style="margin-top:8px"><button class="sm" onclick="ggOpenAdd(\'task\')">＋ タスクを追加</button><button class="sm ghost" onclick="go(\'week\')">作戦室を開く</button></div>'+
+'<div class="row" style="margin-top:8px"><button class="sm" onclick="wkAddForm()">＋ 今日やることを追加</button><button class="sm ghost" onclick="go(\'week\')">作戦室を開く</button></div>'+
 overdueHint()+'</section>'}
 /* ===== 予定（ブロック）と課題欄の連携 ===== */
 function wkSyncAssignFromBlock(b){if(!b)return;let aid=b.aid||null;if(!aid&&b.kind==='課題'){const m=S.assign.find(a=>a.name===b.title);if(m)aid=m.id}if(!aid)return;const a=S.assign.find(x=>x.id===aid);if(a&&a.done!==b.done){a.done=b.done;a.doneDate=b.done?jst():null;save();render();toast(b.done?'課題欄にも反映しました':'課題欄も未完了に戻しました')}}
@@ -1362,6 +1362,14 @@ modal('<h3>🌙 睡眠を記録</h3><p class="mut" style="margin-top:0">昨夜�
 '<button class="ghost" style="width:100%;margin-top:8px" onclick="closeM()">閉じる</button>')}
 function slSet(v){const h=parseFloat(v);if(isNaN(h)||h<0||h>24)return toast('時間を確認してください');if(!S.sleep||typeof S.sleep!=='object')S.sleep={};S.sleep[jst()]=h;save();closeM();render();toast('睡眠を記録しました')}
 function slClear(){if(S.sleep&&typeof S.sleep==='object')delete S.sleep[jst()];save();closeM();render()}
+
+/* ===== タスクを「今日やること」へ一本化（自動移行） ===== */
+function ggTaskMigrate(){if(!Array.isArray(S.tasks)||!S.tasks.length)return;const W=wkEnsure();if(!Array.isArray(S.tasksBak))S.tasksBak=[];
+S.tasks.forEach(t=>{S.tasksBak.push(t);W.blocks.push({id:'w'+Date.now()+Math.random().toString(36).slice(2,6),date:t.date,time:t.tm||'',kind:'その他',title:t.name,memo:t.memo||'',done:!!t.done,aid:''})});
+S.tasks=[];save()}
+const _genRecur2=genRecur;
+genRecur=function(){_genRecur2();ggTaskMigrate()};
+
 
 
 say('open');render();
